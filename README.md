@@ -171,7 +171,7 @@ https://www.w3.org/TR/html/dom.html#classes
 
       <p class="( -phrasing -editable )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
-      <ol class="( -phrasing -include:list )">
+      <ol class="( -phrasing -include:listitem )">
         <li class="( -editable )">labore et dolore magna aliqua.</li>
         <li class="( -editable )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
       </ol>
@@ -228,7 +228,7 @@ https://www.w3.org/TR/html/dom.html#classes
 
 <p class="( -phrasing -editable )"></p>
 
-<ol class="( -phrasing -include:list )">
+<ol class="( -phrasing -include:listitem )">
   <li class="( -editable )"></li>
 </ol>
 
