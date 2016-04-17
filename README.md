@@ -152,35 +152,37 @@ https://www.w3.org/TR/html/dom.html#classes
 
 ### 具体的なコードサンプル
 
+#### 最終的に生成されるHTML
+
 ```html
 
 <div class="contentHeader">
 
   <h1 class="( include : -text )">Lorem ipsum dolor sit amet</h1>
-  <p class="content-header-description ( include : -text )"><em>Lorem</em> ipsum dolor sit amet, consectetur adipisicing elit,</p>
+  <p class="contenHeader-description ( include : -text )"><em>Lorem</em> ipsum dolor sit amet, consectetur adipisicing elit,</p>
 
 </div>
 
-<div class="contentMain">
+<div class="contentMain ( include : -component )">
 
   <div class="textAndImage ( component )">
 
     <div class="textAndImage-left ( include : -text )">
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
+      <p class="( component include : -text )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
-      <ol>
-        <li>labore et dolore magna aliqua.</li>
-        <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
+      <ol class="( component include : -list )">
+        <li class="( include : -text )">labore et dolore magna aliqua.</li>
+        <li class="( include : -text )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
       </ol>
 
-      <p class="arrow ( component )"><a href="#" class="( include : -text )">aliquip ex ea commodo consequat.</a></p>
+      <p class="linkArrow ( component )"><a href="#" class="( include : -text )">aliquip ex ea commodo consequat.</a></p>
 
     </div>
 
     <div class="textAndImage-right ( include : -imgCaption )">
 
-      <p><img src="https://placehold.jp/150x150.png"></p>
+      <p><img src="..." alt="..."></p>
 
       <p class="textAndImage-imgCaption ( component include : -text )">Duis aute irure</p>
 
@@ -191,6 +193,47 @@ https://www.w3.org/TR/html/dom.html#classes
 </div>
 ```
 
+#### テンプレートHTML
+
+```html
+
+<div class="contentHeader">
+
+  <h1 class="( include : -text )"></h1>
+  <p class="contenHeader-description ( include : -text )"></p>
+
+</div>
+
+<div class="contentMain ( include : -component )">
+
+</div>
+```
+
+
+#### コンポーネント定義HTML
+
+
+```html
+
+<div class="textAndImage ( component )">
+  <div class="textAndImage-left ( include : -text )">
+  </div>
+  <div class="textAndImage-right ( include : -imgCaption )">
+    <p><img src="..." alt="..."></p>
+  </div>
+</div>
+
+<p class="( component include : -text )"></p>
+
+<ol class="( component include : -list )">
+  <li class="( include : -text )"></li>
+</ol>
+
+<p class="linkArrow ( component )"><a href="#" class="( include : -text )"></a></p>
+
+<p class="textAndImage-imgCaption ( component include : -text )"></p>
+```
+
 
 ------
 ## 以下は筆者自身のためのメモであり、これから検討すべき事項である。
@@ -198,8 +241,8 @@ https://www.w3.org/TR/html/dom.html#classes
 自明のコンポーネントをどうするか：
 
 ```
-<p>
-<em>
+<p></p>
+<em></em>
 <ol>...</ol>
 ```
 
