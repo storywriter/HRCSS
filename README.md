@@ -158,33 +158,33 @@ https://www.w3.org/TR/html/dom.html#classes
 
 <div class="contentHeader">
 
-  <h1 class="( include : -text )">Lorem ipsum dolor sit amet</h1>
-  <p class="contenHeader-description ( include : -text )"><em>Lorem</em> ipsum dolor sit amet, consectetur adipisicing elit,</p>
+  <h1 class="( -editable )">Lorem ipsum dolor sit amet</h1>
+  <p class="contenHeader-description ( -editable )"><em>Lorem</em> ipsum dolor sit amet, consectetur adipisicing elit,</p>
 
 </div>
 
-<div class="contentMain ( include : -component )">
+<div class="contentMain ( -wysiwyg )">
 
-  <div class="textAndImage ( component )">
+  <div class="textAndImage ( -flow )">
 
-    <div class="textAndImage-left ( include : -text )">
+    <div class="textAndImage-left ( -include:phrasing )">
 
-      <p class="( component include : -text )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
+      <p class="( -phrasing -editable )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
-      <ol class="( component include : -list )">
-        <li class="( include : -text )">labore et dolore magna aliqua.</li>
-        <li class="( include : -text )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
+      <ol class="( -phrasing -include:list )">
+        <li class="( -editable )">labore et dolore magna aliqua.</li>
+        <li class="( -editable )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
       </ol>
 
-      <p class="linkArrow ( component )"><a href="#" class="( include : -text )">aliquip ex ea commodo consequat.</a></p>
+      <p class="linkArrow ( -phrasing )"><i class="fa fa-circle ( -class )"></i><a href="#" class="( -editable )">aliquip ex ea commodo consequat.</a></p>
 
     </div>
 
-    <div class="textAndImage-right ( include : -imgCaption )">
+    <div class="textAndImage-right ( -include:imgCaption )">
 
-      <p><img src="..." alt="..."></p>
+      <p><img src="..." alt="..." class="( -editable )"></p>
 
-      <p class="textAndImage-imgCaption ( component include : -text )">Duis aute irure</p>
+      <p class="imgCaption ( -phrasing -editable )">Duis aute irure</p>
 
     </div>
 
@@ -193,18 +193,21 @@ https://www.w3.org/TR/html/dom.html#classes
 </div>
 ```
 
+備考：`-include:blog-sidebar-*`のような書き方もできる。
+
+
 #### テンプレートHTML
 
 ```html
 
 <div class="contentHeader">
 
-  <h1 class="( include : -text )"></h1>
-  <p class="contenHeader-description ( include : -text )"></p>
+  <h1 class="( -editable )"></h1>
+  <p class="contenHeader-description ( -editable )"></p>
 
 </div>
 
-<div class="contentMain ( include : -component )">
+<div class="contentMain ( -wysiwyg )">
 
 </div>
 ```
@@ -215,23 +218,23 @@ https://www.w3.org/TR/html/dom.html#classes
 
 ```html
 
-<div class="textAndImage ( component )">
-  <div class="textAndImage-left ( include : -text )">
+<div class="textAndImage ( -flow )">
+  <div class="textAndImage-left ( -include:phrasing )">
   </div>
-  <div class="textAndImage-right ( include : -imgCaption )">
-    <p><img src="..." alt="..."></p>
+  <div class="textAndImage-right ( -include:imgCaption )">
+    <p><img src="..." alt="..." class="( -editable )"></p>
   </div>
 </div>
 
-<p class="( component include : -text )"></p>
+<p class="( -phrasing -editable )"></p>
 
-<ol class="( component include : -list )">
-  <li class="( include : -text )"></li>
+<ol class="( -phrasing -include:list )">
+  <li class="( -editable )"></li>
 </ol>
 
-<p class="linkArrow ( component )"><a href="#" class="( include : -text )"></a></p>
+<p class="linkArrow ( -phrasing )"><i class="fa fa-circle ( -class )"></i><a href="#" class="( -editable )"></a></p>
 
-<p class="textAndImage-imgCaption ( component include : -text )"></p>
+<p class="imgCaption ( -phrasing -editable )"></p>
 ```
 
 
