@@ -6,8 +6,10 @@ Human Readable CSS Style Guide with WYSIWYG HTML Editor, apply to Web Components
 そのまま使える WYSIWYG HTML Editor を含む。
 Web Components 技術にも対応している。
 
-
-Yoshiki HAYAMA @storywriter
+本プロジェクトはオープンソースプロジェクトである。
+プロジェクトの代表は
+Yoshiki HAYAMA @storywriter http://storywriter.jp/
+である。
 
 
 ## 原則
@@ -106,6 +108,17 @@ Yoshiki HAYAMA @storywriter
 
 - この問題を解決し、CSSをコンポーネント指向にするためには、セレクタそのものに、そのコンポーネントが何者であるか、ネストできる要素が何であるか、記述するようにする。セレクタだけを見れば、それが何者であるか、明らかであるようにすればよい。
 
+- ひとつ配慮しておくべき点は、class属性のなかに情報を含めるのがよく、data属性を（できるだけ）避けるようにしたほうが、より多くの制作者にとって、わかりやすくなる、ということだ。何十人、何百人というような大人数で、何年も運用していくような、大規模な制作現場では、個人ごとのスキルに跛行があり、時間とともにメンバーは入れ替わる。そのため、すべての制作者が data属性になじんでいることは、残念ながら、あり得ない。class属性にこだわり、いわゆる「CSSの世界」に閉じたほうが、より運用を安定させることができる。
+
+
+### 第4の指針：コンポーネント指向であるために、WYSIWYG HTML Editor を標準装備している。
+
+- 上記まで指針を立てて、すべてを複数のメンバーで共有したとしても、それでも、コンポーネントにしたHTMLを、統一して運用するのは、なかなかうまくいかない。コードを読んで、ルールのとおりに実装する、というときに、細部でどうしても行き違いや、解釈の差が生まれる。それほどに、CSSの大規模な運用とは難しいものだ。
+
+- そこで、スタイルガイドにそってコンポーネントを組み立てHTMLを仕上げるための WYSIWYG HTML Editor も、スタイルガイドとともに提供するとよい。
+
+- コードを読んだり、複雑なスタイルガイドのルールを理解しなくても、その WYSIWYG HTML Editor を使っていれば、自然とスタイルガイドが守れるようにする。
+
 
 
 ## 解法（具体的なコード）
@@ -113,11 +126,15 @@ Yoshiki HAYAMA @storywriter
 
 ### 技術的な着眼点
 
+#### CSSの視点
+
 - CSS仕様のセレクタ名として使える文字列は限られている。
 
 https://www.w3.org/TR/css3-selectors/#lex
 
 - 注目すべきは、「-」から始まるセレクタ名は、CSSとしては不適合となる点。
+
+#### HTMLの視点
 
 - いっぽうで、HTML仕様で、class属性の値として含める文字列には制約はない。つまり、「-」から始まる文字列が含まれていても、HTMLとしては適合になる。（なお、 XHTML1.0 Transitional では &amp; だけは不適合だったが、HTML5では、それも適合となった）
 
@@ -128,45 +145,48 @@ https://www.w3.org/TR/html/dom.html#classes
  - 「-」から始まる文字列は、CSSのセレクタ名として用いられることはない。
  - 極端には、class属性値は日本語でもよい。（アスキー文字である必要はない）
 
+#### JavaScriptの視点
 
-```
-<h1 class="h1 _ component with-text">Lorem ipsum dolor sit amet</h1> <p class="lead _ component with-text"><em>Lorem</em> ipsum dolor sit amet, consectetur adipisicing elit,</p>
+- また、jQuery の仕様として、興味深いことに「-」から始まるセレクタも操作することができる。つまり`$( '-任意のセレクタ' )`という jQuery のコードは、正しく動作する。
 
-<div class="textAndImage1 _ component">
 
-        <div class="left _ with-flow">
+### 具体的なコードサンプル
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
-                <ol>
-                        <li>labore et dolore magna aliqua.</li>
-                        <li>Ut enim ad minim veniam,</li>
-                </ol>
-                <p>quis nostrud exercitation ullamco laboris nisi ut</p>
-                <p class="arrow _ component"><a href="#" class="_ with-text">aliquip ex ea commodo consequat.</a></p>
+```html
 
-        </div>
+<div class="contentHeader">
 
-        <div class="right">
-
-                <p><a href="#" class="_ optional-wrap"><span class="_ with-image"><img src="..."></span><span class="_ with-text optional-element">Duis aute irure</span></a></p>
-
-        </div>
+  <h1 class="( include : -text )">Lorem ipsum dolor sit amet</h1>
+  <p class="content-header-description ( include : -text )"><em>Lorem</em> ipsum dolor sit amet, consectetur adipisicing elit,</p>
 
 </div>
 
-<div class="textAndImage2 _ component">
+<div class="contentMain">
 
-        <div class="left _ with-flow">
+  <div class="textAndImage ( component )">
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
+    <div class="textAndImage-left ( include : -text )">
 
-        </div>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
-        <div class="right _ with-component-imageWithCaption1 with-component-imageWithCaption2">
+      <ol>
+        <li>labore et dolore magna aliqua.</li>
+        <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
+      </ol>
 
-                <p class="imageWithCaption1 _ component"><a href="#" class="_ optional-wrap"><span class="_ with-image"><img src="..."></span><span class="_ with-text">Duis aute irure</span></a></p>
+      <p class="arrow ( component )"><a href="#" class="( include : -text )">aliquip ex ea commodo consequat.</a></p>
 
-        </div>
+    </div>
+
+    <div class="textAndImage-right ( include : -imgCaption )">
+
+      <p><img src="https://placehold.jp/150x150.png"></p>
+
+      <p class="textAndImage-imgCaption ( component include : -text )">Duis aute irure</p>
+
+    </div>
+
+  </div>
 
 </div>
 ```
@@ -175,7 +195,7 @@ https://www.w3.org/TR/html/dom.html#classes
 ------
 ## 以下は筆者自身のためのメモであり、これから検討すべき事項である。
 
-自明のコンポーネント：
+自明のコンポーネントをどうするか：
 
 ```
 <p>
@@ -190,76 +210,5 @@ https://www.w3.org/TR/html/dom.html#classes
 ```
 
 
-
-
-アイデア <h1 class="h1 (component) (with:text)">
-
-わかりやすいが、jQueryで操作できない。HTMLとしてはValid。
-JavaScript系のテンプレートエンジンとのかかわりも気になる。
-
-(component) → -component ならjQueryも動く。またはスペースなら、ふつうのセレクタになる。
-
-<h1 class="h1 -component -with-text">
-<h1 class="h1 ( component with-text )">
-<h1 class="h1 || component with-text">
-
-
-<div class="(with: imageWithCaption1 )">
-と
-<div class="imageWithCaption1">
-が、jQueryで同じに扱われると困る
-
-
-<h1 class="h1 ( component -text -imageWithCaption1 )">
-可読性を考えると
-<h1 class="h1 ( component with-text with-imageWithCaption1 )">
-<h1 class="h1 ( component with: -text -imageWithCaption1 )">
-<h1 class="h1 ( component include: -text -imageWithCaption1 )"> ←これ読みやすい！
-<h1 class="h1 ( component include- -text -imageWithCaption1 )"> ←jQueryで扱える
-<h1 class="h1 ( component include : -text -imageWithCaption1 )"> ←jQueryで扱える
-<h1 class="h1 ( component include : -text -imageWithCaption1 , anything : -something -else )"> ←jQueryで扱える
-
-
-
-
-<h1 class="h1 (component) (with:text)">Lorem ipsum dolor sit amet</h1> <p class="lead (component) (with:text)"><em>Lorem</em> ipsum dolor sit amet, consectetur adipisicing elit,</p>
-
-<div class="textAndImage1 (component)">
-
-        <div class="left (with:flow)">
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
-                <ol>
-                        <li>labore et dolore magna aliqua.</li>
-                        <li>Ut enim ad minim veniam,</li>
-                </ol>
-                <p>quis nostrud exercitation ullamco laboris nisi ut</p>
-                <p class="arrow (component)"><a href="#" class="(with:text)">aliquip ex ea commodo consequat.</a></p>
-
-        </div>
-
-        <div class="right">
-
-                <p><a href="#" class="(optional:wrap)"><span class="(with:image)"><img src="..."></span><span class="(text) (optional:element)">Duis aute irure</span></a></p>
-
-        </div>
-
-</div>
-
-<div class="textAndImage2 (component)">
-
-        <div class="left (with:flow)">
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
-
-        </div>
-
-        <div class="right (with:imageWithCaption1,imageWithCaption2)">
-
-                <p class="imageWithCaption1 (component)"><a href="#" class="(optional:wrap)"><span class="(with:image)"><img src="..."></span><span class="(with:text)">Duis aute irure</span></a></p>
-
-        </div>
-
-</div>
 
 
