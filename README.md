@@ -165,26 +165,26 @@ https://www.w3.org/TR/html/dom.html#classes
 
 <div class="contentMain ( -wysiwyg )">
 
-  <div class="textAndImage ( -flow )">
+  <div class="textAndImage ( -block )">
 
-    <div class="textAndImage-left ( -include:phrasing )">
+    <div class="textAndImage-left ( -include:element )">
 
-      <p class="( -phrasing -editable )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
+      <p class="( -element -editable )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
-      <ol class="( -phrasing -include:listitem )">
+      <ol class="( -element -include:listitem )">
         <li class="( -editable )">labore et dolore magna aliqua.</li>
         <li class="( -editable )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
       </ol>
 
-      <p class="linkArrow ( -phrasing )"><i class="fa fa-circle ( -class )"></i><a href="#" class="( -editable )">aliquip ex ea commodo consequat.</a></p>
+      <p class="linkArrow ( -element )"><i class="fa fa-circle ( -attribute:class )"></i><a href="#" class="( -editable )">aliquip ex ea commodo consequat.</a></p>
 
     </div>
 
     <div class="textAndImage-right ( -include:imgCaption )">
 
-      <p><img src="..." alt="..." class="( -editable )"></p>
+      <p><img src="..." alt="..." class="( -editable -attribute:alt )"></p>
 
-      <p class="imgCaption ( -phrasing -editable )">Duis aute irure</p>
+      <p class="imgCaption ( -element -editable )">Duis aute irure</p>
 
     </div>
 
@@ -218,23 +218,23 @@ https://www.w3.org/TR/html/dom.html#classes
 
 ```html
 
-<div class="textAndImage ( -flow )">
-  <div class="textAndImage-left ( -include:phrasing )">
+<div class="textAndImage ( -block )">
+  <div class="textAndImage-left ( -include:element )">
   </div>
   <div class="textAndImage-right ( -include:imgCaption )">
-    <p><img src="..." alt="..." class="( -editable )"></p>
+    <p><img src="..." alt="..." class="( -editable -attribute:alt )"></p>
   </div>
 </div>
 
-<p class="( -phrasing -editable )"></p>
+<p class="( -element -editable )"></p>
 
-<ol class="( -phrasing -include:listitem )">
+<ol class="( -element -include:listitem )">
   <li class="( -editable )"></li>
 </ol>
 
-<p class="linkArrow ( -phrasing )"><i class="fa fa-circle ( -class )"></i><a href="#" class="( -editable )"></a></p>
+<p class="linkArrow ( -element )"><i class="fa fa-circle ( -attribute:class )"></i><a href="#" class="( -editable )"></a></p>
 
-<p class="imgCaption ( -phrasing -editable )"></p>
+<p class="imgCaption ( -element -editable )"></p>
 ```
 
 
