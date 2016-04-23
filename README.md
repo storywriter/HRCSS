@@ -238,6 +238,50 @@ https://www.w3.org/TR/html/dom.html#classes
 ```
 
 
+#### 参考：最終的に生成されるHTMLを日本語にしたときのイメージ
+
+```html
+
+<div class="contentHeader">
+
+  <h1 class="( -テキスト編集可 )">Lorem ipsum dolor sit amet</h1>
+  <p class="contenHeader-description ( -テキスト編集可 )"><em>Lorem</em> ipsum dolor sit amet, consectetur adipisicing elit,</p>
+
+</div>
+
+<div class="contentMain ( -レイアウト )">
+
+  <div class="textAndImage ( -ブロック )">
+
+    <div class="textAndImage-left ( -子要素はエレメントのみ可 )">
+
+      <p class="( -エレメント -テキスト編集可 )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
+
+      <ol class="( -エレメント -子要素はリストアイテムのみ可 )">
+        <li class="( -テキスト編集可 )">labore et dolore magna aliqua.</li>
+        <li class="( -テキスト編集可 )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
+      </ol>
+
+      <p class="linkArrow ( -エレメント )"><i class="fa fa-circle ( -class属性のみ編集可 )"></i><a href="#" class="( -テキスト編集可 )">aliquip ex ea commodo consequat.</a></p>
+
+    </div>
+
+    <div class="textAndImage-right ( -子要素は.imgCaptionのみ可 )">
+
+      <p><img src="..." alt="..." class="( -テキスト編集可 -alt属性のみ編集可:alt )"></p>
+
+      <p class="imgCaption ( -エレメント -テキスト編集可 )">Duis aute irure</p>
+
+    </div>
+
+  </div>
+
+</div>
+```
+
+
+
+
 ------
 以下は筆者自身のためのメモであり、これから検討すべき事項である。
 
