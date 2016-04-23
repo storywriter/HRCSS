@@ -249,7 +249,7 @@ https://www.w3.org/TR/html/dom.html#classes
 
 </div>
 
-<div class="contentMain ( -レイアウト )">
+<div class="contentMain ( -WYSIWYG編集可 )">
 
   <div class="textAndImage ( -ブロック )">
 
