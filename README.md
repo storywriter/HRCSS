@@ -6,6 +6,8 @@ Human Readable CSS Style Guide with WYSIWYG HTML Editor, apply to Web Components
 そのまま使える WYSIWYG HTML Editor を含む。
 Web Components 技術にも対応している。
 
+最終更新：2016年4月25日 Yoshiki HAYAMA @storywriter
+
 本プロジェクトはオープンソースプロジェクトである。
 プロジェクトの代表は
 Yoshiki HAYAMA @storywriter http://storywriter.jp/
@@ -172,8 +174,8 @@ https://www.w3.org/TR/html/dom.html#classes
       <p class="( -element -editable )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
       <ol class="( -element -include:listitem )">
-        <li class="( -editable )">labore et dolore magna aliqua.</li>
-        <li class="( -editable )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
+        <li class="( -listitem -editable )">labore et dolore magna aliqua.</li>
+        <li class="( -listitem -editable )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
       </ol>
 
       <p class="linkArrow ( -element )"><i class="fa fa-circle ( -attribute:class )"></i><a href="#" class="( -editable )">aliquip ex ea commodo consequat.</a></p>
@@ -229,7 +231,7 @@ https://www.w3.org/TR/html/dom.html#classes
 <p class="( -element -editable )"></p>
 
 <ol class="( -element -include:listitem )">
-  <li class="( -editable )"></li>
+  <li class="( -listitem -editable )"></li>
 </ol>
 
 <p class="linkArrow ( -element )"><i class="fa fa-circle ( -attribute:class )"></i><a href="#" class="( -editable )"></a></p>
@@ -258,8 +260,8 @@ https://www.w3.org/TR/html/dom.html#classes
       <p class="( -エレメント -テキスト編集可 )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
       <ol class="( -エレメント -子要素はリストアイテムのみ可 )">
-        <li class="( -テキスト編集可 )">labore et dolore magna aliqua.</li>
-        <li class="( -テキスト編集可 )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
+        <li class="( -リストアイテム -テキスト編集可 )">labore et dolore magna aliqua.</li>
+        <li class="( -リストアイテム -テキスト編集可 )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
       </ol>
 
       <p class="linkArrow ( -エレメント )"><i class="fa fa-circle ( -class属性のみ編集可 )"></i><a href="#" class="( -テキスト編集可 )">aliquip ex ea commodo consequat.</a></p>
@@ -280,7 +282,8 @@ https://www.w3.org/TR/html/dom.html#classes
 ```
 
 
-
+------
+この文書は日本語で書かれているが、英語や他言語に翻訳などして、広めていただけると嬉しい。
 
 ------
 以下は筆者自身のためのメモであり、これから検討すべき事項である。
