@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- user-scalable=no は指定しない。ピンチアウトができないと、縮小された画像などの文字が潰れたとき、情報を得るすべがなくなる -->
+	<meta name="description" content="">
+	<meta name="keywords" content=""><!-- meta keywords は、現在はSEO効果は無いため、空にするか、ターゲットキーワード1つにする -->
+	<title>Human Readable CSS</title>
+
+	<!-- ファビコン -->
+	<link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+
+	<!-- 依存ライブラリの読み込み -->
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<!-- jQuery UI -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+	<!-- Bootstrap -->
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+
+	<!-- Human Readable CSS -->
+	<link rel="stylesheet" href="css/hrcss-wysiwyg-editor.css">
+	<script>jQuery.noConflict();</script>
+	<script src="js/hrcss-wysiwyg-editor.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+
+  <!-- Site Header -->
+  <div class="masthead">
+    <nav>
+      <ul class="nav nav-justified">
+        <li><a href="#">ホーム</a></li>
+        <li class="active"><a href="#">調査報告</a></li>
+        <li><a href="#">活動記録</a></li>
+        <li><a href="#">入会案内</a></li>
+        <li><a href="#">お問い合わせ</a></li>
+      </ul>
+    </nav>
+  </div>
+
+
+  <!-- Layout -->
+  <nav>
+    <ol class="breadcrumb">
+      <li><a href="#">ホーム</a></li>
+      <li><a href="#">調査報告</a></li>
+      <li class="active">大規模CMSの選定ポイントについて調査報告</li>
+    </ol>
+  </nav>
+
+
+  <!-- Layout -->
+  <div class="row">
+
+
+    <div class="col-sm-3 sidebar">
+
+      <nav>
+        <p class="lead nav-title"><i class="fa fa-folder-o ( -attribute:class )"></i>調査報告</p>
+        <div class="list-group">
+          <a href="#" class="list-group-item active">NOREN</a>
+          <a href="#" class="list-group-item">Word Press</a>
+          <a href="#" class="list-group-item">Movable Type / PowerCMS</a>
+          <a href="#" class="list-group-item">concrete5</a>
+          <a href="#" class="list-group-item">a-blog cms</a>
+          <a href="#" class="list-group-item">eZ Publish Platform</a>
+          <a href="#" class="list-group-item">Craft CMS</a>
+          <a href="#" class="list-group-item">Team Site</a>
+          <a href="#" class="list-group-item">Adobe Experience Manager</a>
+          <a href="#" class="list-group-item">WebRelease</a>
+          <a href="#" class="list-group-item">Drupal</a>
+          <a href="#" class="list-group-item">Sitecore</a>
+        </div><!-- / .list-group -->
+      </nav>
+
+      <aside>
+        <div class="( -wysiwyg )">
+          <ul class="( -include:listitem )">
+            <li class="sidebar-li ( -editable )">今週木曜日19:00より 2011教室で Drupal について勉強会をします。</li>
+            <li class="sidebar-li ( -editable )">NORENのカスタマイズをしよう！ 来週火曜日19:00より 2012教室です。</li>
+            <li class="sidebar-li ( -editable )">来週金曜日19:00より 2011教室で Adobe Experience Manager について勉強会をします。</li>
+        </ul>
+        </div>
+      </aside>
+
+    </div><!-- / .col-sm-3 .sidebar -->
+
+
+    <div class="col-sm-8 col-sm-offset-1 main">
+
+      <h1 class="( -editable )">大規模CMSの選定ポイントについて調査報告</h1>
+      <p class="lead ( -editable )">数万ページで、関連部署が多数、という大規模サイトを、数年間、運用してきて感じる、現場を調査しました。<br>調査者：羽山</p>
+      <p><img src="http://noren.jp/noren.png" alt="" class="img-responsive ( -attribute:src )"></p>
+
+
+      <div class="row ( -wysiwyg )">
+
+        <h2 class="text-success ( -block )"><i class="fa fa-star ( -attribute:class )"></i><span class="( -editable )">【1】主担当者が、そのCMSを愛せるかどうか。</span></h2>
+
+
+        <div class="row ( -block )">
+      	  <div class="col-sm-8">
+      		  <p class="( -element -editable )">一番に大切。この規模でのCMS導入は、年単位のプロジェクトになり、ステークホルダーも多く、説得の苦労も並大抵のものではない。やり切るには、<mark>担当者が「自分の人生の数年間を投資してでも、このCMSでやるんだ！」という強い思い入れを感じられる製品かどうか</mark>。その度合いによって、導入の成否、導入後の活用レベルが決まる。</p>
+      	  </div>
+          <div class="col-sm-4">
+            <img src="http://hermie.jp/20150627-hermie/15-a-4.png" alt="" class="img-responsive ( -attribute:src )">
+          </div>
+      	</div>
+
+
+        <h2 class="text-success ( -block )"><i class="fa fa-star ( -attribute:class )"></i><span class="( -editable )">【2】メーカーの人的サポートが、手厚いかどうか。</span></h2>
+
+     
+        <p class="( -element -editable )">この規模のCMS導入は、ステークホルダーが多く、部署により要望が異なる、想像もしないトラブルが起こる、など、運用がものすごくたいへんになる。最後の一線で、助けてくれる<mark>メーカーのサポート人員が手厚いかどうか。「なんとかしてサポートしよう」という気持ちで支援してもえるかどうか</mark>。CMSの細かい機能の有無がどうより、運用に、とくに大切になる。</p>
+
+
+        <h2 class="text-success ( -block )"><i class="fa fa-star ( -attribute:class )"></i><span class="( -editable )">【3】現場レベルで、カスタマイズや機能追加ができるかどうか。</span></h2>
+
+        <div class="row ( -block )">
+          <div class="col-sm-4">
+            <img src="http://hermie.jp/20151008-hermie/27-2.png" alt="" class="img-responsive ( -attribute:src )">
+          </div>
+          <div class="col-sm-8">
+            <p class="( -element -editable )">この規模のCMS導入は、ステークホルダーが本当に多いため、あちこちの部署から、毎週、毎月という勢いで、新しい要望や、機能追加のニーズがあがってくる。そのひとつひとつを、SIerに見積をして、仕様検討をして、何百万も支払って、開発して・・・としていたのでは、運用にとても間に合わない。<mark>現場のWeb制作者のレベルで、CMSのカスタマイズを、日常的にできること</mark>が必要になる。あるいは、いわゆるWeb事業会社のように、自社内に開発部隊をもち、アジャイルに開発を回す。いずれにしても、現場でカスタマイズや機能追加ができることが必要になる。<br><br>とくにここ数年、マーケティングオートメーションの波で、社内の他システムに、データ連携を求められるケースが増えている。いちいちSIerを介することなく、現場レベルでどんどん開発していけないと、業務変化の速度についていけない。</p>
+          </div>
+        </div>
+
+
+    	  <div class="panel panel-default ( -block )">
+    	  	<div class="panel-body">
+    		  <h2><i class="fa fa-circle ( -attribute:class )"></i><span class="( -editable )">NOREN</span></h2>
+    		  <p class="( -element -editable )">3つの視点からみて、安定感のあるCMS「NOREN」の調査レポート。</p>
+    		  <p><a class="btn btn-primary ( -attribute:href )" href="#" role="button">紹介を見る &raquo;</a></p>
+    		  </div>
+    	  </div>
+
+
+      </div><!-- / .row .-wysiwyg -->
+
+    </div><!-- / .col-sm-8 .main -->
+
+  </div><!-- / Layout .row -->
+
+
+  <!-- Site Footer -->
+  <footer class="footer">
+    <p>&copy; 2016 道玄坂大学 CMS研究会</p>
+  </footer>
+
+</div><!-- /.container -->
+
+</body>
+</html>

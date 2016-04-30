@@ -1,0 +1,236 @@
+@charset "utf-8";
+
+/* 
+	WYSIWYG HTML Editor for Human Readable CSS
+	last Update: 2016/4/30 @storywriter
+*/
+
+/*
+	コーディングスタイル（コーディング規約）：
+		CSSのコーディングスタイルは Google HTML/CSS Style Guide にしたがってください。
+		Google HTML/CSS Style Guide : http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml
+*/
+
+/*
+	マージン：
+		Bootstrap にしたがって「下マージン」で統一します。
+*/
+
+
+/* WYSIWYG HTML Editor */
+
+.hrcss-picker {
+	background: #fefefe;
+	border-bottom: 1px solid #ccc;
+	box-shadow: 3px 3px 3px #999;
+	display: block;
+	line-height: 1.5em;
+	font-size: 16px;
+	font-weight: normal;
+	letter-spacing: 0;
+	left: 0;
+	min-height: 80px;
+	padding: 10px;
+	position: fixed;
+	top: 0;
+	text-decoration: none;
+	width: 100%;
+	z-index: 2040;
+}
+
+.hrcss-picker:after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+.hrcss-picker .hrcss-picker-control {
+	float: right;
+	text-align: center;
+}
+.hrcss-picker .hrcss-picker-control button {
+	width: 120px;
+}
+.hrcss-picker .hrcss-picker-tab {
+	float: left;
+}
+.hrcss-picker .hrcss-picker-tab .hrcss-picker-tab-panes {
+	margin-bottom: 10px;
+}
+.hrcss-picker .hrcss-picker-tab .hrcss-tab-pane {
+	border: 1px solid #ccc;
+	display: inline-block;
+	padding: 5px 10px;
+}
+.hrcss-picker .hrcss-picker-tab .hrcss-tab-pane:hover,
+.hrcss-picker .hrcss-picker-tab .hrcss-tab-pane:active,
+.hrcss-picker .hrcss-picker-tab .hrcss-tab-pane.active {
+	background: #eee;
+}
+.hrcss-picker .hrcss-picker-tab .hrcss-tab-pane:first-child {
+	border-radius: 4px 0 0 4px;
+}
+.hrcss-picker .hrcss-picker-tab .hrcss-tab-pane:last-child {
+	border-radius: 0 4px 4px 0;
+}
+.hrcss-picker .hrcss-picker-tab .hrcss-tab-component {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	display: inline-block;
+	padding: 10px;
+	text-align: center;	
+}
+.hrcss-picker .hrcss-picker-tab .hrcss-tab-component span {
+	display: block;
+}
+.hrcss-picker .hrcss-picker-tab .hrcss-tab-component img {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+
+/* jQuery Sortable Placeholder */
+
+.hrcss-wysiwyg-sortable-placeholder {
+	background: #eef;
+
+}
+
+
+/* focus & hover */
+
+.hrcss-wysiwyg-hover {
+	outline: 2px solid #99f;
+	outline-offset: -2px;
+}
+.hrcss-wysiwyg-focus {
+	outline: 2px solid #9fc;
+	outline-offset: -2px;
+}
+
+
+/* EditInPlace */
+
+/* EditInPlace : TextArea */
+
+.hrcss-editInPlace-textarea {
+	background: #fff;
+	padding: 3px;
+}
+
+/* EditInPlace : Dialog */
+
+.hrcss-editInPlace-dialog {
+	background: #ffe;
+	border: 2px solid #9fc;
+	box-shadow: 3px 3px 3px #999; 
+	color: #333;
+	display: block;
+	line-height: 1.5em;
+	font-size: 16px;
+	font-weight: normal;
+	letter-spacing: 0;
+	text-decoration: none;
+	padding: 10px;
+	position: absolute;
+	z-index: 2030;
+}
+
+.hrcss-editInPlace-dialog button,
+.hrcss-editInPlace-dialog input,
+.hrcss-editInPlace-dialog textarea {
+	font-size: 1.0em;
+}
+
+.hrcss-editInPlace-dialog img {
+	vertical-align: middle;
+}
+
+.hrcss-editInPlace-dialog .hrcss-editInPlace-control {
+	text-align: right;
+}
+
+.hrcss-editInPlace-dialog .hrcss-editInPlace-attrTable {
+	margin-bottom: 10px;
+}
+.hrcss-editInPlace-dialog .hrcss-editInPlace-attrTable input {
+	background: #fff;
+	margin-left: 10px;
+	padding: 3px;
+}
+
+
+
+.hrcss-overlay {
+	background: #ccc;
+	background: rgba( 204, 204, 204, 0.3 );
+	height: 100%;
+	left: 0;
+	top: 0;
+	position: fixed;
+	width: 100%;
+	z-index: 10090;
+}
+
+.hrcss-dialog {
+	background: #fefefe;
+	border: 2px solid #9fc;
+	border-radius: 6px;
+	box-shadow: 3px 3px 3px #999;
+	display: block;
+	line-height: 1.5em;
+	font-size: 16px;
+	padding: 10px;
+	position: fixed;
+	min-width: 300px;
+	z-index: 10100;
+}
+.hrcss-dialog .hrcss-dialog-message {
+	margin-bottom: 20px;
+}
+.hrcss-dialog .hrcss-dialog-control {
+	text-align: center;
+}
+.hrcss-dialog .hrcss-dialog-control button {
+	width: 120px;
+}
+
+
+
+
+
+
+
+
+/* hover and focus */
+
+.hrcss-wysiwyg-hover-section {
+	outline: 2px solid #99f;
+}
+.hrcss-wysiwyg-focus-section {
+	outline: 3px solid #9fc;
+}
+.hrcss-wysiwyg-hover-editable {
+	outline: 1px solid #99f;
+}
+.hrcss-wysiwyg-focus-editable {
+	outline: 2px solid #9fc;
+}
+
+#hrcss-wysiwyg-main a.hrcss-wysiwyg-hover-section:hover {
+	outline: 2px solid #99f;
+}
+#hrcss-wysiwyg-main a.hrcss-wysiwyg-focus-section:active {
+	outline: 3px solid #9fc;
+}
+#hrcss-wysiwyg-main a.hrcss-wysiwyg-hover-editable:hover {
+	outline: 1px solid #99f;
+}
+#hrcss-wysiwyg-main a.hrcss-wysiwyg-focus-editable:active,
+#hrcss-wysiwyg-main a.hrcss-wysiwyg-focus-editable:visited,
+#hrcss-wysiwyg-main a.hrcss-wysiwyg-focus-editable:focus {
+	outline: 2px solid #9fc;
+}
+
+
+

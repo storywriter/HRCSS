@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- user-scalable=no は指定しない。ピンチアウトができないと、縮小された画像などの文字が潰れたとき、情報を得るすべがなくなる -->
+<title>WYSIWYG HTML Editor for Human Readable CSS: User Components</title>
+
+
+  <!-- 依存ライブラリの読み込み -->
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <!-- Bootstrap -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<!-- User Components を見やすくするための CSS -->
+<style>
+
+section {
+  margin-bottom: 80px;
+}
+
+</style>
+
+
+
+</head>
+<body>
+
+  <!-- Layout -->
+  <div class="container">
+  <div class="row">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-8 col-sm-offset-1">
+
+<h1>WYSIWYG HTML Editor for Human Readable CSS: User Components</h1>
+
+<main id="hrcss-main">
+
+<section class="( -tab )">
+
+  <h2 class="( -tab-title )">基本</h2>
+
+
+  <section class="( -component )">
+
+    <h3 class="( -component-title )">h2 見出し</h3>
+    <img class="( -component-image )" src="http://placehold.jp/60x60.png">
+
+    <h2 class="text-success ( -block )"><i class="fa fa-star ( -attribute:class )"></i><span class="( -editable )">見出しテキスト</span></h2>
+
+  </section>
+
+
+  <section class="( -component )">
+
+    <h3 class="( -component-title )">テキスト</h3>
+    <img class="( -component-image )" src="http://placehold.jp/60x60.png">
+
+    <p class="( -element -editable )">テキストテキストテキストテキストテキストテキストテキスト。</p>
+
+  </section>
+
+
+  <section class="( -component )">
+
+    <h3 class="( -component-title )">右テキスト左画像</h3>
+    <img class="( -component-image )" src="http://placehold.jp/60x60.png">
+    <p class="( -component-description )">画像を横に並べるときは、「右テキスト左画像」を基本にします。</p>
+
+    <div class="row ( -block )">
+      <div class="col-sm-8">
+        <p class="( -element -editable )">テキストテキストテキストテキストテキストテキストテキスト。</p>
+      </div>
+      <div class="col-sm-4">
+        <img src="http://placehold.jp/230x230.png" alt="" class="img-responsive ( -attribute:src )">
+      </div>
+    </div>
+
+  </section>
+
+
+  <section class="( -component )">
+
+    <h3 class="( -component-title )">右画像左テキスト</h3>
+    <img class="( -component-image )" src="http://placehold.jp/60x60.png">
+
+    <div class="row ( -block )">
+      <div class="col-sm-4">
+        <img src="http://placehold.jp/230x230.png" alt="" class="img-responsive ( -attribute:src )">
+      </div>
+      <div class="col-sm-8">
+        <p class="( -element -editable )">テキストテキストテキストテキストテキストテキストテキスト。</p>
+      </div>
+    </div>
+
+  </section>
+
+
+</section><!-- / .-tab -->
+
+
+<section class="( -tab )">
+
+  <h2 class="( -tab-title )">バナー</h2>
+
+
+  <section class="( -component )">
+
+    <h3 class="( -component-title )">テキストバナー</h3>
+    <img class="( -component-image )" src="http://placehold.jp/60x60.png">
+
+        <div class="panel panel-default ( -block )">
+          <div class="panel-body">
+          <h2><i class="fa fa-circle ( -attribute:class )"></i><span class="( -editable )">NOREN</span></h2>
+          <p class="( -element -editable )">3つの視点からみて、安定感のあるCMS「NOREN」の調査レポート。</p>
+          <p><a class="btn btn-primary ( -attribute:href )" href="#" role="button">紹介を見る &raquo;</a></p>
+          </div>
+        </div>
+
+  </section>
+
+
+</section>
+
+</main>
+
+
+
+  </div>
+  </div>
+  </div><!-- / Layout -->
+
+    </body>
+</html>
