@@ -202,4 +202,25 @@
 	width: 120px;
 }
 
-
+.hrcss-alert {
+	background: #ffe;
+	border: 2px solid #9fc;
+	border-radius: 6px;
+	box-shadow: 3px 3px 3px #999;
+	display: block;
+	line-height: 1.5em;
+	font-size: 16px;
+	padding: 10px;
+	position: fixed;
+	min-width: 300px;
+	z-index: 10100;
+}
+.hrcss-alert .hrcss-alert-message {
+	margin-bottom: 20px;
+}
+.hrcss-alert .hrcss-alert-control {
+	text-align: center;
+}
+.hrcss-alert .hrcss-alert-control button {
+	width: 120px;
+}

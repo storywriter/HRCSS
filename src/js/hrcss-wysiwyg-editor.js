@@ -138,6 +138,39 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 	},
 
+	alert: function( message, func ){
+
+		var _this = this;
+
+		var dialog, overlay;
+
+		dialog = $( _this.systemTemplates.find( '.hrcss-alert' ).clone() );
+		overlay = $( _this.systemTemplates.find( '.hrcss-overlay' ).clone() );
+
+		overlay.appendTo( 'body' );
+		overlay.append( dialog );
+
+		dialog.find( '.hrcss-alert-message' ).text( message );
+
+		dialog.css( {
+			top: ( $( window ).height() - dialog.height() ) / 2,
+			left: ( $( window ).width() - dialog.width() ) / 2
+		} );
+
+		overlay
+			.on( 'click', function( event ){
+
+				var action = $( event.target ).hasClass( 'hrcss-alert-ok' );
+				if( action ){
+					func();
+				}
+
+				overlay.remove();
+
+			} );
+
+	},
+
 	init: function(){
 		
 		var _this = this;
@@ -312,7 +345,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 								if( permission ) {
 									ui.item.after( component.clone() );
 								} else {
-								//	_this.alert( 'そのコンポーネントは、ここに追加できません。', function(){} );
+									_this.alert( 'そのコンポーネントは、ここに追加できません。', function(){} );
 								}
 
 								$( '.-wysiwyg' ).sortable( "destroy" );
