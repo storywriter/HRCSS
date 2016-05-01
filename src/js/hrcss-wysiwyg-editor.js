@@ -117,7 +117,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 		overlay.appendTo( 'body' );
 		overlay.append( dialog );
 
-		dialog.find( '.hrcss-dialog-message' ).text( message );
+		dialog.find( '.hrcss-dialog-message' ).html( message );
 
 		dialog.css( {
 			top: ( $( window ).height() - dialog.height() ) / 2,
@@ -150,7 +150,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 		overlay.appendTo( 'body' );
 		overlay.append( dialog );
 
-		dialog.find( '.hrcss-alert-message' ).text( message );
+		dialog.find( '.hrcss-alert-message' ).html( message );
 
 		dialog.css( {
 			top: ( $( window ).height() - dialog.height() ) / 2,
