@@ -1,6 +1,6 @@
 /**
  * WYSIWYG HTML Editor for Human Readable CSS
- * last Update: 2016/4/30 @storywriter
+ * last Update: 2016/5/1 @storywriter
  *
  * Require libraries:
  * jquery v1.10.2
