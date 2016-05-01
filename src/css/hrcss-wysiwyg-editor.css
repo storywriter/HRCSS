@@ -110,11 +110,6 @@
 	z-index: 2020;
 }
 .hrcss-focus {
-	outline: 2px solid #9fc;
-	outline-offset: -2px;
-	z-index: 2030; /* hoverより強い */
-}
-.hrcss-focus-bold {
 	outline: 3px solid #9fc;
 	outline-offset: -3px;
 	z-index: 2030; /* hoverより強い */

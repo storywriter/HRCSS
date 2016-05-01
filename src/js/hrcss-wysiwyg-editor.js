@@ -147,6 +147,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 			opacity: 0.5,
 			forcePlaceholderSize: true,
 			placeholder: "hrcss-wysiwyg-sortable-placeholder",
+			cursor: 'move',
 			zIndex: 10060
 		}
 
@@ -363,8 +364,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 				} else if( element ) {
 
 					sortableOption = $.extend( {}, sortableOption, sortableOptionWysiwyg, {
-						items: ".-element",
-						connectWith: $( '.-block' )
+						items: ".-element, .-block"
 					} );
 					$( '.-wysiwyg' ).sortable( sortableOption );
 
@@ -541,41 +541,53 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 				var _ctrlKey;
 
+				var block = $( _this.pointer ).hasClass( '-block' ),
+						element = $( _this.pointer ).hasClass( '-element' );
+
 				if( !_this.status() ){ /* 'input' 'textarea' 入力中と競合しないように */
 
 					_ctrlKey = ( event.ctrlKey === true || event.metaKey === true ) ? true : false;
 
-					if( _ctrlKey && event.keyCode === 67 ){ /* CTRL+C */
+					if( block || element ) {
 
-						_this.clipboard = $( _this.pointer ).clone();
 
-					} else if( _ctrlKey && event.keyCode === 88 ){ /* CTRL+X */
+						if( _ctrlKey && event.keyCode === 67 ) { /* CTRL+C */
 
-						_this.clipboard = $( _this.pointer ).clone();
-						_this.pointer.remove();
+							_this.clipboard = $( _this.pointer ).clone();
 
-					} else if( _ctrlKey && event.keyCode === 86 ){ /* CTRL+V */
+						} else if( _ctrlKey && event.keyCode === 88 ){ /* CTRL+X */
 
-						$( _this.pointer ).after( $( _this.clipboard ).clone() )
+							_this.clipboard = $( _this.pointer ).clone();
+							_this.pointer.remove();
 
-					} else if( event.keyCode === 46 || event.keyCode === 8 ){ /* Del || BackSpace */
+						} else if( _ctrlKey && event.keyCode === 86 ) { /* CTRL+V */
 
-						if( $( _this.pointer ).hasClass( '-block' ) || $( _this.pointer ).hasClass( '-element' ) ) {
+							var _paste = $( _this.clipboard ).clone();
+							$( _this.pointer ).after( _paste );
+							$(_this.pointer ).removeClass( 'hrcss-focus' );
+							_this.pointer = _paste; /* ペーストしたものにフォーカスを移す */
 
-							_this.dialog( '削除してもよろしいですか？', function(){
-								_this.pointer.remove();
-							} );
+						} else if( event.keyCode === 46 || event.keyCode === 8 ) { /* Del || BackSpace */
 
+							if( $( _this.pointer ).hasClass( '-block' ) || $( _this.pointer ).hasClass( '-element' ) ) {
+
+								_this.dialog( '削除してもよろしいですか？', function(){
+									_this.pointer.remove();
+								} );
+
+							}
+							if( event.keyCode === 8 ){ return false; } /* Disable 'Page Back' on the 'BackSpace' key */
+
+						} else if( _ctrlKey && event.keyCode === 90 ) { /* CTRL+Z */
+							/* ToDo: UnDo Function */
+
+						} else if( _ctrlKey && event.keyCode === 89 ) { /* CTRL+Y */
+							/* ToDo: ReDo Function */
+
+						} else {
 						}
-						if( event.keyCode === 8 ){ return false; } /* Disable 'Page Back' on the 'BackSpace' key */
 
-					} else if( _ctrlKey && event.keyCode === 90 ){ /* CTRL+Z */
-						/* ToDo: UnDo Function */
 
-					} else if( _ctrlKey && event.keyCode === 89 ){ /* CTRL+Y */
-						/* ToDo: ReDo Function */
-
-					} else {
 					}
 
 				}
