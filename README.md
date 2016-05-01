@@ -173,9 +173,9 @@ https://www.w3.org/TR/html/dom.html#classes
 
       <p class="( -element -editable )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
-      <ol class="( -element -include:listitem )">
-        <li class="( -listitem -editable )">labore et dolore magna aliqua.</li>
-        <li class="( -listitem -editable )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
+      <ol class="listitem-ol ( -element -include:listitem )">
+        <li class="listitem ( -editable -parent:listitem-ol )">labore et dolore magna aliqua.</li>
+        <li class="listitem ( -editable -parent:listitem-ol )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
       </ol>
 
       <p class="linkArrow ( -element )"><i class="fa fa-circle ( -attribute:class )"></i><a href="#" class="( -editable )">aliquip ex ea commodo consequat.</a></p>
@@ -230,8 +230,8 @@ https://www.w3.org/TR/html/dom.html#classes
 
 <p class="( -element -editable )"></p>
 
-<ol class="( -element -include:listitem )">
-  <li class="( -listitem -editable )"></li>
+<ol class="listitem-ol ( -element -include:listitem )">
+  <li class="listitem ( -editable -parent:listitem-ol )"></li>
 </ol>
 
 <p class="linkArrow ( -element )"><i class="fa fa-circle ( -attribute:class )"></i><a href="#" class="( -editable )"></a></p>
@@ -259,9 +259,9 @@ https://www.w3.org/TR/html/dom.html#classes
 
       <p class="( -エレメント -テキスト編集可 )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
-      <ol class="( -エレメント -子要素はリストアイテムのみ可 )">
-        <li class="( -リストアイテム -テキスト編集可 )">labore et dolore magna aliqua.</li>
-        <li class="( -リストアイテム -テキスト編集可 )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
+      <ol class="リスト ( -エレメント -子要素はリストアイテムのみ可 )">
+        <li class="リストアイテム ( -テキスト編集可 -親要素はリストのみ可 )">labore et dolore magna aliqua.</li>
+        <li class="リストアイテム ( -テキスト編集可 -親要素はリストのみ可 )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
       </ol>
 
       <p class="linkArrow ( -エレメント )"><i class="fa fa-circle ( -class属性のみ編集可 )"></i><a href="#" class="( -テキスト編集可 )">aliquip ex ea commodo consequat.</a></p>

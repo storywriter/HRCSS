@@ -143,10 +143,10 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 		var _this = this;
 
 		var sortableOption = {
-			forceHelperSize: true,
 			opacity: 0.5,
-			forcePlaceholderSize: true,
-			placeholder: "hrcss-wysiwyg-sortable-placeholder",
+//			forceHelperSize: true,
+//			forcePlaceholderSize: true,
+//			placeholder: "hrcss-sortable-placeholder",
 			cursor: 'move',
 			zIndex: 10060
 		}
@@ -205,12 +205,30 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 				component.find( '.-component-description' ).remove();
 				component = component.children();
 
+				/* コンポーネントの種類を確認する */
+				var block = component.eq( 0 ).hasClass( '-block' ),
+						element = component.eq( 0 ).hasClass( '-element' );
+
+				/* コンポーネントの class属性を保持する */
+				var classes = component.eq( 0 ).attr( 'class' );
+
+				/* コンポーネントを移動して、追加できるようにする */
 				componentSelector
 					.on( 'mousedown', function( event ){
 
-						var sortableOptionPicker = {
-							remove: function( event, ui ){
+						var items;
+						if( block ) {
+							items = '> .-block';
+						} else if( element ) {
+							items = '.-block, .-element';
+						}
 
+						var sortableOptionPicker = {
+//forceHelperSize: true,
+//			forcePlaceholderSize: true,
+//			placeholder: "hrcss-sortable-placeholder",
+							remove: function( event, ui ){
+						//		$( '.hrcss-picker-tab-content' ).sortable( "cancel" );
 							},
 							stop: function( event, ui ){
 								$( '.hrcss-picker-tab-content' ).sortable( "destroy" );
@@ -225,18 +243,81 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 						$( '.hrcss-picker-tab-content' ).sortable( sortableOption );
 
 
-						sortableOptionWysiwyg = {}
+						sortableOptionWysiwyg = {
+//			forceHelperSize: true,
+//			forcePlaceholderSize: true,
+//			placeholder: "hrcss-sortable-placeholder",
+						}
 
 						sortableOption = $.extend( {}, sortableOption, sortableOptionWysiwyg, {
-							items: "> .-block",
-							connectWith: $( '.-wysiwyg' ),
+							items: items,
 							stop: function( event, ui ){
 								$( '.-wysiwyg' ).sortable( "destroy" );
 							},
-							receive: function( event, ui ){
-								ui.item.after( component.clone() );
+							receive: function( event, ui ){ /* コンポーネントがドロップされたとき */
+
+								var include = ( ui.item.parent().attr( 'class' ).indexOf( '-include' ) > -1 ) ? true : false;
+								var includes;
+
+								var parent = ( classes.indexOf( '-parent' ) > -1 ) ? true : false;
+								var parents;
+
+								var permission = true; /* ここに追加していいか */
+								if( include || parent ) {
+									permission = false; /* 親要素に -include: があるか、子要素に -parent: があるときは、追加に制約がある */
+								}
+
+								/* -include:の対象リストをつくる */
+								if( include ) {
+									includes = ui.item.parent().attr( 'class' ).split( ' ' );
+									if( includes.length > 1 ) {
+
+										includes = $.grep( includes, function( elem, index ){
+											return ( elem.indexOf( '-include' ) > -1 ) ? true : false;
+										} );
+										includes = $.map( includes, function( elem, index ){
+											return elem.replace( '-include:', '' );
+										} );
+									}
+
+									$( includes ).each( function(){
+										if( classes.indexOf( this ) > -1 ) {
+											permission = true; /* ここに追加していい */
+										}
+									});
+
+								}
+
+								/* -parent:の対象リストをつくる */
+								if( parent ) {
+									parents = classes.split( ' ' );
+									if( parents.length > 1 ) {
+
+										parents = $.grep( parents, function( elem, index ){
+											return ( elem.indexOf( '-parent' ) > -1 ) ? true : false;
+										} );
+										parents = $.map( parents, function( elem, index ){
+											return elem.replace( '-parent:', '' );
+										} );
+									}
+
+									$( parents ).each( function(){
+										if( ui.item.parent().attr( 'class' ).indexOf( this ) > -1 ) {
+											permission = true; /* ここに追加していい */
+										}
+									});
+
+								}
+
+								if( permission ) {
+									ui.item.after( component.clone() );
+								} else {
+								//	_this.alert( 'そのコンポーネントは、ここに追加できません。', function(){} );
+								}
+
 								$( '.-wysiwyg' ).sortable( "destroy" );
 								$( '.hrcss-picker-tab-content' ).sortable( 'cancel' );
+
 							}
 						} );
 						$( '.-wysiwyg' ).sortable( sortableOption );
@@ -308,9 +389,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 								$( _this.pointer ).addClass( 'hrcss-focus' ); /* 今回クリックしたもの */
 							}
 
-
 						}
-
 
 					}
 
@@ -325,6 +404,9 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 				var target = event.target;
 				var $target = $( target );
+
+				var block = $target.hasClass( '-block' ),
+						element = $target.hasClass( '-element' );
 
 				var sortableOptionWysiwyg = {
 
@@ -345,13 +427,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 						}
 
-						$( '.-wysiwyg' ).sortable( "destroy" );
 					}
 				}
-
-
-				var block = $target.hasClass( '-block' ),
-						element = $target.hasClass( '-element' );
 
 				if( block ) {
 
@@ -369,7 +446,6 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 					$( '.-wysiwyg' ).sortable( sortableOption );
 
 				}
-
 
 			} )
 
@@ -390,19 +466,21 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 						var editable = $target.hasClass( '-editable' ),
 								attribute = ( $target.attr( 'class' ).indexOf( '-attribute' ) > -1 ) ? true : false;
+						var attributes;
 
 						/* -attribute:の対象リストをつくる */
-						var attributes = $target.attr( 'class' ).split( ' ' );
-						if( attributes.length > 1 ) {
+						if( attribute ) {
+							attributes = $target.attr( 'class' ).split( ' ' );
+							if( attributes.length > 1 ) {
 
-							attributes = $.grep( attributes, function( elem, index ){
-								return ( elem.indexOf( '-attribute' ) > -1 ) ? true : false;
-							} );
-							attributes = $.map( attributes, function( elem, index ){
-								return elem.replace( '-attribute:', '' );
-							} );
+								attributes = $.grep( attributes, function( elem, index ){
+									return ( elem.indexOf( '-attribute' ) > -1 ) ? true : false;
+								} );
+								attributes = $.map( attributes, function( elem, index ){
+									return elem.replace( '-attribute:', '' );
+								} );
+							}
 						}
-
 
 						/* EditInPlace : Dialog */
 
@@ -587,7 +665,6 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 						} else if( _ctrlKey && event.keyCode === 89 ) { /* CTRL+Y */
 							/* ToDo: ReDo Function */
 
-						} else {
 						}
 
 
