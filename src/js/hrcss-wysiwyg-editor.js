@@ -4,7 +4,7 @@
  *
  * Require libraries:
  * jquery v1.10.2
- * jquery-ui v1.10.3
+ * jquery-ui v1.10.3 ( core, widget, mouse, sortable )
  *
  *
  * コーディングスタイル（コーディング規約）：
