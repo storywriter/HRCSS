@@ -99,15 +99,26 @@
 
 /* focus & hover */
 
-.hrcss-wysiwyg-hover {
-	outline: 2px solid #99f;
-	outline-offset: -2px;
+.hrcss-hover {
+	outline: 1px solid #99f;
+	outline-offset: -1px;
+	z-index: 2020;
 }
-.hrcss-wysiwyg-focus {
+.hrcss-hover-bold {
+	outline: 3px solid #99f;
+	outline-offset: -3px;
+	z-index: 2020;
+}
+.hrcss-focus {
 	outline: 2px solid #9fc;
 	outline-offset: -2px;
+	z-index: 2030; /* hoverより強い */
 }
-
+.hrcss-focus-bold {
+	outline: 3px solid #9fc;
+	outline-offset: -3px;
+	z-index: 2030; /* hoverより強い */
+}
 
 /* EditInPlace */
 
@@ -115,6 +126,7 @@
 
 .hrcss-editInPlace-textarea {
 	background: #fff;
+	border: 2px solid #9fc;
 	padding: 3px;
 }
 
@@ -162,8 +174,8 @@
 
 
 .hrcss-overlay {
-	background: #ccc;
-	background: rgba( 204, 204, 204, 0.3 );
+	background: #999;
+	background: rgba( 153, 153, 153, 0.5 );
 	height: 100%;
 	left: 0;
 	top: 0;
@@ -173,7 +185,7 @@
 }
 
 .hrcss-dialog {
-	background: #fefefe;
+	background: #ffe;
 	border: 2px solid #9fc;
 	border-radius: 6px;
 	box-shadow: 3px 3px 3px #999;
@@ -194,43 +206,5 @@
 .hrcss-dialog .hrcss-dialog-control button {
 	width: 120px;
 }
-
-
-
-
-
-
-
-
-/* hover and focus */
-
-.hrcss-wysiwyg-hover-section {
-	outline: 2px solid #99f;
-}
-.hrcss-wysiwyg-focus-section {
-	outline: 3px solid #9fc;
-}
-.hrcss-wysiwyg-hover-editable {
-	outline: 1px solid #99f;
-}
-.hrcss-wysiwyg-focus-editable {
-	outline: 2px solid #9fc;
-}
-
-#hrcss-wysiwyg-main a.hrcss-wysiwyg-hover-section:hover {
-	outline: 2px solid #99f;
-}
-#hrcss-wysiwyg-main a.hrcss-wysiwyg-focus-section:active {
-	outline: 3px solid #9fc;
-}
-#hrcss-wysiwyg-main a.hrcss-wysiwyg-hover-editable:hover {
-	outline: 1px solid #99f;
-}
-#hrcss-wysiwyg-main a.hrcss-wysiwyg-focus-editable:active,
-#hrcss-wysiwyg-main a.hrcss-wysiwyg-focus-editable:visited,
-#hrcss-wysiwyg-main a.hrcss-wysiwyg-focus-editable:focus {
-	outline: 2px solid #9fc;
-}
-
 
 

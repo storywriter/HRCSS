@@ -87,13 +87,15 @@ ToDo:
 
 
 
-var hrcssWysiwygEditor = {
+var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 	pointer: {},
 
 	status: function(){
-		return ( $( '.hrcss-editInPlace-dialog' ).length > 0 ) ? true : false; /* true : 編集起動中 , false : 編集未起動 */
+		return ( ( $( '.hrcss-editInPlace-dialog' ).length > 0 ) ? true : false ); /* true : 編集起動中 , false : 編集未起動 */
 	},
+
+	dblclick: false, /* for accessibility : 'dblclick' event is not accessible. */
 
 	clipboard: {},
 
@@ -255,30 +257,61 @@ var hrcssWysiwygEditor = {
 
 		$( document )
 
-			/* 見た目のフォーカスを整える */
-
-			.on( 'mouseenter', '.-block, .-element, .-editable, [class*=-attribute]', function( event ){
-				$( this ).addClass( 'hrcss-wysiwyg-hover' );
-			} )
-
-			.on( 'mouseleave', '.-block, .-element, .-editable, [class*=-attribute]', function( event ){
-				$( this ).removeClass( 'hrcss-wysiwyg-hover' )
-			} )
+			/* リンクの動作を停止（mousedownとは別にclickイベントを止める必要がある） */
 
       .on( 'click', '.-block, .-element, .-editable, [class*=-attribute]', function( event ){
-        event.preventDefault(); /* リンクの動作を停止（mousedownとは別にclickイベントを止める必要がある） */
+        event.preventDefault();
       } )
+
+			/* 見た目のフォーカスを整え、ポインタを記録する */
+
+			.on( 'mouseenter', '.-block', function( event ){
+				$( this ).addClass( 'hrcss-hover-bold' );
+			} )
+			.on( 'mouseleave', '.-block', function( event ){
+				$( this ).removeClass( 'hrcss-hover-bold' );
+			} )
+			.on( 'mouseenter', '.-element, .-editable, [class*=-attribute]', function( event ){
+				$( this ).addClass( 'hrcss-hover' );
+			} )
+			.on( 'mouseleave', '.-element, .-editable, [class*=-attribute]', function( event ){
+				$( this ).removeClass( 'hrcss-hover' );
+			} )
 
 			.on( 'mousedown', '.-block, .-element, .-editable, [class*=-attribute]', function( event ){
 
-				$( '.hrcss-wysiwyg-hover' ).removeClass( 'hrcss-wysiwyg-hover' ); /* hoverは解除 */
+				event.stopPropagation();
 
-				if( _this.pointer !== event.target ) { /* 今回クリックしたものが、前回クリックしたもの以外だった */
+				var action = $( event.target ).hasClass( 'hrcss-editInPlace-ok' ) || $( event.target ).hasClass( 'hrcss-editInPlace-cansel' );
 
-					$( _this.pointer ).removeClass( 'hrcss-wysiwyg-focus' ); /* 前回クリックしたもの */
+				$( '.hrcss-hover' ).removeClass( 'hrcss-hover' ); /* hoverは解除 */
 
-          _this.pointer = event.target; /* 新しいポインタを記録する */
-					$( _this.pointer ).addClass( 'hrcss-wysiwyg-focus' ); /* 今回クリックしたもの */
+
+				if( action ) { /* 編集ダイアログの OKボタン または Cancelボタン */
+
+					_this.pointer = {}; /* ポインタを空にする */
+					_this.dblclick = false; /* ダブルクリックを初期化 */
+					$( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusは解除 */
+
+				} else {
+
+					if( event.target === this ) {
+
+						if( !_this.status() ) { /* 他を編集中でなければ */
+
+							if( _this.pointer === this ) {
+								_this.dblclick = true; /* ダブルクリックを有効化 */
+							} else {
+								$( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusは解除 */
+			      	  _this.pointer = this; /* 新しいポインタを記録する */
+								$( _this.pointer ).addClass( 'hrcss-focus' ); /* 今回クリックしたもの */
+							}
+
+
+						}
+
+
+					}
 
 				}
 
@@ -345,154 +378,160 @@ var hrcssWysiwygEditor = {
 
 			.on( 'click', '.-editable, [class*=-attribute]', function( event ){
 
-				var target = event.target;
-				var $target = $( target );
+				if( _this.dblclick ) { /* for accessibility : 'dblclick' event is not accessible. */
 
-				var originalText = '',
-						ins, tagName, text, textarea, table, tr;
+					if( !_this.status() ) { /* 同時に編集できるのは1つのみ */
 
-				var editable = $target.hasClass( '-editable' ),
-						attribute = ( $target.attr( 'class' ).indexOf( '-attribute' ) > -1 ) ? true : false;
+						var target = event.target;
+						var $target = $( target );
 
-				/* -attribute:の対象リストをつくる */
-				var attributes = $target.attr( 'class' ).split( ' ' );
-				if( attributes.length > 1 ) {
+						var originalText = '',
+								ins, tagName, text, textarea, table, tr;
 
-					attributes = $.grep( attributes, function( elem, index ){
-						return ( elem.indexOf( '-attribute' ) > -1 ) ? true : false;
-					} );
-					attributes = $.map( attributes, function( elem, index ){
-						return elem.replace( '-attribute:', '' );
-					} );
-				}
+						var editable = $target.hasClass( '-editable' ),
+								attribute = ( $target.attr( 'class' ).indexOf( '-attribute' ) > -1 ) ? true : false;
 
+						/* -attribute:の対象リストをつくる */
+						var attributes = $target.attr( 'class' ).split( ' ' );
+						if( attributes.length > 1 ) {
 
-				/* EditInPlace : Dialog */
-
-				ins = _this.systemTemplates.find( '.hrcss-editInPlace-dialog' ).clone();
-
-				/* EditInPlace : OK & Cansel Button */
-
-				ins.append( _this.systemTemplates.find( '.hrcss-editInPlace-control' ).clone() );
-
-
-				/* EditInPlace : TextArea */
-
-				if( editable ){
-
-					tagName = $target.context.tagName;
-
-					if( tagName !== 'IMG' && tagName !== 'HR' ){ /* img でも hr でもなければ */
-
-						text = $target.html();
-						originalText = text; /* 元のテキストを保存（キャンセル用） */
-						text = $.trim( text );
-						text = text.replace( /<br.*?>/g, "\n" ); /* @TODO <br class="hidden-xs">などで困る */
-
-						textarea = _this.systemTemplates.find( '.hrcss-editInPlace-textarea' ).clone();
-						textarea.width( $target.width() ).height( $target.height() );
-						textarea.val( text );
-
-						$target.text( '' );
-						$target.append( textarea );
-
-						textarea.focus();
-
-					}
-
-				}
-
-
-				/* EditInPlace : Attributes */
-
-				if( attribute ){
-
-					table = _this.systemTemplates.find( '.hrcss-editInPlace-attrTable' ).clone();
-					tr = table.find( 'tr' ).clone();
-					table.remove( 'table' ).empty();
-
-					for( var _key in attributes ){
-
-						var _tr = $( $( tr ).clone() );
-						_tr.find( 'label' ).text( attributes[ _key ] );
-
-						var _val = $target.attr( attributes[ _key ] );
-						/* @TODO class属性のとき、hrcssまでさわれてしまう */
-
-						_tr.find( 'input' ).attr( 'name', attributes[ _key ] ).val( _val || '' );
-						table.append( _tr );
-
-					}
-
-					ins.prepend( table );
-
-				}
-
-
-				/* 表示 */
-
-				$target.after( ins );
-
-
-
-				/* OKボタンがクリックされたとき または その他の要素がクリックされたとき */
-
-				$( '.hrcss-editInPlace-ok', ins )
-					.on( 'click', function( event ){
-
-						var _text;
-
-						/* EditInPlace : TextArea */
-
-						if( editable ){
-
-							_text = textarea.val();
-							_text = $.trim( _text );
-							_text = _text.replace( /\r\n/g, "<br>" ).replace( /(\r|\n)/g, "<br>" );
-							$target.html( _text );
-
-						}
-
-						/* EditInPlace : Attributes */
-
-						if( attribute ){
-
-							table.find( 'tr' ).each( function(){
-
-								var $this = $( this ).find( 'input' );
-								$target.attr( $this.attr( 'name' ), ( $this.val() || $this.text() ) );
-
+							attributes = $.grep( attributes, function( elem, index ){
+								return ( elem.indexOf( '-attribute' ) > -1 ) ? true : false;
 							} );
-
+							attributes = $.map( attributes, function( elem, index ){
+								return elem.replace( '-attribute:', '' );
+							} );
 						}
 
-						ins.remove();
 
+						/* EditInPlace : Dialog */
 
-					} )
+						ins = _this.systemTemplates.find( '.hrcss-editInPlace-dialog' ).clone();
 
+						/* EditInPlace : OK & Cansel Button */
 
-				/* キャンセルボタンがクリックされたとき */
+						ins.append( _this.systemTemplates.find( '.hrcss-editInPlace-control' ).clone() );
 
-				$( '.hrcss-editInPlace-cansel', ins )
-					.on( 'click', function( event ){
 
 						/* EditInPlace : TextArea */
 
-						if( editable ){
+						if( editable ) {
 
-							$target.text( originalText );
+							tagName = $target.context.tagName;
+
+							if( tagName !== 'IMG' && tagName !== 'HR' ){ /* img でも hr でもなければ */
+
+								text = $target.html();
+								originalText = text; /* 元のテキストを保存（キャンセル用） */
+								text = $.trim( text );
+								text = text.replace( /<br.*?>/g, "\n" ); /* @TODO <br class="hidden-xs">などで困る */
+
+								textarea = _this.systemTemplates.find( '.hrcss-editInPlace-textarea' ).clone();
+								textarea.width( $target.width() ).height( $target.height() );
+								textarea.val( text );
+
+								/* 表示 */
+								$target.text( '' );
+								$target.append( textarea );
+								textarea.focus();
+
+							}
 
 						}
 
+
 						/* EditInPlace : Attributes */
 
-						if( attribute ){}
+						if( attribute ) {
 
-						ins.remove();
+							table = _this.systemTemplates.find( '.hrcss-editInPlace-attrTable' ).clone();
+							tr = table.find( 'tr' ).clone();
+							table.remove( 'table' ).empty();
 
-					} )
+							for( var _key in attributes ){
 
+								var _tr = $( $( tr ).clone() );
+								_tr.find( 'label' ).text( attributes[ _key ] );
+
+								var _val = $target.attr( attributes[ _key ] );
+								/* @TODO class属性のとき、hrcssまでさわれてしまう */
+
+								_tr.find( 'input' ).attr( 'name', attributes[ _key ] ).val( _val || '' );
+								table.append( _tr );
+
+							}
+
+							ins.prepend( table );
+
+						}
+
+
+						/* 表示 */
+						$target.after( ins );
+
+
+						/* OKボタンがクリックされたとき または その他の要素がクリックされたとき */
+
+						$( '.hrcss-editInPlace-ok', ins )
+							.on( 'click', function( event ){
+
+								var _text;
+
+								/* EditInPlace : TextArea */
+
+								if( editable ){
+
+									_text = textarea.val();
+									_text = $.trim( _text );
+									_text = _text.replace( /\r\n/g, "<br>" ).replace( /(\r|\n)/g, "<br>" );
+									$target.html( _text );
+
+								}
+
+								/* EditInPlace : Attributes */
+
+								if( attribute ){
+
+									table.find( 'tr' ).each( function(){
+
+										var $this = $( this ).find( 'input' );
+										$target.attr( $this.attr( 'name' ), ( $this.val() || $this.text() ) );
+
+									} );
+
+								}
+
+								ins.remove();
+
+
+							} )
+
+
+						/* キャンセルボタンがクリックされたとき */
+
+						$( '.hrcss-editInPlace-cansel', ins )
+							.on( 'click', function( event ){
+
+								/* EditInPlace : TextArea */
+
+								if( editable ){
+
+									$target.html( originalText );
+
+								}
+
+								/* EditInPlace : Attributes */
+
+								if( attribute ){}
+
+								ins.remove();
+
+							} )
+
+
+						} /* / if( !_this.status() ) */
+
+					} /* / if( _this.dblclick ) */
 
 
 			} )
@@ -521,9 +560,13 @@ var hrcssWysiwygEditor = {
 
 					} else if( event.keyCode === 46 || event.keyCode === 8 ){ /* Del || BackSpace */
 
-						_this.dialog( '削除してもよろしいですか？', function(){
-							_this.pointer.remove();
-						} );
+						if( $( _this.pointer ).hasClass( '-block' ) || $( _this.pointer ).hasClass( '-element' ) ) {
+
+							_this.dialog( '削除してもよろしいですか？', function(){
+								_this.pointer.remove();
+							} );
+
+						}
 						if( event.keyCode === 8 ){ return false; } /* Disable 'Page Back' on the 'BackSpace' key */
 
 					} else if( _ctrlKey && event.keyCode === 90 ){ /* CTRL+Z */
@@ -544,7 +587,6 @@ var hrcssWysiwygEditor = {
 
 }
 
-document.hrcssWysiwygEditor = hrcssWysiwygEditor;
 
 $( window ).load( function(){
 
