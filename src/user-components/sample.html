@@ -27,7 +27,29 @@
 <style>
 
 section {
-  margin-bottom: 80px;
+  margin-bottom: 5.0em;
+}
+
+.hrcss-tab-title {
+  border-bottom: 1px solid #333;
+  margin-bottom: .5em;
+  padding-bottom: .2em;
+}
+
+.hrcss-component-title {
+  border-bottom: 1px solid #333;
+  margin-bottom: .5em;
+  padding-bottom: .2em;
+}
+
+.hrcss-component-image {
+  display: none;
+}
+
+.hrcss-component-description {
+  background: #eee;
+  margin-bottom: 1.0em;
+  padding: .5em;
 }
 
 </style>
@@ -39,9 +61,45 @@ section {
 
   <!-- Layout -->
   <div class="container">
+
+  <!-- Site Header -->
+  <div class="masthead">
+    <nav>
+      <ul class="nav nav-justified">
+        <li><a href="#">ホーム</a></li>
+        <li><a href="#">調査報告</a></li>
+        <li><a href="#">活動記録</a></li>
+        <li><a href="#">入会案内</a></li>
+        <li><a href="#">お問い合わせ</a></li>
+      </ul>
+    </nav>
+  </div>
+
+
+  <!-- Layout -->
+  <nav>
+    <ol class="breadcrumb">
+      <li><a href="#">ホーム</a></li>
+      <li><a href="#">カテゴリ</a></li>
+      <li class="active">記事タイトル</li>
+    </ol>
+  </nav>
+
   <div class="row">
-  <div class="col-sm-3"></div>
-  <div class="col-sm-8 col-sm-offset-1">
+  <div class="col-sm-3 sidebar">
+    
+      <nav>
+        <p class="lead nav-title"><i class="fa fa-folder-o"></i> カテゴリ</p>
+        <div class="list-group">
+          <a href="#" class="list-group-item">ナビゲーション</a>
+          <a href="#" class="list-group-item">ナビゲーション</a>
+          <a href="#" class="list-group-item">ナビゲーション</a>
+
+        </div><!-- / .list-group -->
+      </nav>
+
+  </div>
+  <div class="col-sm-8 col-sm-offset-1 main">
 
 <h1>WYSIWYG HTML Editor for Human Readable CSS: User Components</h1>
 
@@ -49,13 +107,13 @@ section {
 
 <section class="( -tab )">
 
-  <h2 class="( -tab-title )">基本</h2>
+  <h2 class="hrcss-tab-title ( -tab-title )">基本</h2>
 
 
   <section class="( -component )">
 
-    <h3 class="( -component-title )">h2 見出し</h3>
-    <img class="( -component-image )" src="http://placehold.jp/60x40.png">
+    <h3 class="hrcss-component-title ( -component-title )">h2 見出し</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
 
     <h2 class="text-primary ( -block )"><i class="fa fa-star ( -attribute:class )"></i><span class="( -editable )">見出しテキスト</span></h2>
 
@@ -64,8 +122,8 @@ section {
 
   <section class="( -component )">
 
-    <h3 class="( -component-title )">h3 見出し</h3>
-    <img class="( -component-image )" src="http://placehold.jp/60x40.png">
+    <h3 class="hrcss-component-title ( -component-title )">h3 見出し</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
 
     <h3 class="( -block -editable )">見出しテキスト</h3>
 
@@ -74,8 +132,8 @@ section {
 
   <section class="( -component )">
 
-    <h3 class="( -component-title )">テキスト</h3>
-    <img class="( -component-image )" src="http://placehold.jp/60x40.png">
+    <h3 class="hrcss-component-title ( -component-title )">テキスト</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
 
     <p class="( -element -editable )">テキストテキストテキストテキストテキストテキストテキスト。</p>
 
@@ -84,9 +142,9 @@ section {
 
   <section class="( -component )">
 
-    <h3 class="( -component-title )">右テキスト左画像</h3>
-    <img class="( -component-image )" src="http://placehold.jp/60x40.png">
-    <p class="( -component-description )">画像を横に並べるときは、「右テキスト左画像」を基本にします。</p>
+    <h3 class="hrcss-component-title ( -component-title )">右テキスト左画像</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
+    <p class="hrcss-component-description ( -component-description )">画像を横に並べるときは、「右テキスト左画像」を基本にします。</p>
 
     <div class="row ( -block )">
       <div class="col-sm-8">
@@ -102,8 +160,8 @@ section {
 
   <section class="( -component )">
 
-    <h3 class="( -component-title )">右画像左テキスト</h3>
-    <img class="( -component-image )" src="http://placehold.jp/60x40.png">
+    <h3 class="hrcss-component-title ( -component-title )">右画像左テキスト</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
 
     <div class="row ( -block )">
       <div class="col-sm-4">
@@ -122,13 +180,13 @@ section {
 
 <section class="( -tab )">
 
-  <h2 class="( -tab-title )">訴求</h2>
+  <h2 class="hrcss-tab-title ( -tab-title )">訴求</h2>
 
 
   <section class="( -component )">
 
-    <h3 class="( -component-title )">テキストバナー</h3>
-    <img class="( -component-image )" src="http://placehold.jp/60x40.png">
+    <h3 class="hrcss-component-title ( -component-title )">テキストバナー</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
 
     <div class="panel panel-default ( -block )">
       <div class="panel-body">
@@ -143,8 +201,8 @@ section {
 
   <section class="( -component )">
 
-    <h3 class="( -component-title )">お知らせリスト</h3>
-    <img class="( -component-image )" src="http://placehold.jp/60x40.png">
+    <h3 class="hrcss-component-title ( -component-title )">お知らせリスト</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
 
     <div class="well ( -block )">
       <p class="lead">この記事に関係するお知らせ</p>
@@ -159,8 +217,8 @@ section {
 
   <section class="( -component )">
 
-    <h3 class="( -component-title )">コラム</h3>
-    <img class="( -component-image )" src="http://placehold.jp/60x40.png">
+    <h3 class="hrcss-component-title ( -component-title )">コラム</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
 
     <div class="panel panel-default ( -block )">
       <div class="panel-body">
@@ -189,12 +247,12 @@ section {
 
 <section class="( -tab )">
 
-  <h2 class="( -tab-title )">リスト</h2>
+  <h2 class="hrcss-tab-title ( -tab-title )">リスト</h2>
 
   <section class="( -component )">
 
-    <h3 class="( -component-title )">リスト行</h3>
-    <img class="( -component-image )" src="http://placehold.jp/60x40.png">
+    <h3 class="hrcss-component-title ( -component-title )">リスト行</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
 
     <li class="well-li ( -element -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">テキストテキストテキストテキストテキストテキストテキスト。</a></li>
 
@@ -210,6 +268,12 @@ section {
 
   </div>
   </div>
+
+  <!-- Site Footer -->
+  <footer class="footer">
+    <p class="text-center">&copy; 2016 道玄坂大学 CMS研究会</p>
+  </footer>
+
   </div><!-- / Layout -->
 
     </body>
