@@ -22,7 +22,7 @@
 .hrcss-picker {
 	background: #fefefe;
 	border-bottom: 1px solid #ccc;
-	box-shadow: 3px 3px 3px #999;
+	box-shadow: 0 3px 3px #999;
 	display: block;
 	line-height: 1.5em;
 	font-size: 16px;
@@ -51,6 +51,7 @@
 .hrcss-picker .hrcss-picker-control button {
 	width: 120px;
 }
+
 .hrcss-picker .hrcss-picker-tab {
 	float: left;
 }
@@ -89,12 +90,16 @@
 }
 
 
-/* jQuery Sortable Placeholder */
+/* jQuery Sortable Placeholder & Helper */
 
 .hrcss-sortable-placeholder {
 	background: #eef;
 }
-
+.hrcss-picker .hrcss-sortable-placeholder {
+	background: transparent;
+	display: inline-block;
+	height: 1px !important;
+}
 
 /* focus & hover */
 

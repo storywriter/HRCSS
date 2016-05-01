@@ -256,34 +256,28 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 							items = '.-block, .-element';
 						}
 
-						var sortableOptionPicker = {
-//forceHelperSize: true,
-//			forcePlaceholderSize: true,
-//			placeholder: "hrcss-sortable-placeholder",
-							remove: function( event, ui ){
-						//		$( '.hrcss-picker-tab-content' ).sortable( "cancel" );
+						sortableOption = $.extend( {}, sortableOption, {
+							items: componentSelector,
+							connectWith: $( '.-wysiwyg' ),
+							forceHelperSize: true,
+							forcePlaceholderSize: true,
+							placeholder: 'hrcss-sortable-placeholder',
+							start: function( event, ui ){
+								$( '.hrcss-sortable-placeholder' ).width( ui.item.outerWidth( true ) );
 							},
 							stop: function( event, ui ){
 								$( '.hrcss-picker-tab-content' ).sortable( "destroy" );
 							}
-						}
-
-						sortableOption = $.extend( {}, sortableOption, sortableOptionPicker, {
-							items: componentSelector,
-							connectWith: $( '.-wysiwyg' )
 						} );
 
+						/* Picker の sortable を有効にする */
 						$( '.hrcss-picker-tab-content' ).sortable( sortableOption );
 
 
-						sortableOptionWysiwyg = {
-//			forceHelperSize: true,
-//			forcePlaceholderSize: true,
-//			placeholder: "hrcss-sortable-placeholder",
-						}
-
-						sortableOption = $.extend( {}, sortableOption, sortableOptionWysiwyg, {
+						sortableOption = $.extend( {}, sortableOption, {
 							items: items,
+							forceHelperSize: true,
+							forcePlaceholderSize: true,
 							stop: function( event, ui ){
 								$( '.-wysiwyg' ).sortable( "destroy" );
 							},
@@ -353,8 +347,9 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 							}
 						} );
-						$( '.-wysiwyg' ).sortable( sortableOption );
 
+						/* 本文 の sortable を有効にする */
+						$( '.-wysiwyg' ).sortable( sortableOption );
 
 
 					} );
@@ -441,7 +436,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 				var block = $target.hasClass( '-block' ),
 						element = $target.hasClass( '-element' );
 
-				var sortableOptionWysiwyg = {
+				var sortableOption2 = {
 
 					stop: function( event, ui ){ /* 削除 */
 
@@ -465,17 +460,19 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 				if( block ) {
 
-					sortableOption = $.extend( {}, sortableOption, sortableOptionWysiwyg, {
+					sortableOption = $.extend( {}, sortableOption, sortableOption2, {
 						items: "> .-block",
 						connectWith: $( '.-wysiwyg' )
 					} );
+					/* 本文 の sortable を有効にする */
 					$( '.-wysiwyg' ).sortable( sortableOption );
 
 				} else if( element ) {
 
-					sortableOption = $.extend( {}, sortableOption, sortableOptionWysiwyg, {
+					sortableOption = $.extend( {}, sortableOption, sortableOption2, {
 						items: ".-element, .-block"
 					} );
+					/* 本文 の sortable を有効にする */
 					$( '.-wysiwyg' ).sortable( sortableOption );
 
 				}
