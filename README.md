@@ -291,6 +291,8 @@ https://www.w3.org/TR/html/dom.html#classes
  
 - この WYSIWYG HTML Editor のためのコンポーネント集は、そのままふつうのウェブページとして表示することができる。つまり、コンポーネントの管理を別資料にする必要がない。
 
+- コンポーネント集のデモは http://storywriter.jp/hrcss/user-components/sample.html で公開している。
+
 
 ------
 この文書は日本語で書かれているが、英語や他言語に翻訳などして、広めていただけると嬉しい。
