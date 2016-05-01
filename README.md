@@ -9,9 +9,8 @@ Web Components 技術にも対応している。
 最終更新：2016年4月25日 Yoshiki HAYAMA @storywriter
 
 本プロジェクトはオープンソースプロジェクトである。
-プロジェクトの代表は
-Yoshiki HAYAMA @storywriter http://storywriter.jp/
-である。
+プロジェクトの代表は Yoshiki HAYAMA @storywriter http://storywriter.jp/ である。
+WYSIWYG HTML Editor のデモは http://storywriter.jp/hrcss/ で公開している。
 
 
 ## 原則
@@ -121,6 +120,7 @@ Yoshiki HAYAMA @storywriter http://storywriter.jp/
 
 - コードを読んだり、複雑なスタイルガイドのルールを理解しなくても、その WYSIWYG HTML Editor を使っていれば、自然とスタイルガイドが守れるようにする。
 
+- WYSIWYG HTML Editor のデモは http://storywriter.jp/hrcss/ で公開している。
 
 
 ## 解法（具体的なコード）
@@ -284,8 +284,11 @@ https://www.w3.org/TR/html/dom.html#classes
 ### 実装対象のイメージ
 
 - この WYSIWYG HTML Editor は、大規模なウェブサイトの運用を念頭においており、何らかのCMSに組み込んで利用することを想定している。
+
  - ただし、CMSに組み込むさい、CMSのコンテンツ管理画面に埋め込むことは「想定していない」。埋め込む先は、コンテンツ管理画面から呼び出される「プレビュー画面」を想定している。
+
  - 人間は、目に見えているものと、じっさいに仕上がるものに差があると、難しく感じる。せっかく WYSIWYG にしたのに、コンテンツ管理画面に埋め込むと、たいていは管理画面の諸々の情報が邪魔をして、完全に見たままを再現することはできない。そこで、見た目と最終形が同じになる「プレビュー画面」に、この WYSIWYG HTML Editor を埋め込むとよい。
+ 
 - この WYSIWYG HTML Editor のためのコンポーネント集は、そのままふつうのウェブページとして表示することができる。つまり、コンポーネントの管理を別資料にする必要がない。
 
 
