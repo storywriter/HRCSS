@@ -177,9 +177,6 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 		var sortableOption = {
 			opacity: 0.5,
-//			forceHelperSize: true,
-//			forcePlaceholderSize: true,
-//			placeholder: "hrcss-sortable-placeholder",
 			cursor: 'move',
 			zIndex: 10060
 		}
@@ -358,6 +355,38 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 			} );
 
 		} );
+
+
+		/* 保存ボタンがクリックされたとき */
+
+		picker.find( '.hrcss-picker-control-save' )
+			.on( 'click', function( event ){
+
+				/* 不要なセレクタの削除 */
+				$( '.hrcss-hover-bold' ).removeClass( '.hrcss-hover-bold' );
+				$( '.hrcss-hover' ).removeClass( '.hrcss-hover' );
+
+				/* 編集中なら終了する */
+				if( _this.status() ) {
+					$( '.hrcss-editInPlace-dialog' ).find( '.hrcss-editInPlace-ok' ).trigger( 'click' );
+				}
+
+				/* sortable を破棄する */
+				if( $( '.-wysiwyg' ).hasClass( 'ui-sortable' ) ) {
+					$( '.-wysiwyg' ).sortable( "destroy" );
+				}
+
+				/* HTML を表示する */
+				$( '.-wysiwyg' ).each( function(){
+
+					var _text = $( this ).html();
+					_text = $( '<textarea rows="20" cols="100">' ).html( _text );
+					_this.alert( _text, function(){} );
+
+				} );
+
+			} );
+
 
 		/* ページ上部に Picker ぶんの余白をとる */
 		$( 'body' ).css( { 'padding-top' : picker.outerHeight( true ) } );
