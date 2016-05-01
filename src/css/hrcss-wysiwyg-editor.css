@@ -137,9 +137,9 @@
 	font-size: 16px;
 	font-weight: normal;
 	letter-spacing: 0;
-	text-decoration: none;
 	padding: 10px;
 	position: absolute;
+	text-decoration: none;
 	z-index: 2030;
 }
 
@@ -154,7 +154,7 @@
 }
 
 .hrcss-editInPlace-dialog .hrcss-editInPlace-control {
-	text-align: right;
+	text-align: left; /* 画面外にはみ出しても、操作ボタンが左にあるように */
 }
 
 .hrcss-editInPlace-dialog .hrcss-editInPlace-attrTable {
@@ -163,6 +163,7 @@
 .hrcss-editInPlace-dialog .hrcss-editInPlace-attrTable input {
 	background: #fff;
 	margin-left: 10px;
+	min-width: 360px;
 	padding: 3px;
 }
 

@@ -456,6 +456,9 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 								var _val = $target.attr( attributes[ _key ] );
 								/* @TODO class属性のとき、hrcssまでさわれてしまう */
 
+								_val = _val.replace( 'hrcss-focus', '' ); /* フォーカスの CSS を外す */
+								_val = $.trim( _val );
+
 								_tr.find( 'input' ).attr( 'name', attributes[ _key ] ).val( _val || '' );
 								table.append( _tr );
 
