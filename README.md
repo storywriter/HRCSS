@@ -6,7 +6,7 @@ Human Readable CSS Style Guide with WYSIWYG HTML Editor, apply to Web Components
 そのまま使える WYSIWYG HTML Editor を含む。
 Web Components 技術にも対応している。
 
-最終更新：2016年5月1日 Yoshiki HAYAMA @storywriter
+最終更新：2016年5月2日 Yoshiki HAYAMA @storywriter
 
 本プロジェクトはオープンソースプロジェクトである。
 プロジェクトの代表は Yoshiki HAYAMA @storywriter http://storywriter.jp/ である。
@@ -294,26 +294,20 @@ https://www.w3.org/TR/html/dom.html#classes
 - コンポーネント集のデモは http://storywriter.jp/hrcss/user-components/sample.html で公開している。
 
 
+## 歴史
+
+- 本プロジェクトは、もともとは2009年ごろ、コンポーネントベースの WYSIWYG HTML Editor の構想からはじまった。
+
+- 2012年ごろに、 WYSIWYG HTML Editor の最初のプロトタイプが登場した。このプロトタイプは、一部のユーザーに公開された。
+
+- 2014年〜2015年、羽山の長年の運用経験から、大規模ウェブサイトでの HTML と CSS の運用における課題をまとめ、そのなかから、Human Readable CSS のベースとなる記述方法を考案した。
+
+- 2016年、日本のフロントエンドエンジニアが集まるイベント「CodeGrid四周年記念パーティー」に、羽山が登壇するのを機に、Human Readable CSS にあわせて、WYSIWYG HTML Editor を再実装。5月1日に公開した。
+
+
 ------
-この文書は日本語で書かれているが、英語や他言語に翻訳などして、広めていただけると嬉しい。
+この文書は日本語で書かれているが、英語や他言語に翻訳などして、広めていただけると嬉しいです。
 
 ------
-以下は筆者自身のためのメモであり、これから検討すべき事項である。
-
-自明のコンポーネントをどうするか：
-
-```
-<p></p>
-<em></em>
-<ol>...</ol>
-```
-
-気になること：
-
-```
-<table>
-```
-
-
 
 
