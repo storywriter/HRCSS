@@ -6,7 +6,7 @@ Human Readable CSS Style Guide with WYSIWYG HTML Editor, apply to Web Components
 そのまま使える WYSIWYG HTML Editor を含む。
 Web Components 技術にも対応している。
 
-最終更新：2016年5月2日 Yoshiki HAYAMA @storywriter
+最終更新：2016年5月3日 Yoshiki HAYAMA @storywriter
 
 本プロジェクトはオープンソースプロジェクトである。
 プロジェクトの代表は Yoshiki HAYAMA @storywriter http://storywriter.jp/ である。
@@ -138,7 +138,7 @@ https://www.w3.org/TR/css3-selectors/#lex
 
 #### HTMLの視点
 
-- いっぽうで、HTML仕様で、class属性の値として含める文字列には制約はない。つまり、「-」から始まる文字列が含まれていても、HTMLとしては適合になる。（なお、 XHTML1.0 Transitional では &amp; だけは不適合だったが、HTML5では、それも適合となった）
+- いっぽうで、HTML仕様で、class属性の値として含める文字列には制約はない。つまり、「-」から始まる文字列が含まれていても、HTMLとしては（驚くべきことに！）「適合」になる。（なお、 XHTML1.0 Transitional では &amp; だけは不適合だったが、HTML5では、それも適合となった）
 
 https://www.w3.org/TR/html/dom.html#classes
 
@@ -169,7 +169,7 @@ https://www.w3.org/TR/html/dom.html#classes
 
   <div class="textAndImage ( -block )">
 
-    <div class="textAndImage-left ( -include:element )">
+    <div class="textAndImage-left ( -include:-element )">
 
       <p class="( -element -editable )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
@@ -221,7 +221,7 @@ https://www.w3.org/TR/html/dom.html#classes
 ```html
 
 <div class="textAndImage ( -block )">
-  <div class="textAndImage-left ( -include:element )">
+  <div class="textAndImage-left ( -include:-element )">
   </div>
   <div class="textAndImage-right ( -include:imgCaption )">
     <p><img src="..." alt="..." class="( -editable -attribute:alt )"></p>
