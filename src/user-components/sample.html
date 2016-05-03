@@ -142,10 +142,30 @@ section {
 
   <section class="( -component )">
 
+    <h3 class="hrcss-component-title ( -component-title )">リンク</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
+
+    <p class="( -element )">&raquo; <a href="#" class="( -editable -attribute:href )">テキスト</a></p>
+
+  </section>
+
+
+  <section class="( -component )">
+
     <h3 class="hrcss-component-title ( -component-title )">画像大</h3>
     <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
 
     <p class="( -block )"><img src="http://placehold.jp/750x230.png" alt="" class="img-responsive ( -attribute:src )"></p>
+
+  </section>
+
+
+  <section class="( -component )">
+
+    <h3 class="hrcss-component-title ( -component-title )">画像小</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
+
+    <img src="http://placehold.jp/60x60.png" alt="" class="img-responsive ( -element -attribute:src )">
 
   </section>
 
@@ -216,10 +236,29 @@ section {
 
     <div class="well ( -block )">
       <p class="lead">この記事に関係するお知らせ</p>
-      <ul class="well-ul ( -include:well-li )">
-        <li class="well-li ( -element )"><a href="#" class="( -editable -attribute:href )">テキストテキストテキストテキストテキストテキストテキスト。</a></li>
-    </ul>
+      <ul class="well-ul ( -list -include:well-li )">
+        <li class="well-li ( -listitem )"><a href="#" class="( -editable -attribute:href )">テキストテキストテキストテキストテキストテキストテキスト。</a></li>
+        <li class="well-li ( -listitem )"><a href="#" class="( -editable -attribute:href )">テキストテキストテキストテキストテキストテキストテキスト。</a></li>
+      </ul>
     </div>
+
+  </section>
+
+
+  <section class="( -component )">
+
+    <h3 class="hrcss-component-title ( -component-title )">備考リスト</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
+
+        <div class="panel panel-default ( -block )">
+          <div class="panel-body">
+            <p class="lead">備考</p>
+            <ul class="( -list )">
+              <li class="( -listitem )">テキストテキストテキストテキストテキストテキストテキスト。</li>
+              <li class="( -listitem )">テキストテキストテキストテキストテキストテキストテキスト。</li>
+            </ul>
+          </div>
+        </div>
 
   </section>
 
@@ -264,7 +303,83 @@ section {
     <h3 class="hrcss-component-title ( -component-title )">リスト行</h3>
     <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
 
-    <li class="well-li ( -element -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">テキストテキストテキストテキストテキストテキストテキスト。</a></li>
+    <li class="( -listitem )">テキストテキストテキストテキストテキストテキストテキスト。</li>
+
+  </section>
+
+  <section class="( -component )">
+
+    <h3 class="hrcss-component-title ( -component-title )">リンクリスト行</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
+
+    <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">テキストテキストテキストテキストテキストテキストテキスト。</a></li>
+
+  </section>
+
+
+</section><!-- / .-tab -->
+
+
+<section class="( -tab )">
+
+  <h2 class="hrcss-tab-title ( -tab-title )">表</h2>
+
+  <section class="( -component )">
+
+    <h3 class="hrcss-component-title ( -component-title )">行</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
+
+    <table class="table ( -ignore )">
+      <tr class="( -tr )">
+        <td class="( -td )"><span class="( -editable )">テキスト</span></td>
+        <td class="( -td )"><span class="( -editable )">テキスト</span></td>
+        <td class="( -td )"><span class="( -editable )">テキスト</span></td>
+      </tr>
+    </table>
+
+
+  </section>
+
+
+  <section class="( -component )">
+
+    <h3 class="hrcss-component-title ( -component-title )">見出し行</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
+
+    <table class="table ( -ignore )">
+      <tr class="( -tr )">
+        <th class="( -td )"><span class="( -editable )">テキスト</span></th>
+        <th class="( -td )"><span class="( -editable )">テキスト</span></th>
+        <th class="( -td )"><span class="( -editable )">テキスト</span></th>
+        <th class="( -td )"><span class="( -editable )">テキスト</span></th>
+        <th class="( -td )"><span class="( -editable )">テキスト</span></th>
+      </tr>
+    </table>
+
+
+  </section>
+
+
+  <section class="( -component )">
+
+    <h3 class="hrcss-component-title ( -component-title )">列</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
+
+    <table class="table ( -ignore )">
+      <td class="( -td )"><span class="( -editable )">テキスト</span></td>
+    </table>
+
+  </section>
+
+
+  <section class="( -component )">
+
+    <h3 class="hrcss-component-title ( -component-title )">見出し列</h3>
+    <img class="hrcss-component-image ( -component-image )" src="http://placehold.jp/60x40.png">
+
+    <table class="table ( -ignore )">
+      <th class="( -td )"><span class="( -editable )">テキスト</span></th>
+    </table>
 
   </section>
 

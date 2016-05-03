@@ -173,9 +173,9 @@ https://www.w3.org/TR/html/dom.html#classes
 
       <p class="( -element -editable )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
-      <ol class="listitem-ol ( -element -include:listitem )">
-        <li class="listitem ( -editable -parent:listitem-ol )">labore et dolore magna aliqua.</li>
-        <li class="listitem ( -editable -parent:listitem-ol )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
+      <ol class="listitem-ol ( -element -list -include:listitem-li )">
+        <li class="listitem-li ( -listitem -editable -parent:listitem-ol )">labore et dolore magna aliqua.</li>
+        <li class="listitem-li ( -listitem -editable -parent:listitem-ol )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
       </ol>
 
       <p class="linkArrow ( -element )"><i class="fa fa-circle ( -attribute:class )"></i><a href="#" class="( -editable )">aliquip ex ea commodo consequat.</a></p>
@@ -230,8 +230,8 @@ https://www.w3.org/TR/html/dom.html#classes
 
 <p class="( -element -editable )"></p>
 
-<ol class="listitem-ol ( -element -include:listitem )">
-  <li class="listitem ( -editable -parent:listitem-ol )"></li>
+<ol class="listitem-ol ( -element -list -include:listitem-li )">
+  <li class="listitem-li ( -listitem -editable -parent:listitem-ol )"></li>
 </ol>
 
 <p class="linkArrow ( -element )"><i class="fa fa-circle ( -attribute:class )"></i><a href="#" class="( -editable )"></a></p>

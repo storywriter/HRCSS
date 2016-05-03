@@ -233,14 +233,48 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 				component.find( '.-component-title' ).remove();
 				component.find( '.-component-image' ).remove();
 				component.find( '.-component-description' ).remove();
+
 				component = component.children();
 
 				/* コンポーネントの種類を確認する */
 				var block = component.eq( 0 ).hasClass( '-block' ),
 						element = component.eq( 0 ).hasClass( '-element' );
 
+        /* テーブルは、tbody、tr、td だけだと DOM を構成しないため、個別に対応する。
+            ・tr や td　だけ単体であると、DOMから消える。
+            ・td だけ書いても、ブラウザで table > tbody > tr > td まで補完される。
+        */
+        var ignore = component.eq( 0 ).hasClass( '-ignore' );
+        if( ignore ) {
+
+          /* tableの要素を探す（条件文は、親から順に分岐する） */
+          if( component.find( '.-tbody' ).length ) {
+            component = component.find( '.-tbody' );
+          } else if( component.find( '.-tr' ).length ) {
+            component = component.find( '.-tr' );
+          } else if( component.find( '.-td' ).length ) {
+            component = component.find( '.-td' );
+          } else {
+            /* 1階層スキップする */
+            component = component.find( ':first' );
+          }
+
+        }
+
 				/* コンポーネントの class属性を保持する */
 				var classes = component.eq( 0 ).attr( 'class' );
+
+        /* テーブル（ -table, -tgroup, -tr, -td ）は、ほかの要素と一線を画しているため、個別に対応する */
+        var table = ( classes.indexOf( '-table' ) > -1 ) ? true : false,
+            tbody = ( classes.indexOf( '-tbody' ) > -1 ) ? true : false, /* tbody, thead, tfoot */
+            tr = ( classes.indexOf( '-tr' ) > -1 ) ? true : false,
+            td = ( classes.indexOf( '-td' ) > -1 ) ? true : false; /* td, th */
+
+        /* リスト（ -list, -listitem ）は、個別に対応する */
+        var list = ( classes.indexOf( '-list' ) > -1 ) ? true : false, /* ul, ol */
+            listitem = ( classes.indexOf( '-listitem' ) > -1 ) ? true : false; /* li */
+
+
 
 				/* コンポーネントを移動して、追加できるようにする */
 				componentSelector
@@ -251,7 +285,15 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 							items = '> .-block';
 						} else if( element ) {
 							items = '.-block, .-element';
-						}
+						} else if( tbody ) {
+              items = '.-tbody';
+            } else if( tr ) {
+              items = '.-tr';
+            } else if( td ) {
+              items = '.-td';
+            } else if( listitem ) {
+              items = '.-listitem';
+            }
 
 						sortableOption = $.extend( {}, sortableOption, {
 							items: componentSelector,
@@ -280,20 +322,43 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 							},
 							receive: function( event, ui ){ /* コンポーネントがドロップされたとき */
 
-								var include = ( ui.item.parent().attr( 'class' ).indexOf( '-include' ) > -1 ) ? true : false;
+								var include;
 								var includes;
+
+                var uiParentClass;
+
+                /* tableの要素を探す（条件文は、親から順に分岐すること） */
+                if( tbody ) {
+                  uiParentClass = ui.item.closest( '.-table' ).attr( 'class' );
+                } else if( tr ) {
+
+                  if( ui.item.closest( '.-tbody' ).length ) {
+                    uiParentClass = ui.item.closest( '.-tbody' ).attr( 'class' );
+                  } else {
+                    uiParentClass = ui.item.closest( '.-table' ).attr( 'class' );
+                  }
+
+                } else if( td ) {
+                  uiParentClass = ui.item.closest( '.-tr' ).attr( 'class' );
+                } else {
+                  /* table以外 */
+                  uiParentClass = ui.item.parent().attr( 'class' );
+                }
+
+                include = ( uiParentClass.indexOf( '-include' ) > -1 ) ? true : false;
 
 								var parent = ( classes.indexOf( '-parent' ) > -1 ) ? true : false;
 								var parents;
 
-								var permission = true; /* ここに追加していいか */
-								if( include || parent ) {
-									permission = false; /* 親要素に -include: があるか、子要素に -parent: があるときは、追加に制約がある */
-								}
+                var permission = true; /* ここに追加していいか */
+//              if( include || parent || table || tbody || tr || td ) {
+                if( include || parent ) {
+                  permission = false; /* 親要素に -include: があるか、子要素に -parent: があるときは、追加に制約がある */
+                }
 
 								/* -include:の対象リストをつくる */
 								if( include ) {
-									includes = ui.item.parent().attr( 'class' ).split( ' ' );
+									includes = uiParentClass.split( ' ' );
 									if( includes.length > 1 ) {
 
 										includes = $.grep( includes, function( elem, index ){
@@ -303,6 +368,17 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 											return elem.replace( '-include:', '' );
 										} );
 									}
+
+									/* テーブル（ -table, -tbody, -tr, -td ）は、個別に対応する */
+									/* if( table ) { 
+										includes.push( '-tbody', '-tr' );
+									}
+									if( tbody ) { 
+										includes.push( '-tr' );
+									}
+									if( tr ) { 
+										includes.push( '-td' );
+									} */
 
 									$( includes ).each( function(){
 										if( classes.indexOf( this ) > -1 ) {
@@ -325,16 +401,81 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 										} );
 									}
 
+                  /* テーブル（ -table, -tbody, -tr, -td ）は、個別に対応する */
+                  /* if( tbody ) { 
+                    parents.push( '-table' );
+                  }
+                  if( tr ) { 
+                    parents.push( '-table', '-tbody' );
+                  }
+                  if( td ) { 
+                    parents.push( '-tr' );
+                  } */
+
 									$( parents ).each( function(){
-										if( ui.item.parent().attr( 'class' ).indexOf( this ) > -1 ) {
+										if( uiParentClass.indexOf( this ) > -1 ) {
 											permission = true; /* ここに追加していい */
 										}
 									});
 
 								}
 
-								if( permission ) {
-									ui.item.after( component.clone() );
+								if( permission ) { /* 制約はなく、追加できるなら */
+
+                  /* コンポーネントを追加する */
+
+                if( td ) { /* セルの追加なら、ほかの行にも追加する */
+
+                  /* 自分は何番目のセルか調べる */
+                  var _index = ui.item.index();
+                  ui.item.closest( '.-table' ).find( '.-tr' ).each( function(){
+
+                    var _td = $( this ).children();
+                    /* コンポーネントの HTML を追加 */
+                    _td.eq( _index ).before( component.clone() );
+
+                  } );
+
+                } else if( tr ) {
+
+                  /* 追加先のセルの数を数える */
+                  var _tds = ui.item.closest( '.-table' ).find( '.-tr:first' ).children().length;
+
+                  /* 自分自身のセルの数を数える */
+                  var _self = component.children().length;
+
+                  var _difference = _tds - _self;
+
+
+                  var _tmp = component.clone();
+                  var _abs = Math.abs( _tds - _self );
+
+                  if( _tds - _self > 0 ) { /* tdが足りていなければ */
+
+                    for( var i = 0; i < _abs; i++ ) {
+                      _tmp.append( _tmp.find( '.-td:last' ).clone() ); /* tdを追加 */
+                    }
+
+                  } else if( _tds - _self < 0 ) { /* tdが多すぎたら */
+
+                    for( var i = 0; i < _abs; i++ ) {
+                      _tmp.find( '.-td:last' ).remove(); /* tdを削除 */
+                    }
+
+                  }
+
+                  /* コンポーネントの HTML を追加 */
+                  ui.item.after( _tmp );
+
+                } else {
+
+                  /* コンポーネントの HTML を追加 */
+                  ui.item.after( component.clone() );
+
+                }
+
+
+
 								} else {
 									_this.alert( 'そのコンポーネントは、ここに追加できません。', function(){} );
 								}
