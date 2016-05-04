@@ -1,6 +1,6 @@
 /**
  * WYSIWYG HTML Editor for Human Readable CSS
- * last Update: 2016/5/1 @storywriter
+ * last Update: 2016/5/4 @storywriter
  *
  * Require libraries:
  * jquery v1.10.2
@@ -13,75 +13,6 @@
  *
  */
 
-
-/*
-ToDo:
-
-image Upload function
-
-editable:
-bricks-editable
-bricks-editable-text
-bricks-editable-image
-bricks-editable-table
-bricks-editable-table-tr
-bricks-editable-table-td
-bricks-editable-list
-bricks-editable-dl
-bricks-editable-input
-bricks-editable-html : well-formedかどうかチェックする
-bricks-editable-cms
-
-要素を見て、自動判別させるか、自分で指定させるか。両方？
-
-
-命名規則 _getMain _getBrickkiln ゲッターなのか。
-
-jQueryをラップして、他のjQueryバージョンと競合しないようにする。
-	<script>document.write('<script src="js/vendor/jquery-1.10.2.js"><\/script><script src="js/vendor/jquery-ui.js"><\/script>')</script>
-
-baseURLの実装
-
-サンプルデータの作成
-
-ドキュメントの作成:
-	前提・制約条件:
-		#bricks-mainの設置、1箇所
-		#bricks-main内では<ins>のunderlineはnoneになる
-		user/bricks.htmlの記述
-		body margin-top の上書き
-		接頭詞 bricks- は予約語
-		editableな要素は限られる divはeditableではないので注意(テキストはpで)
-		editableな要素で、初期テキストは「>>」から始めると、入力時に消える。指示を書くときに便利。(メール返信とかあるが、これでいいのか？)
-
-
-copy cut paste エフェクト、いれる？　いらない気もする。
-　cut　fadeOut
-　paste　fadeIn
-
-アクセシビリティ対応版つくる
-
-キーボード操作に対応する
-
-a target="_blank"に対応する
-
-
-バグ報告
-jQuery ui -> sortable:
-・forceHelperSize: true にしても、connectWithした先にドラッグすると、HelperSizeが維持されない?
-・ui.offsetとui.positionの値が同じ
-・out イベントがfireしない（receiveのタイミングでfireしてる？）
-
-*/
-
-/*
-ToDo:
-
-・href属性の保管と削除
-・style属性の保管と削除
-・class:ui-sortable　ui-sortable-disabledの削除 _destroyでできる。
-
-*/
 
 ;( function( d, $ ) { 
 
@@ -284,7 +215,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 						var items;
 						if( block ) {
-							items = '> .-block';
+							items = '.-block';
 						} else if( element ) {
 							items = '.-block, .-element';
 						} else if( tbody ) {
@@ -579,16 +510,16 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 			/* 見た目のフォーカスを整え、ポインタを記録する */
 
-			.on( 'mouseenter', '.-block, .-element, -listitem, .-editable, [class*=-attribute]', function( event ){
+			.on( 'mouseenter', '.-block, .-element, .-listitem, .-editable, [class*=-attribute]', function( event ){
         if( !_this.hovering ){ /* 要素の移動中に hover を効かせない */
           $( this ).addClass( 'hrcss-hover' );
         }
 			} )
-			.on( 'mouseleave', '.-block, .-element, -listitem, .-editable, [class*=-attribute]', function( event ){
+			.on( 'mouseleave', '.-block, .-element, .-listitem, .-editable, [class*=-attribute]', function( event ){
 				$( this ).removeClass( 'hrcss-hover' );
 			} )
 
-			.on( 'mousedown', '.-block, .-element, -listitem, .-editable, [class*=-attribute]', function( event ){
+			.on( 'mousedown', '.-block, .-element, .-listitem, .-editable, [class*=-attribute]', function( event ){
 
 				event.stopPropagation();
 
@@ -628,7 +559,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 			/* 移動できるもののときは、移動可能先を洗い出し、sortableにする */
 
-			.on( 'mousedown', '.-block, .-element, -listitem', function( event ){
+			.on( 'mousedown', '.-block, .-element, .-listitem', function( event ){
 
 				var target = event.target;
 				var $target = $( target );
@@ -667,7 +598,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
         var items;
         if( block ) {
-          items = '> .-block';
+          items = '.-block';
         } else if( element ) {
           items = '.-block, .-element';
         } else if( listitem ) {
@@ -857,13 +788,14 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 				var _ctrlKey;
 
 				var block = $( _this.pointer ).hasClass( '-block' ),
-						element = $( _this.pointer ).hasClass( '-element' );
+						element = $( _this.pointer ).hasClass( '-element' ),
+            listitem = $( _this.pointer ).hasClass( '-listitem' );
 
 				if( !_this.status() ){ /* 'input' 'textarea' 入力中と競合しないように */
 
 					_ctrlKey = ( event.ctrlKey === true || event.metaKey === true ) ? true : false;
 
-					if( block || element ) {
+					if( block || element || listitem ) {
 
 
 						if( _ctrlKey && event.keyCode === 67 ) { /* CTRL+C */
@@ -878,9 +810,34 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 						} else if( _ctrlKey && event.keyCode === 86 ) { /* CTRL+V */
 
 							var _paste = $( _this.clipboard ).clone();
-							$( _this.pointer ).after( _paste );
-							$(_this.pointer ).removeClass( 'hrcss-focus' );
-							_this.pointer = _paste; /* ペーストしたものにフォーカスを移す */
+
+              var _permission = false;
+
+              if( block ) {
+                if( $( _paste ).hasClass( '-block' ) ) {
+                  _permission = true;
+                } else if( $( _paste ).hasClass( '-element' ) ) {
+                  _permission = true;
+                }
+              } else if( element ) {
+                if( $( _paste ).hasClass( '-block' ) ) {
+                  _permission = true;
+                }
+              } else if( listitem ) {
+                if( $( _paste ).hasClass( '-listitem' ) ) {
+                  _permission = true;
+                }
+              }
+
+              if( _permission ) { /* 制約はなく、追加できるなら */
+
+  							$( _this.pointer ).after( _paste );
+  							$(_this.pointer ).removeClass( 'hrcss-focus' );
+						    _this.pointer = _paste; /* ペーストしたものにフォーカスを移す */
+
+              } else {
+                _this.alert( 'そのコンポーネントは、ここに追加できません。', function(){} );
+              }
 
 						} else if( event.keyCode === 46 || event.keyCode === 8 ) { /* Del || BackSpace */
 
