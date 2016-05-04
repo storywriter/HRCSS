@@ -95,6 +95,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 		return ( ( $( '.hrcss-editInPlace-dialog' ).length > 0 ) ? true : false ); /* true : 編集起動中 , false : 編集未起動 */
 	},
 
+  hovering: false, /* 要素の移動中に hover や editInPlace を効かせない */
+
 	dblclick: false, /* for accessibility : 'dblclick' event is not accessible. */
 
 	clipboard: {},
@@ -302,9 +304,11 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 							forcePlaceholderSize: true,
 							placeholder: 'hrcss-sortable-placeholder',
 							start: function( event, ui ){
+                _this.hovering = true;
 								$( '.hrcss-sortable-placeholder' ).width( ui.item.outerWidth( true ) );
 							},
 							stop: function( event, ui ){
+                _this.hovering = false;
 								$( '.hrcss-picker-tab-content' ).sortable( "destroy" );
 							}
 						} );
@@ -317,7 +321,11 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 							items: items,
 							forceHelperSize: true,
 							forcePlaceholderSize: true,
+              start: function( event, ui ){
+                _this.hovering = true;
+              },
 							stop: function( event, ui ){
+                _this.hovering = false;
 								$( '.-wysiwyg' ).sortable( "destroy" );
 							},
 							receive: function( event, ui ){ /* コンポーネントがドロップされたとき */
@@ -504,6 +512,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 									_this.alert( 'そのコンポーネントは、ここに追加できません。', function(){} );
 								}
 
+                _this.hovering = false;
 								$( '.-wysiwyg' ).sortable( "destroy" );
 								$( '.hrcss-picker-tab-content' ).sortable( 'cancel' );
 
@@ -538,6 +547,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 				/* sortable を破棄する */
 				if( $( '.-wysiwyg' ).hasClass( 'ui-sortable' ) ) {
+          _this.hovering = false;
 					$( '.-wysiwyg' ).sortable( "destroy" );
 				}
 
@@ -569,20 +579,16 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 			/* 見た目のフォーカスを整え、ポインタを記録する */
 
-			.on( 'mouseenter', '.-block', function( event ){
-				$( this ).addClass( 'hrcss-hover-bold' );
+			.on( 'mouseenter', '.-block, .-element, -listitem, .-editable, [class*=-attribute]', function( event ){
+        if( !_this.hovering ){ /* 要素の移動中に hover を効かせない */
+          $( this ).addClass( 'hrcss-hover' );
+        }
 			} )
-			.on( 'mouseleave', '.-block', function( event ){
-				$( this ).removeClass( 'hrcss-hover-bold' );
-			} )
-			.on( 'mouseenter', '.-element, .-editable, [class*=-attribute]', function( event ){
-				$( this ).addClass( 'hrcss-hover' );
-			} )
-			.on( 'mouseleave', '.-element, .-editable, [class*=-attribute]', function( event ){
+			.on( 'mouseleave', '.-block, .-element, -listitem, .-editable, [class*=-attribute]', function( event ){
 				$( this ).removeClass( 'hrcss-hover' );
 			} )
 
-			.on( 'mousedown', '.-block, .-element, .-editable, [class*=-attribute]', function( event ){
+			.on( 'mousedown', '.-block, .-element, -listitem, .-editable, [class*=-attribute]', function( event ){
 
 				event.stopPropagation();
 
@@ -622,16 +628,20 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 			/* 移動できるもののときは、移動可能先を洗い出し、sortableにする */
 
-			.on( 'mousedown', '.-block, .-element', function( event ){
+			.on( 'mousedown', '.-block, .-element, -listitem', function( event ){
 
 				var target = event.target;
 				var $target = $( target );
 
 				var block = $target.hasClass( '-block' ),
-						element = $target.hasClass( '-element' );
+						element = $target.hasClass( '-element' )
+            listitem = $target.hasClass( '-listitem' )
 
 				var sortableOption2 = {
 
+          start: function( event, ui ){
+            _this.hovering = true;
+          },
 					stop: function( event, ui ){ /* 削除 */
 
 						var _wysiwyg = $( event.target );
@@ -649,27 +659,27 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 						}
 
+            _this.hovering = false;
+            $( '.-wysiwyg' ).sortable( "destroy" );
+
 					}
 				}
 
-				if( block ) {
+        var items;
+        if( block ) {
+          items = '> .-block';
+        } else if( element ) {
+          items = '.-block, .-element';
+        } else if( listitem ) {
+          items = '.-listitem';
+        }
 
-					sortableOption = $.extend( {}, sortableOption, sortableOption2, {
-						items: "> .-block",
-						connectWith: $( '.-wysiwyg' )
-					} );
-					/* 本文 の sortable を有効にする */
-					$( '.-wysiwyg' ).sortable( sortableOption );
+				sortableOption = $.extend( {}, sortableOption, sortableOption2, {
+					items: items
+				} );
+				/* 本文 の sortable を有効にする */
+				$( '.-wysiwyg' ).sortable( sortableOption );
 
-				} else if( element ) {
-
-					sortableOption = $.extend( {}, sortableOption, sortableOption2, {
-						items: ".-element, .-block"
-					} );
-					/* 本文 の sortable を有効にする */
-					$( '.-wysiwyg' ).sortable( sortableOption );
-
-				}
 
 			} )
 
@@ -680,7 +690,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 				if( _this.dblclick ) { /* for accessibility : 'dblclick' event is not accessible. */
 
-					if( !_this.status() ) { /* 同時に編集できるのは1つのみ */
+					if( !_this.status() && !_this.hovering ) { /* 同時に編集できるのは1つのみ && 要素の移動中に EditInPlace を効かせない */
 
 						var target = event.target;
 						var $target = $( target );
@@ -834,7 +844,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 							} )
 
 
-						} /* / if( !_this.status() ) */
+						} /* / if( !_this.status() && !_this.hovering ) */
 
 					} /* / if( _this.dblclick ) */
 

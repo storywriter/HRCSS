@@ -103,13 +103,8 @@
 /* focus & hover */
 
 .hrcss-hover {
-	outline: 1px solid #99f;
-	outline-offset: -1px;
-	z-index: 2020;
-}
-.hrcss-hover-bold {
-	outline: 3px solid #99f;
-	outline-offset: -3px;
+	outline: 2px solid #99f;
+	outline-offset: -2px;
 	z-index: 2020;
 }
 .hrcss-focus {
