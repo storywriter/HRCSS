@@ -814,19 +814,25 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
               var _permission = false;
 
               if( block ) {
+
                 if( $( _paste ).hasClass( '-block' ) ) {
                   _permission = true;
                 } else if( $( _paste ).hasClass( '-element' ) ) {
                   _permission = true;
                 }
+
               } else if( element ) {
-                if( $( _paste ).hasClass( '-block' ) ) {
+
+                if( $( _paste ).hasClass( '-element' ) ) {
                   _permission = true;
                 }
+
               } else if( listitem ) {
+
                 if( $( _paste ).hasClass( '-listitem' ) ) {
                   _permission = true;
                 }
+
               }
 
               if( _permission ) { /* 制約はなく、追加できるなら */
