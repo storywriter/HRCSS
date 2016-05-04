@@ -178,20 +178,23 @@ https://www.w3.org/TR/html/dom.html#classes
 - 指示文が複数あるときは、半角スペースで区切って、ひとつの (  ) に入れる。
 - 既存のCSSと混在してかまわない。
 
-主な指示文：
+主となる指示文：
 
 - ( -block )：BEMのブロック要素。
 - ( -element )：BEMのエレメント要素。
-- ( -list )：リストである。
-- ( -listitem )：リストアイテムである。
-- ( -table )：テーブルである。
-- ( -tbody )：テーブルの行グループ thead, tbody, tfoot である。
-- ( -tr )：テーブルの行 tr である。
-- ( -td )：テーブルのセル td, th である。
 - ( -editable )：文字列の編集ができる。
 - ( -attribute:xxx )：xxx属性の編集ができる。
 - ( -include:xxx )：xxxセレクタをもつ要素しか子要素にとらない。
 - ( -parent:xxx )：xxxセレクタをもつ要素しか親要素にとらない。
+
+補助的な指示文：（よくあるケースを指示文にしたもの）
+
+- ( -list )：リストである。（子要素は -listitem である）
+- ( -listitem )：リストアイテムである。（親要素は -list である）
+- ( -table )：テーブルである。（子要素は -tbody か、-tr である）
+- ( -tbody )：テーブルの行グループ thead, tbody, tfoot である。（親要素は -table で、子要素は -tr である）
+- ( -tr )：テーブルの行 tr である。（親要素は -table か -tbody で、子要素は -td である）
+- ( -td )：テーブルのセル td, th である。（親要素は -tr である）
 
 WYSIWYG HTML Editorのための文字列：
 
