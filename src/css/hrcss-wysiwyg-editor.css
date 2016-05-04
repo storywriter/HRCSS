@@ -56,6 +56,8 @@
 }
 .hrcss-picker .hrcss-picker-tab .hrcss-picker-tab-panes {
 	margin-bottom: 10px;
+	overflow-x: scroll;
+	white-space: nowrap;
 }
 .hrcss-picker .hrcss-picker-tab .hrcss-tab-pane {
 	border: 1px solid #ccc;
@@ -72,6 +74,10 @@
 }
 .hrcss-picker .hrcss-picker-tab .hrcss-tab-pane:last-child {
 	border-radius: 0 4px 4px 0;
+}
+.hrcss-picker .hrcss-picker-tab .hrcss-picker-tab-content {
+	overflow-x: scroll;
+	white-space: nowrap;
 }
 .hrcss-picker .hrcss-picker-tab .hrcss-tab-component {
 	border: 1px solid #ccc;

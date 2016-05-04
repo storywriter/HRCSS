@@ -497,6 +497,12 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 		/* ページ上部に Picker ぶんの余白をとる */
 		$( 'body' ).css( { 'padding-top' : picker.outerHeight( true ) } );
 
+    /* スクロールバーを有効にする */
+    if( $( '.hrcss-picker-tab-content' ).outerWidth( true ) - $( window ).width() - 150 < 0 ) {
+      $( '.hrcss-picker-tab-content').css( { 'width' : $( window ).width() - 150 } );
+    }
+
+
 
 		/* イベントの設定 */
 
