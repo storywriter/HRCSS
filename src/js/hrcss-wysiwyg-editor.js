@@ -853,13 +853,10 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 						} else if( event.keyCode === 46 || event.keyCode === 8 ) { /* Del || BackSpace */
 
-							if( $( _this.pointer ).hasClass( '-block' ) || $( _this.pointer ).hasClass( '-element' ) ) {
-
 								_this.dialog( '削除してもよろしいですか？', function(){
-									_this.pointer.remove();
+									$( _this.pointer ).remove();
 								} );
 
-							}
 							if( event.keyCode === 8 ){ return false; } /* Disable 'Page Back' on the 'BackSpace' key */
 
 						} else if( _ctrlKey && event.keyCode === 90 ) { /* CTRL+Z */
