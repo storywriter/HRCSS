@@ -6,7 +6,7 @@ Human Readable CSS Style Guide with WYSIWYG HTML Editor, apply to Web Components
 そのまま使える WYSIWYG HTML Editor を含む。
 Web Components 技術にも対応している。
 
-最終更新：2016年5月3日 Yoshiki HAYAMA @storywriter
+最終更新：2016年5月4日 Yoshiki HAYAMA @storywriter
 
 本プロジェクトはオープンソースプロジェクトである。
 プロジェクトの代表は Yoshiki HAYAMA @storywriter http://storywriter.jp/ である。
@@ -134,11 +134,11 @@ WYSIWYG HTML Editor のデモは http://storywriter.jp/hrcss/ で公開してい
 
 https://www.w3.org/TR/css3-selectors/#lex
 
-- 注目すべきは、「-」から始まるセレクタ名は、CSSとしては不適合となる点。
+- 注目すべきは、「-」から始まるセレクタ名は、CSSとしては不適合となる点。言い換えると、「-」から始まる文字列は、CSSとして登場することはない。
 
 #### HTMLの視点
 
-- いっぽうで、HTML仕様で、class属性の値として含める文字列には制約はない。つまり、「-」から始まる文字列が含まれていても、HTMLとしては（驚くべきことに！）「適合」になる。（なお、 XHTML1.0 Transitional では &amp; だけは不適合だったが、HTML5では、それも適合となった）
+- いっぽうで、HTML仕様で、class属性の値として含める文字列には制約はない。つまり、「-」から始まる文字列が含まれていても、HTMLとしては（驚くべきことに！）「適合」になる。（なお、 XHTML1.0 Transitional では &amp; だけは「不適合」だったが、HTML5では、それも「適合」となった）
 
 https://www.w3.org/TR/html/dom.html#classes
 
@@ -151,8 +151,52 @@ https://www.w3.org/TR/html/dom.html#classes
 
 - また、jQuery の仕様として、興味深いことに「-」から始まるセレクタも操作することができる。つまり`$( '.-任意のセレクタ' )`という jQuery のコードは、正しく動作する。
 
+- 備考：`[class*=-attribute]`のような書き方もできる。
+
+
+#### ユーザビリティの視点
+
+- 視認性をよくするためには、空白をうまく使うことと、区切り文字をうまく使うこと。長い文字列は視認性がよくない。
+
+
 
 ### 具体的なコードサンプル
+
+#### 基本的な文法
+
+```html
+<div class="( -block )">
+  <div class="( -element )">
+    <p class="lead ( -element -editable )">...</p>
+```
+
+文法の基本：
+
+- 人間に「指示」するための指示文を (  ) で囲む。
+- 人間に「指示」するための指示文は「-」から始める。
+- カッコと文字列は、半角スペースで区切る。
+- 指示文が複数あるときは、半角スペースで区切って、ひとつの (  ) に入れる。
+- 既存のCSSと混在してかまわない。
+
+主な指示文：
+
+- ( -block )：BEMのブロック要素。
+- ( -element )：BEMのエレメント要素。
+- ( -list )：リストである。
+- ( -listitem )：リストアイテムである。
+- ( -table )：テーブルである。
+- ( -tbody )：テーブルの行グループ thead, tbody, tfoot である。
+- ( -tr )：テーブルの行 tr である。
+- ( -td )：テーブルのセル td, th である。
+- ( -editable )：文字列の編集ができる。
+- ( -attribute:xxx )：xxx属性の編集ができる。
+- ( -include:xxx )：xxxセレクタをもつ要素しか子要素にとらない。
+- ( -parent:xxx )：xxxセレクタをもつ要素しか親要素にとらない。
+
+WYSIWYG HTML Editorのための文字列：
+
+- ( -wysiwyg )：編集可能領域を示す。
+
 
 #### 最終的に生成されるHTML
 
@@ -194,8 +238,6 @@ https://www.w3.org/TR/html/dom.html#classes
 
 </div>
 ```
-
-備考：`[class*=-attribute]`のような書き方もできる。
 
 
 #### テンプレートHTML
