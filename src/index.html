@@ -60,7 +60,7 @@
     <ol class="breadcrumb">
       <li><a href="#">ホーム</a></li>
       <li><a href="#">調査報告</a></li>
-      <li class="active">大規模CMSの選定ポイントについて調査報告</li>
+      <li class="active">Human Readable CSS デモ</li>
     </ol>
   </nav>
 
@@ -81,11 +81,7 @@
           <a href="#" class="list-group-item">a-blog cms</a>
           <a href="#" class="list-group-item">eZ Publish Platform</a>
           <a href="#" class="list-group-item">Craft CMS</a>
-          <a href="#" class="list-group-item">Team Site</a>
-          <a href="#" class="list-group-item">Adobe Experience Manager</a>
-          <a href="#" class="list-group-item">WebRelease</a>
           <a href="#" class="list-group-item">Drupal</a>
-          <a href="#" class="list-group-item">Sitecore</a>
         </div><!-- / .list-group -->
       </nav>
 
@@ -94,9 +90,9 @@
 
     <div class="col-sm-8 col-sm-offset-1 main">
 
-      <h1 class="( -editable )"><small>WYSIWYG HTML Editor for Human Readable CSS デモ</small><br>大規模CMSの選定ポイントについて調査報告</h1>
+      <h1 class="( -editable )"><small>WYSIWYG HTML Editor for</small><br>Human Readable CSS デモ</h1>
 
-      <p class="lead ( -editable )">数万ページで、関連部署が多数、という大規模サイトを、数年間、運用してきて感じる、現場の実感を調査しました。</p>
+      <p class="lead ( -editable )">人間に読みやすいコンポーネント指向のCSS記述法</p>
 
       <p>このページは WYSIWYG HTML Editor for Human Readable CSS のデモページです。ソースコードは <a href="https://github.com/storywriter/hrcss" target="_blank">GitHub（ https://github.com/storywriter/hrcss ）</a>に公開しています。</p>
 
@@ -104,12 +100,14 @@
 
         <p class="( -block )"><img src="http://noren.jp/noren.png" alt="" class="img-responsive ( -attribute:src )"></p>
 
-        <h2 class="text-primary ( -block )"><i class="fa fa-star ( -attribute:class )"></i><span class="( -editable )">【1】主担当者が、そのCMSを愛せるかどうか。</span></h2>
+        <h2 class="text-primary ( -block )"><i class="fa fa-arrow-circle-right ( -attribute:class )"></i><span class="( -editable )">1.ドラッグ＆ドロップで、コンポーネントを楽に追加。</span></h2>
 
 
         <div class="row ( -block )">
       	  <div class="col-sm-8">
-      		  <p class="( -element -editable )">一番に大切。この規模でのCMS導入は、年単位のプロジェクトになり、ステークホルダーも多く、説得の苦労も並大抵のものではない。やり切るには、<mark>担当者が「自分の人生の数年間を投資してでも、このCMSでやるんだ！」という強い思い入れを感じられる製品かどうか</mark>。その度合いによって、導入の成否、導入後の活用レベルが決まる。</p>
+      		  <p class="( -element -editable )"><mark>ドラッグ＆ドロップページ上部のツールバーから、追加したいコンポーネントを選んで、ドラッグ＆ドロップ</mark>。ページ内に、かんたんに追加できます。ためしに、何かを追加してみましょう。</p>
+            <p class="( -element -editable )">追加した要素の編集は、ダブルクリックで、手軽にできます。</p>
+            <p class="( -element -editable )">この WYSIWYG HTML Editor for Human Readable CSS は、Human Readable CSS で記述された HTML を解釈して、自在に編集できるようにします。</p>
       	  </div>
           <div class="col-sm-4">
             <img src="http://hermie.jp/20150627-hermie/15-a-4.png" alt="" class="img-responsive ( -attribute:src )">
@@ -117,28 +115,47 @@
       	</div>
 
 
-        <h2 class="text-primary ( -block )"><i class="fa fa-star ( -attribute:class )"></i><span class="( -editable )">【2】メーカーの人的サポートが、手厚いかどうか。</span></h2>
+        <h2 class="text-primary ( -block )"><i class="fa fa-check-square-o ( -attribute:class )"></i><span class="( -editable )">2.要素を追加できるところに、制約をつくれる。</span></h2>
 
+
+        <p class="( -element -editable )">Human Readable CSS で記述すれば、コンポーネントを追加できるところ、できないところをかんたんに制約できます。また、BEMにおけるブロック、エレメントの層や、リスト、テーブルといった単位で、追加できる場所をコントロールすることができます。</p>
+
+
+        <div class="well ( -block )">
+          <p class="lead">制約のあるリストの例</p>
+          <ul class="well-ul ( -list -include:well-li )">
+            <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">このリストは .well-ul というセレクタをもつ要素しかドラッグ＆ドロップできません。</a></li>
+            <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">ためしに、ふつうのリスト行をドラッグ＆ドロップすると「追加できません」というエラーが表示されます。</a></li>
+          </ul>
+        </div>
      
-        <p class="( -element -editable )">この規模のCMS導入は、ステークホルダーが多く、部署により要望が異なる、想像もしないトラブルが起こる、など、運用がものすごくたいへんになる。最後の一線で、助けてくれる<mark>メーカーのサポート人員が手厚いかどうか。「なんとかしてサポートしよう」という気持ちで支援してもえるかどうか</mark>。CMSの細かい機能の有無がどうより、運用に、とくに大切になる。</p>
 
-
-        <h2 class="text-primary ( -block )"><i class="fa fa-star ( -attribute:class )"></i><span class="( -editable )">【3】現場レベルで、カスタマイズや機能追加ができるかどうか。</span></h2>
+        <h2 class="text-primary ( -block )"><i class="fa fa-list-alt ( -attribute:class )"></i><span class="( -editable )">3.コンポーネントの追加はかんたん。Human Readable CSS で記述するだけ。</span></h2>
 
         <div class="row ( -block )">
           <div class="col-sm-4">
             <img src="http://hermie.jp/20151008-hermie/27-2.png" alt="" class="img-responsive ( -attribute:src )">
           </div>
           <div class="col-sm-8">
-            <p class="( -element -editable )">この規模のCMS導入は、ステークホルダーが本当に多いため、あちこちの部署から、毎週、毎月という勢いで、新しい要望や、機能追加のニーズがあがってくる。そのひとつひとつを、SIerに見積をして、仕様検討をして、何百万も支払って、開発して・・・としていたのでは、運用にとても間に合わない。<mark>現場のWeb制作者のレベルで、CMSのカスタマイズを、日常的にできること</mark>が必要になる。あるいは、いわゆるWeb事業会社のように、自社内に開発部隊をもち、アジャイルに開発を回す。いずれにしても、現場でカスタマイズや機能追加ができることが必要になる。<br><br>とくにここ数年、マーケティングオートメーションの波で、社内の他システムに、データ連携を求められるケースが増えている。いちいちSIerを介することなく、現場レベルでどんどん開発していけないと、業務変化の速度についていけない。</p>
+            <p class="( -element -editable )">コンポーネントの追加は、Human Readable CSS で記述するだけでかんたんにできます。ポイントは、<mark>ふだん、ウェブ制作者がふれている HTML と CSS の世界だけで、すべてができる</mark>こと。JavaScript や、サーバーサイドの言語を知らない人でも、編集することができます。</p>
+            <p class="( -element -editable )">さらに良いのは、Human Readable CSS で記述したコンポーネントの一覧表は、そのままウェブページとして表示できます。一覧表を別資料として管理する必要はありません。以下が、コンポーネントの一覧表のサンプルです。</p>
+            <p class="( -element )">» <a href="http://storywriter.jp/hrcss/user-components/sample.html" class="( -editable -attribute:href )">コンポーネントの一覧表のサンプル</a></p>
+            <p class="( -element -editable )"><mark>既存の HTML や CSS との混在もOK</mark>です。たとえば、このサンプルページは Bootstrap で作られています。そこに、Human Readable CSS の記述を追加することで、そのまま、WYSIWYG HTML Editor で編集ができるようになります。</p>
           </div>
         </div>
+
+
+        <h2 class="text-primary ( -block )"><i class="fa fa-file-text-o ( -attribute:class )"></i><span class="( -editable )">4.読みやすく、学習しやすい。</span></h2>
+
+
+        <p class="( -element -editable )">Human Readable CSS は、人間にとって読みやすいことをコンセプトに設計されています。HTML と CSS の知識があれば、気軽に学習することができます。また、コンポーネント指向で、大規模なウェブサイトでの運用にも耐えられるように設計されています。文法やソースコードは GitHub で公開されています。</p>
+
 
 
     	  <div class="panel panel-default ( -block )">
     	  	<div class="panel-body">
       		  <p class="lead"><i class="fa fa-circle ( -attribute:class )"></i><span class="( -editable )">お問い合わせ</span></p>
-      		  <p class="( -element -editable )">3つの視点からみて、安定感のあるCMS「NOREN」の調査レポート。</p>
+      		  <p class="( -element -editable )">WYSIWYG HTML Editor for Human Readable CSS を組み込みたい CMS メーカーさまを募集しています。</p>
       		  <p><a class="btn btn-primary ( -attribute:href )" href="#" role="button">資料請求 &raquo;</a></p>
     		  </div>
     	  </div>
@@ -148,27 +165,17 @@
           <div class="panel-body">
             <p class="lead ( -editable )">備考</p>
             <ul class="( -list )">
-              <li class="( -listitem )">NOREN は、株式会社のれんが販売する CMS　です。</li>
-              <li class="( -listitem )">「NOREN」の商標は、株式会社のれんに属しています。</li>
+              <li class="( -listitem )">Human Readable CSS および WYSIWYG HTML Editor for Human Readable CSS は、オープンソースプロジェクトとして開発しています。</li>
+              <li class="( -listitem )">本プロジェクトの成果物を組み込みたい CMS メーカーさまを募集しています。</li>
             </ul>
           </div>
-        </div>
-
-
-        <div class="well ( -block )">
-          <p class="lead">この記事に関係するお知らせ</p>
-          <ul class="well-ul ( -list -include:well-li )">
-            <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">今週木曜日19:00より 2011教室で a-blog cms について勉強会をします。</a></li>
-            <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">NORENのカスタマイズをしよう！ 来週火曜日19:00より 2012教室です。</a></li>
-            <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">来週金曜日19:00より 2011教室で Drupal について勉強会をします。</a></li>
-          </ul>
         </div>
 
 
         <div class="panel panel-default ( -block )">
           <div class="panel-body">
             <p class="lead ( -editable )">コラム</p>
-            <p class="( -editable )">NOREN は韓国でも大きなシェアを持ちます。韓国といえば、音楽シーンも面白いですね。そこで最近、気になる韓国アーティストをピックアップしました。</p>
+            <p class="( -editable )">韓国の音楽シーンは面白いですね。そこで最近、気になる韓国アーティストをピックアップしました。WYSIWYG HTML Editor for Human Readable CSS なら、次のような表もかんたんに作成できます。</p>
             <table class="table ( -element -table )">
               <tr class="( -tr )">
                 <th class="( -td )"><span class="( -element -editable )">アーティスト</span></th>
