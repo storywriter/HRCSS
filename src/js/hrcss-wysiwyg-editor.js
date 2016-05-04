@@ -431,8 +431,34 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
                   ui.item.closest( '.-table' ).find( '.-tr' ).each( function(){
 
                     var _td = $( this ).children();
+                    var _tagName, _tmp;
+
+                    /* 追加位置の左右のセルを見て、th要素 なら th要素 で追加する。（注意：DOM要素そのものを変更している）*/
+                    if( _index === 0 ) {
+                      _tagName = _td.eq( _index + 1 ).get( 0 ).tagName;
+                    } else {
+                      _tagName = _td.eq( _index - 1 ).get( 0 ).tagName;
+                    }
+
+                    /* 追加予定の HTML を一時保管 */
+                    _tmp = component.clone();
+
+                    if( _tagName.toUpperCase() === 'TH' ) { /* TODO: l18nでは.toUpperCase()は使えない地域（トルコとか）がある */
+
+                        var _th = $( '<th>' );
+
+                        $.each( _tmp.get( 0 ).attributes, function(){
+                          _th.attr( this.name, this.value ); /* unwrap()する前に属性をコピーする TODO: コピーされない属性があることがある？ */
+                        } );
+
+                        _tmp.unwrap();
+                        _tmp.appendTo( _th );
+                        _tmp = _th;
+
+                    }
+
                     /* コンポーネントの HTML を追加 */
-                    _td.eq( _index ).before( component.clone() );
+                    _td.eq( _index ).before( _tmp );
 
                   } );
 
@@ -444,9 +470,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
                   /* 自分自身のセルの数を数える */
                   var _self = component.children().length;
 
-                  var _difference = _tds - _self;
-
-
+                  /* 追加予定の HTML を一時保管 */
                   var _tmp = component.clone();
                   var _abs = Math.abs( _tds - _self );
 
