@@ -198,7 +198,7 @@ https://www.w3.org/TR/html/dom.html#classes
 
 WYSIWYG HTML Editorのための文字列：
 
-- ( -wysiwyg )：編集可能領域を示す。
+- ( -wysiwyg )：編集可能領域である。
 
 
 #### 最終的に生成されるHTML
