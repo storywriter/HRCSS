@@ -529,7 +529,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 				event.stopPropagation();
 
-				var action = $( event.target ).hasClass( 'hrcss-editInPlace-ok' ) || $( event.target ).hasClass( 'hrcss-editInPlace-cansel' );
+				var action = $( event.target ).hasClass( 'hrcss-editInPlace-ok' ) || $( event.target ).hasClass( 'hrcss-editInPlace-cancel' );
 
 				$( '.hrcss-hover' ).removeClass( 'hrcss-hover' ); /* hoverは解除 */
 
@@ -657,7 +657,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 						ins = _this.systemTemplates.find( '.hrcss-editInPlace-dialog' ).clone();
 
-						/* EditInPlace : OK & Cansel Button */
+						/* EditInPlace : OK & Cancel Button */
 
 						ins.append( _this.systemTemplates.find( '.hrcss-editInPlace-control' ).clone() );
 
@@ -761,7 +761,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 						/* キャンセルボタンがクリックされたとき */
 
-						$( '.hrcss-editInPlace-cansel', ins )
+						$( '.hrcss-editInPlace-cancel', ins )
 							.on( 'click', function( event ){
 
 								/* EditInPlace : TextArea */

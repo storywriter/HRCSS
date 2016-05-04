@@ -16,6 +16,27 @@
 */
 
 
+
+/* Common Style */
+
+.hrcss-button {
+	background: #fefefe;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	line-height: 1.0em;
+	font-size: 14px;
+	padding: 3px;
+	vertical-align: middle;
+}
+.hrcss-button:active {
+  box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.3);
+}
+.hrcss-button img {
+	margin: -2px 5px 0 0;
+}
+
+
+
 /* WYSIWYG HTML Editor */
 
 .hrcss-picker {
@@ -24,7 +45,7 @@
 	box-shadow: 0 3px 3px #999;
 	display: block;
 	line-height: 1.5em;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: normal;
 	letter-spacing: 0;
 	left: 0;
@@ -51,12 +72,13 @@
 	width: 120px;
 }
 
+
 .hrcss-picker .hrcss-picker-tab {
 	float: left;
 }
 .hrcss-picker .hrcss-picker-tab .hrcss-picker-tab-panes {
 	margin-bottom: 10px;
-	overflow-x: scroll;
+	overflow-x: auto;
 	white-space: nowrap;
 }
 .hrcss-picker .hrcss-picker-tab .hrcss-tab-pane {
@@ -76,7 +98,7 @@
 	border-radius: 0 4px 4px 0;
 }
 .hrcss-picker .hrcss-picker-tab .hrcss-picker-tab-content {
-	overflow-x: scroll;
+	overflow-x: auto;
 	white-space: nowrap;
 }
 .hrcss-picker .hrcss-picker-tab .hrcss-tab-component {
@@ -138,7 +160,7 @@
 	color: #333;
 	display: block;
 	line-height: 1.5em;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: normal;
 	letter-spacing: 0;
 	padding: 10px;
@@ -170,6 +192,9 @@
 	min-width: 360px;
 	padding: 3px;
 }
+.hrcss-editInPlace-dialog button {
+	width: 120px;
+}
 
 
 
@@ -191,7 +216,7 @@
 	box-shadow: 3px 3px 3px #999;
 	display: block;
 	line-height: 1.5em;
-	font-size: 16px;
+	font-size: 14px;
 	padding: 10px;
 	position: fixed;
 	min-width: 300px;
@@ -207,6 +232,7 @@
 	width: 120px;
 }
 
+
 .hrcss-alert {
 	background: #ffe;
 	border: 2px solid #9fc;
@@ -214,7 +240,7 @@
 	box-shadow: 3px 3px 3px #999;
 	display: block;
 	line-height: 1.5em;
-	font-size: 16px;
+	font-size: 14px;
 	padding: 10px;
 	position: fixed;
 	min-width: 300px;
@@ -229,3 +255,6 @@
 .hrcss-alert .hrcss-alert-control button {
 	width: 120px;
 }
+
+
+
