@@ -57,6 +57,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 			left: ( $( window ).width() - dialog.width() ) / 2
 		} );
 
+    dialog.find( '.hrcss-dialog-ok' ).focus();
+
 		overlay
 			.on( 'click', function( event ){
 
@@ -89,6 +91,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 			top: ( $( window ).height() - dialog.height() ) / 2,
 			left: ( $( window ).width() - dialog.width() ) / 2
 		} );
+
+    dialog.find( '.hrcss-alert-ok' ).focus();
 
 		overlay
 			.on( 'click', function( event ){
