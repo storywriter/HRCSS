@@ -214,18 +214,18 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 					.on( 'mousedown', function( event ){
 
 						var items;
-						if( block ) {
-							items = '.-block';
-						} else if( element ) {
-							items = '.-block, .-element';
+            if( block ) {
+              items = $( '.-block' );
+            } else if( element ) {
+              items = $( '.-element' );
 						} else if( tbody ) {
-              items = '.-tbody';
+              items = $( '.-tbody' );
             } else if( tr ) {
-              items = '.-tr';
+              items = $( '.-tr' );
             } else if( td ) {
-              items = '.-td';
+              items = $( '.-td' );
             } else if( listitem ) {
-              items = '.-listitem';
+              items = $( '.-listitem' );
             }
 
 						sortableOption = $.extend( {}, sortableOption, {
@@ -468,7 +468,6 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 			.on( 'click', function( event ){
 
 				/* 不要なセレクタの削除 */
-				$( '.hrcss-hover-bold' ).removeClass( '.hrcss-hover-bold' );
 				$( '.hrcss-hover' ).removeClass( '.hrcss-hover' );
 
 				/* 編集中なら終了する */
@@ -578,6 +577,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
           start: function( event, ui ){
             _this.hovering = true;
+            _this.dblclick = false; /* ダブルクリックを初期化 */
           },
 					stop: function( event, ui ){ /* 削除 */
 
@@ -604,11 +604,11 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
         var items;
         if( block ) {
-          items = '.-block';
+          items = $( '.-block' );
         } else if( element ) {
-          items = '.-block, .-element';
+          items = $( '.-element' );
         } else if( listitem ) {
-          items = '.-listitem';
+          items = $( '.-listitem' );
         }
 
 				sortableOption = $.extend( {}, sortableOption, sortableOption2, {
