@@ -146,14 +146,14 @@
           </div>
           <div class="col-sm-8">
             <p class="( -element -editable )">Human Readable CSS は、コンポーネント指向で、大規模なウェブサイトでの運用にも耐えられるように考えられています。</p>
-            <p class="( -element -editable )">Human Readable CSS で記述すれば、<mark>コンポーネントを追加できるところ、できないところをかんたんに条件指定</mark>できます。記述方法は、Human Readable CSS にそって、セレクタに <code>-include:</code> や <code>-parent:</code> を書くだけです。WYSIWYG HTML Editor を使うことで、ひとつひとつのコンポーネントのルールを知らなくても、ガイドラインにそった運用ができます。</p>
+            <p class="( -element -editable )">Human Readable CSS で記述すれば、<mark>コンポーネントを追加できるところ、できないところをかんたんに条件指定</mark>できます。記述方法は、Human Readable CSS にそって、セレクタに <code>-child:</code> や <code>-parent:</code> を書くだけです。WYSIWYG HTML Editor を使うことで、ひとつひとつのコンポーネントのルールを知らなくても、ガイドラインにそった運用ができます。</p>
             <p class="( -element -editable )">また、BEM におけるブロック、エレメントの単位で、追加できる場所をコントロールすることができます。</p>
           </div>
         </div>
 
         <div class="well ( -block )">
           <p class="lead">条件指定のあるリストの例</p>
-          <ul class="well-ul ( -list -include:well-li )">
+          <ul class="well-ul ( -list -child:well-li )">
             <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">このリストは .well-ul というセレクタをもつ要素（「リンクリスト行」）しかドラッグ＆ドロップできません。</a></li>
             <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">ためしに、ふつうの「リスト行」をドラッグ＆ドロップすると「追加できません」というエラーが表示されます。</a></li>
           </ul>

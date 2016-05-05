@@ -184,7 +184,7 @@ https://www.w3.org/TR/html/dom.html#classes
 - ( -element )：BEMのエレメント要素。
 - ( -editable )：文字列の編集ができる。
 - ( -attribute:xxx )：xxx属性の編集ができる。
-- ( -include:xxx )：xxxセレクタをもつ要素しか子要素にとらない。
+- ( -child:xxx )：xxxセレクタをもつ要素しか子要素にとらない。
 - ( -parent:xxx )：xxxセレクタをもつ要素しか親要素にとらない。
 
 補助的な指示文：（よくあるケースを指示文にしたもの）
@@ -216,11 +216,11 @@ WYSIWYG HTML Editorのための文字列：
 
   <div class="textAndImage ( -block )">
 
-    <div class="textAndImage-left ( -include:-element )">
+    <div class="textAndImage-left ( -child:-element )">
 
       <p class="( -element -editable )">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
 
-      <ol class="listitem-ol ( -element -list -include:listitem-li )">
+      <ol class="listitem-ol ( -element -list -child:listitem-li )">
         <li class="listitem-li ( -listitem -editable -parent:listitem-ol )">labore et dolore magna aliqua.</li>
         <li class="listitem-li ( -listitem -editable -parent:listitem-ol )">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
       </ol>
@@ -229,7 +229,7 @@ WYSIWYG HTML Editorのための文字列：
 
     </div>
 
-    <div class="textAndImage-right ( -include:imgCaption )">
+    <div class="textAndImage-right ( -child:imgCaption )">
 
       <p><img src="..." alt="..." class="( -editable -attribute:alt )"></p>
 
@@ -266,16 +266,16 @@ WYSIWYG HTML Editorのための文字列：
 ```html
 
 <div class="textAndImage ( -block )">
-  <div class="textAndImage-left ( -include:-element )">
+  <div class="textAndImage-left ( -child:-element )">
   </div>
-  <div class="textAndImage-right ( -include:imgCaption )">
+  <div class="textAndImage-right ( -child:imgCaption )">
     <p><img src="..." alt="..." class="( -editable -attribute:alt )"></p>
   </div>
 </div>
 
 <p class="( -element -editable )"></p>
 
-<ol class="listitem-ol ( -element -list -include:listitem-li )">
+<ol class="listitem-ol ( -element -list -child:listitem-li )">
   <li class="listitem-li ( -listitem -editable -parent:listitem-ol )"></li>
 </ol>
 

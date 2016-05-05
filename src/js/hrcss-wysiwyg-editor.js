@@ -261,8 +261,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 							},
 							receive: function( event, ui ){ /* コンポーネントがドロップされたとき */
 
-								var include;
-								var includes;
+								var child;
+								var children;
 
                 var uiParentClass;
 
@@ -284,42 +284,42 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
                   uiParentClass = ui.item.parent().attr( 'class' );
                 }
 
-                include = ( uiParentClass.indexOf( '-include' ) > -1 ) ? true : false;
+                child = ( uiParentClass.indexOf( '-child' ) > -1 ) ? true : false;
 
 								var parent = ( classes.indexOf( '-parent' ) > -1 ) ? true : false;
 								var parents;
 
                 var permission = true; /* ここに追加していいか */
-//              if( include || parent || table || tbody || tr || td ) {
-                if( include || parent ) {
-                  permission = false; /* 親要素に -include: があるか、子要素に -parent: があるときは、追加に制約がある */
+//              if( child || parent || table || tbody || tr || td ) {
+                if( child || parent ) {
+                  permission = false; /* 親要素に -child: があるか、子要素に -parent: があるときは、追加に制約がある */
                 }
 
-								/* -include:の対象リストをつくる */
-								if( include ) {
-									includes = uiParentClass.split( ' ' );
-									if( includes.length > 1 ) {
+								/* -child:の対象リストをつくる */
+								if( child ) {
+									children = uiParentClass.split( ' ' );
+									if( children.length > 1 ) {
 
-										includes = $.grep( includes, function( elem, index ){
-											return ( elem.indexOf( '-include' ) > -1 ) ? true : false;
+										children = $.grep( children, function( elem, index ){
+											return ( elem.indexOf( '-child' ) > -1 ) ? true : false;
 										} );
-										includes = $.map( includes, function( elem, index ){
-											return elem.replace( '-include:', '' );
+										children = $.map( children, function( elem, index ){
+											return elem.replace( '-child:', '' );
 										} );
 									}
 
 									/* テーブル（ -table, -tbody, -tr, -td ）は、個別に対応する */
 									/* if( table ) { 
-										includes.push( '-tbody', '-tr' );
+										children.push( '-tbody', '-tr' );
 									}
 									if( tbody ) { 
-										includes.push( '-tr' );
+										children.push( '-tr' );
 									}
 									if( tr ) { 
-										includes.push( '-td' );
+										children.push( '-td' );
 									} */
 
-									$( includes ).each( function(){
+									$( children ).each( function(){
 										if( classes.indexOf( this ) > -1 ) {
 											permission = true; /* ここに追加していい */
 										}
