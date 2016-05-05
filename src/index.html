@@ -59,7 +59,7 @@
   <nav>
     <ol class="breadcrumb">
       <li><a href="#">ホーム</a></li>
-      <li><a href="#">調査報告</a></li>
+      <li><a href="#">活動記録</a></li>
       <li class="active">Human Readable CSS デモ</li>
     </ol>
   </nav>
@@ -72,7 +72,7 @@
     <div class="col-sm-3 sidebar">
 
       <nav>
-        <p class="lead nav-title"><i class="fa fa-folder-o"></i> 調査報告</p>
+        <p class="lead nav-title"><i class="fa fa-folder-o"></i> 活動記録</p>
         <div class="list-group">
           <a href="#" class="list-group-item active">NOREN</a>
           <a href="#" class="list-group-item">Word Press</a>
@@ -98,58 +98,72 @@
 
       <div class="row ( -wysiwyg )">
 
-        <p class="( -block )"><img src="http://noren.jp/noren.png" alt="" class="img-responsive ( -attribute:src )"></p>
 
-        <h2 class="text-primary ( -block )"><i class="fa fa-arrow-circle-right ( -attribute:class )"></i><span class="( -editable )">1.ドラッグ＆ドロップで、コンポーネントを楽に追加。</span></h2>
-
+        <h2 class="text-primary ( -block )"><i class="fa fa-check-square ( -attribute:class )"></i><span class="( -editable )">1.ドラッグ＆ドロップで、コンポーネントを楽に追加。</span></h2>
 
         <div class="row ( -block )">
       	  <div class="col-sm-8">
-      		  <p class="( -element -editable )"><mark>ドラッグ＆ドロップページ上部のツールバーから、追加したいコンポーネントを選んで、ドラッグ＆ドロップ</mark>。ページ内に、かんたんに追加できます。ためしに、何かを追加してみましょう。</p>
-            <p class="( -element -editable )">追加した要素の編集は、ダブルクリックで、手軽にできます。</p>
-            <p class="( -element -editable )">この WYSIWYG HTML Editor for Human Readable CSS は、Human Readable CSS で記述された HTML を解釈して、自在に編集できるようにします。</p>
+      		  <p class="( -element -editable )"><mark>ドラッグ＆ドロップページ上部のツールバーから、追加したいコンポーネントを選んで、ドラッグ＆ドロップ</mark>。ページ内に、かんたんに追加できます。並び替えもできます。ためしに、何かを追加してみましょう。</p>
+            <p class="( -element -editable )">追加した要素の編集は、ダブルクリックでできます。<mark>その場で、見たまま、手軽に編集できる</mark>から、イメージがつかみやすく、ウェブページの制作ができます。</p>
+            <p class="( -element -editable )">また、<mark>キーボードショートカットに対応</mark>しており、<kbd>CTRL+C</kbd> のコピー、<kbd>CTRL+X</kbd> のカット、<kbd>CTRL+V</kbd> でのペースト、<kbd>Del</kbd> で削除ができるので、作業がすばやくできます。</p>
       	  </div>
           <div class="col-sm-4">
-            <img src="http://hermie.jp/20150627-hermie/15-a-4.png" alt="" class="img-responsive ( -attribute:src )">
+            <img src="http://hermie.jp/20150111-hermie/42-2.png" alt="" class="img-responsive ( -attribute:src )">
           </div>
       	</div>
 
 
-        <h2 class="text-primary ( -block )"><i class="fa fa-check-square-o ( -attribute:class )"></i><span class="( -editable )">2.要素を追加できるところに、制約をつくれる。</span></h2>
+        <h2 class="text-primary ( -block )"><i class="fa fa-check-square ( -attribute:class )"></i><span class="( -editable )">2.コンポーネントの作成は Human Readable CSS で記述するだけ。</span></h2>
+
+        <p class="( -element -editable )">コンポーネントを新たに作成したいときは、設定ファイルに、Human Readable CSS で記述するだけです。<mark>ふだん、ウェブ制作者がふれている HTML と CSS の世界だけで、すべてができる</mark>こと。JavaScript や、プログラミングの知識なしに、編集することができます。</p>
+
+        <p class="( -element -editable )">Human Readable CSS は、人間にとって読みやすいことをコンセプトに設計された、CSS の記述方法です。ふつうの HTML と CSS の知識があれば、むずかしくなく習得することができます。</p>
+
+        <p class="( -element -editable )">また、<mark>Human Readable CSS で記述した設定ファイルは、そのままウェブページとして表示できるので、コンポーネント一覧表として使うことができます</mark>。別資料として管理する必要はありません。</p>
+
+        <p class="( -element )">» <a href="http://storywriter.jp/hrcss/user-components/sample.html" class="( -editable -attribute:href )">コンポーネントの一覧表のサンプル： http://storywriter.jp/hrcss/user-components/sample.html<br>（ページ編集中はリンクは開かないので、URLをコピーして参照してください）</a></p>
 
 
-        <p class="( -element -editable )">Human Readable CSS で記述すれば、コンポーネントを追加できるところ、できないところをかんたんに制約できます。また、BEMにおけるブロック、エレメントの層や、リスト、テーブルといった単位で、追加できる場所をコントロールすることができます。</p>
+        <h2 class="text-primary ( -block )"><i class="fa fa-arrow-circle-right ( -attribute:class )"></i><span class="( -editable )">3.既存の CSS との混在OK！ 移行しやすい。</span></h2>
 
-
-        <div class="well ( -block )">
-          <p class="lead">制約のあるリストの例</p>
-          <ul class="well-ul ( -list -include:well-li )">
-            <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">このリストは .well-ul というセレクタをもつ要素しかドラッグ＆ドロップできません。</a></li>
-            <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">ためしに、ふつうのリスト行をドラッグ＆ドロップすると「追加できません」というエラーが表示されます。</a></li>
-          </ul>
+        <div class="row ( -block )">
+          <div class="col-sm-8">
+            <p class="( -element -editable )"><mark>既存の HTML や CSS との混在もOK</mark>です。たとえば、このサンプルページは Bootstrap で作られています。既存の CSS と衝突することなく、Human Readable CSS の記述を追加することができます。そして、そのまま、WYSIWYG HTML Editor での編集ができるようになります。</p>
+            <p class="( -element -editable )">Human Readable CSS は、大規模なウェブサイトでの運用も想定して設計されており、すでにあるウェブサイトへの導入や移行など、現場のリアルなケースにも応えられるようになっています。</p>
+          </div>
+          <div class="col-sm-4">
+            <img src="http://hermie.jp/20150627-hermie/15-a-4.png" alt="" class="img-responsive ( -attribute:src )">
+          </div>
         </div>
-     
 
-        <h2 class="text-primary ( -block )"><i class="fa fa-list-alt ( -attribute:class )"></i><span class="( -editable )">3.コンポーネントの追加はかんたん。Human Readable CSS で記述するだけ。</span></h2>
+
+        <h2 class="text-primary ( -block )"><i class="fa fa-check-square ( -attribute:class )"></i><span class="( -editable )">4.コンポーネント指向で、大規模な運用も想定。</span></h2>
 
         <div class="row ( -block )">
           <div class="col-sm-4">
             <img src="http://hermie.jp/20151008-hermie/27-2.png" alt="" class="img-responsive ( -attribute:src )">
           </div>
           <div class="col-sm-8">
-            <p class="( -element -editable )">コンポーネントの追加は、Human Readable CSS で記述するだけでかんたんにできます。ポイントは、<mark>ふだん、ウェブ制作者がふれている HTML と CSS の世界だけで、すべてができる</mark>こと。JavaScript や、サーバーサイドの言語を知らない人でも、編集することができます。</p>
-            <p class="( -element -editable )">さらに良いのは、Human Readable CSS で記述したコンポーネントの一覧表は、そのままウェブページとして表示できます。一覧表を別資料として管理する必要はありません。以下が、コンポーネントの一覧表のサンプルです。</p>
-            <p class="( -element )">» <a href="http://storywriter.jp/hrcss/user-components/sample.html" class="( -editable -attribute:href )">コンポーネントの一覧表のサンプル</a></p>
-            <p class="( -element -editable )"><mark>既存の HTML や CSS との混在もOK</mark>です。たとえば、このサンプルページは Bootstrap で作られています。そこに、Human Readable CSS の記述を追加することで、そのまま、WYSIWYG HTML Editor で編集ができるようになります。</p>
+            <p class="( -element -editable )">Human Readable CSS は、コンポーネント指向で、大規模なウェブサイトでの運用にも耐えられるように考えられています。</p>
+            <p class="( -element -editable )">Human Readable CSS で記述すれば、<mark>コンポーネントを追加できるところ、できないところをかんたんに条件指定</mark>できます。記述方法は、Human Readable CSS にそって、セレクタに <code>-include:</code> や <code>-parent:</code> を書くだけです。WYSIWYG HTML Editor を使うことで、ひとつひとつのコンポーネントのルールを知らなくても、ガイドラインにそった運用ができます。</p>
+            <p class="( -element -editable )">また、BEM におけるブロック、エレメントの単位で、追加できる場所をコントロールすることができます。</p>
           </div>
         </div>
 
+        <div class="well ( -block )">
+          <p class="lead">条件指定のあるリストの例</p>
+          <ul class="well-ul ( -list -include:well-li )">
+            <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">このリストは .well-ul というセレクタをもつ要素（「リンクリスト行」）しかドラッグ＆ドロップできません。</a></li>
+            <li class="well-li ( -listitem -parent:well-ul )"><a href="#" class="( -editable -attribute:href )">ためしに、ふつうの「リスト行」をドラッグ＆ドロップすると「追加できません」というエラーが表示されます。</a></li>
+          </ul>
+        </div>
 
-        <h2 class="text-primary ( -block )"><i class="fa fa-file-text-o ( -attribute:class )"></i><span class="( -editable )">4.読みやすく、学習しやすい。</span></h2>
 
+        <h2 class="text-primary ( -block )"><i class="fa fa-check-square ( -attribute:class )"></i><span class="( -editable )">5.JavaScriptだけで動作、OSSだから採用しやすい。</span></h2>
 
-        <p class="( -element -editable )">Human Readable CSS は、人間にとって読みやすいことをコンセプトに設計されています。HTML と CSS の知識があれば、気軽に学習することができます。また、コンポーネント指向で、大規模なウェブサイトでの運用にも耐えられるように設計されています。文法やソースコードは GitHub で公開されています。</p>
+        <p class="( -element -editable )"><mark>WYSIWYG HTML Editor は JavaScript だけで動作</mark>します。さまざまな CMS やシステム、環境へ移植しやすいようになっています。<mark>依存するライブラリも、jQuery と jQuery UI Sortable だけ</mark>に抑えてあり、既存のシステムを邪魔しません。</p>
 
+        <p class="( -element -editable )">また、Human Readable CSS および WYSIWYG HTML Editor for Human Readable CSS は、オープンソースプロジェクトとして開発しています。<mark>文法やソースコードは GitHub で公開</mark>されています。特定のベンダーに依存することなく、導入することができます</p>
 
 
     	  <div class="panel panel-default ( -block )">
@@ -175,7 +189,7 @@
         <div class="panel panel-default ( -block )">
           <div class="panel-body">
             <p class="lead ( -editable )">コラム</p>
-            <p class="( -editable )">韓国の音楽シーンは面白いですね。そこで最近、気になる韓国アーティストをピックアップしました。WYSIWYG HTML Editor for Human Readable CSS なら、次のような表もかんたんに作成できます。</p>
+            <p class="( -editable )">WYSIWYG HTML Editor for Human Readable CSS なら、次のような表もかんたんに作成できます。たとえば私は、韓国の音楽シーンが好きなので、最近、気になる韓国アーティストをピックアップしました。</p>
             <table class="table ( -element -table )">
               <tr class="( -tr )">
                 <th class="( -td )"><span class="( -element -editable )">アーティスト</span></th>
@@ -201,6 +215,8 @@
           </div>
         </div>
 
+
+        <p class="( -block )"><img src="http://noren.jp/noren.png" alt="" class="img-responsive ( -attribute:src )"></p>
 
 
       </div><!-- / .row .-wysiwyg -->
