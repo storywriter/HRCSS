@@ -513,7 +513,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 			/* リンクの動作を停止（mousedownとは別にclickイベントを止める必要がある） */
 
-      .on( 'click', '.-block, .-element, .-editable, [class*=-attribute]', function( event ){
+      .on( 'click', 'a, :submit', function( event ){
         event.preventDefault();
       } )
 
