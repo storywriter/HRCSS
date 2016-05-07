@@ -507,11 +507,10 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
       $( '.hrcss-picker-tab-content').css( { 'width' : $( window ).width() - 150 } );
     }
 
-
-
 		/* イベントの設定 */
 
 		$( document )
+
 
 			/* リンクの動作を停止（mousedownとは別にclickイベントを止める必要がある） */
 
@@ -519,7 +518,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
         event.preventDefault();
       } )
 
-			/* 見た目のフォーカスを整え、ポインタを記録する */
+
+			/* 見た目のフォーカスを整える */
 
 			.on( 'mouseenter', '.-block, .-element, .-listitemm, .-tr, .-td, .-editable, [class*=-attribute]', function( event ){
         if( !_this.hovering ){ /* 要素の移動中に hover を効かせない */
@@ -530,124 +530,163 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 				$( this ).removeClass( 'hrcss-hover' );
 			} )
 
+
+      /* クリックしたときに、対象によって動きを分岐する */
+
 			.on( 'mousedown', '.-block, .-element, .-listitem, .-td, .-editable, [class*=-attribute]', function( event ){
 
 				event.stopPropagation();
 
-				var action = $( event.target ).hasClass( 'hrcss-editInPlace-ok' ) || $( event.target ).hasClass( 'hrcss-editInPlace-cancel' );
+        var $this = $( this );
 
-				$( '.hrcss-hover' ).removeClass( 'hrcss-hover' ); /* hoverは解除 */
+        var block = $this.hasClass( '-block' ),
+            element = $this.hasClass( '-element' ),
+            listitem = $this.hasClass( '-listitem' ),
+            td = $this.hasClass( '-td' ); /* -tr は outline の表示のみに利用 */ /* -tr は outline の表示のみに利用 */
 
+        $( '.hrcss-hover' ).removeClass( 'hrcss-hover' ); /* hoverは解除 */
 
-				if( action ) { /* 編集ダイアログの OKボタン または Cancelボタン */
+				var action = false;
+        if( $( event.target ).closest( '.hrcss-editInPlace-dialog' ).length ) {
+          action = true;
+        } else if( $( event.target ).closest( '.hrcss-editInPlace-textarea' ).length ) {
+          action = true;
+        }
 
-					_this.pointer = {}; /* ポインタを空にする */
-					_this.dblclick = false; /* ダブルクリックを初期化 */
-					$( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusは解除 */
+				if( action ) { /* イベントの発生源が editInPlace ダイアログ */
+
+          _this.dblclick = false; /* ダブルクリックを初期化 */
 
 				} else {
 
-					if( event.target === this ) {
 
-						if( !_this.status() ) { /* 他を編集中でなければ */
+					if( !_this.status() ) { /* editInPlace ダイアログが開いていなければ */
 
-							if( _this.pointer === this ) {
-								_this.dblclick = true; /* ダブルクリックを有効化 */
-							} else {
-								$( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusは解除 */
-			      	  _this.pointer = this; /* 新しいポインタを記録する */
-								$( _this.pointer ).addClass( 'hrcss-focus' ); /* 今回クリックしたもの */
-                if( _this.table ) { /* テーブル編集モードなら */
-                  if( $( event.target ).closest( '.-td' ).length === 0 ) { /* テーブル内の要素をクリックしたのでなければ */
-                    _this.table = false; /* テーブル編集モードを解除する */
-                  }
+						if( _this.pointer === this ) { /* 前のクリックも同じ要素なら */
+
+							_this.dblclick = true; /* ダブルクリックを有効化 */
+
+
+						} else { /* 前のクリックは別の要素だったら */
+
+              $( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusを解除 */
+              $( '.hrcss-sortable-handle' ).remove(); /* 取っ手は解除 */
+
+		      	  _this.pointer = this; /* 新しいポインタを記録する */
+
+							$( _this.pointer ).addClass( 'hrcss-focus' ); /* 今回クリックしたものにフォーカスをつける */
+
+              if( _this.table ) { /* テーブル編集モードなら */
+
+                if( $( _this.pointer ).closest( '.-td' ).length === 0 ) { /* テーブル内の要素をクリックしたのでなければ */
+                  _this.table = false; /* テーブル編集モードを解除する */
                 }
-							}
 
-						}
+              } /* / if( _this.table ) */
 
-					}
-
-				}
-
-      } )
+						} /* / if( _this.pointer === this ) */
 
 
-      /* テーブル編集モードにする */
+					} /* / if( !_this.status() ) */
 
-      .on( 'mousedown', '.-td', function( event ){
 
-        if( _this.dblclick ) { /* for accessibility : 'dblclick' event is not accessible. */
-          _this.table = true; /* テーブル編集モードにする */
-        }
 
-      } )
-
-			/* 移動できるもののときは、移動可能先を洗い出し、sortableにする */
-
-			.on( 'mousedown', '.-block, .-element, .-listitem, .-td', function( event ){
-
-				var target = event.target;
-				var $target = $( target );
-
-				var block = $target.hasClass( '-block' ),
-						element = $target.hasClass( '-element' ),
-            listitem = $target.hasClass( '-listitem' ),
-            td = $target.hasClass( '-td' ); /* -tr は outline の表示のみに利用 */
-
-				var sortableOption2 = {
-
-          start: function( event, ui ){
-            _this.hovering = true;
-            _this.dblclick = false; /* ダブルクリックを初期化 */
-          },
-					stop: function( event, ui ){ /* 削除 */
-
-						var _wysiwyg = $( event.target );
-
-						var _uiBottom = ui.offset.top + ui.item.outerHeight();
-						var _uiRight = ui.offset.left + ui.item.outerWidth();
-						var _mainBottom = _wysiwyg.offset().top + _wysiwyg.outerHeight();
-						var _mainRight = _wysiwyg.offset().left + _wysiwyg.outerWidth();
-
-						if( ( _wysiwyg.offset().top - 100 > _uiBottom ) || ( ui.offset.left > _mainRight + 100 ) || ( ui.offset.top > _mainBottom + 100 ) || ( _wysiwyg.offset().left - 100 > _uiRight ) ){ /* '100px' : little wider is better. */
-
-							_this.dialog( '削除してもよろしいですか？', function(){
-								ui.item.remove();
-							} );
-
-						}
-
-            _this.hovering = false;
-            $( '.-wysiwyg' ).sortable( "destroy" );
-
-					}
-				}
-
-        var items;
-        if( block ) {
-          items = $( '.-block' );
-        } else if( element ) {
-          items = $( '.-element' );
-        } else if( listitem ) {
-          items = $( '.-listitem' );
-        }
-
-        if( _this.table ) { /* テーブル編集モードのとき */
+          /* テーブルがダブルクリックされたら、テーブル編集モードにする */
           if( td ) {
-            items = $( '.-td' ); /* 上書き */
-          }
-        }
+
+            if( _this.dblclick ) {
+
+              _this.table = true; /* テーブル編集モードにする */
+
+            }
+
+          } /* / if( td ) */
 
 
-				sortableOption = $.extend( {}, sortableOption, sortableOption2, {
-					items: items
-				} );
-				/* 本文 の sortable を有効にする */
-				$( '.-wysiwyg' ).sortable( sortableOption );
+
+    			/* 移動できるもののときは、移動可能先を洗い出し、sortableにする */
+
+          if( block || element || listitem || td ) {
+
+    				var sortableOption2 = {
+
+              forceHelperSize: true,
+              forcePlaceholderSize: true,
+              placeholder: 'hrcss-sortable-placeholder',
+
+              start: function( event, ui ){
+                _this.hovering = true;
+                _this.dblclick = false; /* ダブルクリックを初期化 */
+              },
+
+    					stop: function( event, ui ){ /* 削除 */
+
+    						var _wysiwyg = $( event.target ); /* かならず .ui-sortable を指す */
+
+    						var _uiBottom = ui.offset.top + ui.item.outerHeight();
+    						var _uiRight = ui.offset.left + ui.item.outerWidth();
+    						var _mainBottom = _wysiwyg.offset().top + _wysiwyg.outerHeight();
+    						var _mainRight = _wysiwyg.offset().left + _wysiwyg.outerWidth();
+
+    						if( ( _wysiwyg.offset().top - 50 > _uiBottom ) || ( ui.offset.left > _mainRight + 50 ) || ( ui.offset.top > _mainBottom + 50 ) || ( _wysiwyg.offset().left - 50 > _uiRight ) ){ /* '50px' : little wider is better. */
+
+    							_this.dialog( '削除してもよろしいですか？', function(){
+    								ui.item.remove();
+    							} );
+
+    						}
+
+                _this.hovering = false;
+                _this.pointer = {}; /* ポインタを空にする */
+                $( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusは解除 */
+                $( '.hrcss-sortable-handle' ).remove(); /* 取っ手は解除 */
+
+                $( '.-wysiwyg' ).sortable( "destroy" );
+
+    					}
+
+    				} /* / sortableOption2 */
+
+            var items;
+            if( block ) {
+              items = $( '.-block' );
+            } else if( element ) {
+              items = $( '.-element' );
+            } else if( listitem ) {
+              items = $( '.-listitem' );
+            }
+
+            if( _this.table ) { /* テーブル編集モードのとき */
+              if( td ) {
+                items = $( '.-td' ); /* 上書き */
+              }
+            }
+
+            /* .sortable しやすくするための取っ手 */
+            var sortableHandler = _this.systemTemplates.find( '.hrcss-sortable-handle' ).clone();
+            $this.prepend( sortableHandler );
+
+            /* 既存の sortable があるか確認する */
+            if( $( '.-wysiwyg' ).hasClass( 'ui-sortable' ) ) {
+
+            } else {
+
+              sortableOption = $.extend( {}, sortableOption, sortableOption2, {
+                items: items
+              } );
+              /* 本文 の sortable を有効にする */
+              $( '.-wysiwyg' ).sortable( sortableOption );
+
+            }
+
+          } /* / if( block || element || listitem || td ) */
+
+
+        } /* / if( action ) */
 
 
 			} )
+
 
 
 			/* EditInPlace で編集する */
@@ -658,19 +697,18 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 					if( !_this.status() && !_this.hovering ) { /* 同時に編集できるのは1つのみ && 要素の移動中に EditInPlace を効かせない */
 
-						var target = event.target;
-						var $target = $( target );
+						var $this = $( this );
 
 						var originalText = '',
 								ins, tagName, text, textarea, table, tr;
 
-						var editable = $target.hasClass( '-editable' ),
-								attribute = ( $target.attr( 'class' ).indexOf( '-attribute' ) > -1 ) ? true : false;
+						var editable = $this.hasClass( '-editable' ),
+								attribute = ( $this.attr( 'class' ).indexOf( '-attribute' ) > -1 ) ? true : false;
 						var attributes;
 
 						/* -attribute:の対象リストをつくる */
 						if( attribute ) {
-							attributes = $target.attr( 'class' ).split( ' ' );
+							attributes = $this.attr( 'class' ).split( ' ' );
 							if( attributes.length > 1 ) {
 
 								attributes = $.grep( attributes, function( elem, index ){
@@ -695,25 +733,21 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 						if( editable ) {
 
-							tagName = $target.context.tagName;
+              $( '.hrcss-sortable-handle' ).remove(); /* 取っ手は解除 */
 
-							if( tagName !== 'IMG' && tagName !== 'HR' ){ /* img でも hr でもなければ */
+							text = $this.html();
+							originalText = text; /* 元のテキストを保存（キャンセル用） */
+							text = $.trim( text );
+							text = text.replace( /<br.*?>/g, "\n" ); /* @TODO <br class="hidden-xs">などで困る */
 
-								text = $target.html();
-								originalText = text; /* 元のテキストを保存（キャンセル用） */
-								text = $.trim( text );
-								text = text.replace( /<br.*?>/g, "\n" ); /* @TODO <br class="hidden-xs">などで困る */
+							textarea = _this.systemTemplates.find( '.hrcss-editInPlace-textarea' ).clone();
+							textarea.width( $this.width() ).height( $this.height() );
+							textarea.val( text );
 
-								textarea = _this.systemTemplates.find( '.hrcss-editInPlace-textarea' ).clone();
-								textarea.width( $target.width() ).height( $target.height() );
-								textarea.val( text );
-
-								/* 表示 */
-								$target.text( '' );
-								$target.append( textarea );
-								textarea.focus();
-
-							}
+							/* 表示 */
+							$this.text( '' );
+							$this.append( textarea );
+							textarea.focus();
 
 						}
 
@@ -731,7 +765,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 								var _tr = $( $( tr ).clone() );
 								_tr.find( 'label' ).text( attributes[ _key ] );
 
-								var _val = $target.attr( attributes[ _key ] );
+								var _val = $this.attr( attributes[ _key ] );
 								/* @TODO class属性のとき、hrcssまでさわれてしまう */
 
 								_val = _val.replace( 'hrcss-focus', '' ); /* フォーカスの CSS を外す */
@@ -748,7 +782,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 
 						/* 表示 */
-						$target.after( ins );
+						$this.after( ins );
 
 
 						/* OKボタンがクリックされたとき または その他の要素がクリックされたとき */
@@ -765,7 +799,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 									_text = textarea.val();
 									_text = $.trim( _text );
 									_text = _text.replace( /\r\n/g, "<br>" ).replace( /(\r|\n)/g, "<br>" );
-									$target.html( _text );
+									$this.html( _text );
 
 								}
 
@@ -776,7 +810,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 									table.find( 'tr' ).each( function(){
 
 										var $this = $( this ).find( 'input' );
-										$target.attr( $this.attr( 'name' ), ( $this.val() || $this.text() ) );
+										$this.attr( $this.attr( 'name' ), ( $this.val() || $this.text() ) );
 
 									} );
 
@@ -797,7 +831,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 								if( editable ){
 
-									$target.html( originalText );
+									$this.html( originalText );
 
 								}
 
@@ -873,7 +907,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
               if( _permission ) { /* 制約はなく、追加できるなら */
 
   							$( _this.pointer ).after( _paste );
-  							$(_this.pointer ).removeClass( 'hrcss-focus' );
+  							$( _this.pointer ).removeClass( 'hrcss-focus' );
+                $( '.hrcss-sortable-handle' ).remove(); /* 取っ手は解除 */
 						    _this.pointer = _paste; /* ペーストしたものにフォーカスを移す */
 
               } else {

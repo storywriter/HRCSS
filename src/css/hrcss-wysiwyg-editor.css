@@ -141,6 +141,22 @@
 	z-index: 2030; /* hoverより強い */
 }
 
+
+/* .sortable handle */
+
+.hrcss-sortable-handle {
+	background: #9fc;
+	border: 0;
+	border-radius: 6px 0 0 6px;
+	display: block;
+	height: 24px;
+	margin-left: -18px;
+	position: absolute;
+	width: 18px;
+	z-index: 2030;
+}
+
+
 /* EditInPlace */
 
 /* EditInPlace : TextArea */
