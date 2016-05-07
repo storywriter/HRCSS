@@ -30,6 +30,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 	dblclick: false, /* for accessibility : 'dblclick' event is not accessible. */
 
+  table: false, /* テーブル編集モード、テーブルは独自の世界が多いため、個別に対応する */
+
 	clipboard: {},
 
 	undo: {},
@@ -519,16 +521,16 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 			/* 見た目のフォーカスを整え、ポインタを記録する */
 
-			.on( 'mouseenter', '.-block, .-element, .-listitem, .-editable, [class*=-attribute]', function( event ){
+			.on( 'mouseenter', '.-block, .-element, .-listitemm, .-tr, .-td, .-editable, [class*=-attribute]', function( event ){
         if( !_this.hovering ){ /* 要素の移動中に hover を効かせない */
           $( this ).addClass( 'hrcss-hover' );
         }
 			} )
-			.on( 'mouseleave', '.-block, .-element, .-listitem, .-editable, [class*=-attribute]', function( event ){
+			.on( 'mouseleave', '.-block, .-element, .-listitem, .-tr, .-td, .-editable, [class*=-attribute]', function( event ){
 				$( this ).removeClass( 'hrcss-hover' );
 			} )
 
-			.on( 'mousedown', '.-block, .-element, .-listitem, .-editable, [class*=-attribute]', function( event ){
+			.on( 'mousedown', '.-block, .-element, .-listitem, .-td, .-editable, [class*=-attribute]', function( event ){
 
 				event.stopPropagation();
 
@@ -555,6 +557,11 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 								$( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusは解除 */
 			      	  _this.pointer = this; /* 新しいポインタを記録する */
 								$( _this.pointer ).addClass( 'hrcss-focus' ); /* 今回クリックしたもの */
+                if( _this.table ) { /* テーブル編集モードなら */
+                  if( $( event.target ).closest( '.-td' ).length === 0 ) { /* テーブル内の要素をクリックしたのでなければ */
+                    _this.table = false; /* テーブル編集モードを解除する */
+                  }
+                }
 							}
 
 						}
@@ -566,16 +573,27 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
       } )
 
 
+      /* テーブル編集モードにする */
+
+      .on( 'mousedown', '.-td', function( event ){
+
+        if( _this.dblclick ) { /* for accessibility : 'dblclick' event is not accessible. */
+          _this.table = true; /* テーブル編集モードにする */
+        }
+
+      } )
+
 			/* 移動できるもののときは、移動可能先を洗い出し、sortableにする */
 
-			.on( 'mousedown', '.-block, .-element, .-listitem', function( event ){
+			.on( 'mousedown', '.-block, .-element, .-listitem, .-td', function( event ){
 
 				var target = event.target;
 				var $target = $( target );
 
 				var block = $target.hasClass( '-block' ),
-						element = $target.hasClass( '-element' )
-            listitem = $target.hasClass( '-listitem' )
+						element = $target.hasClass( '-element' ),
+            listitem = $target.hasClass( '-listitem' ),
+            td = $target.hasClass( '-td' ); /* -tr は outline の表示のみに利用 */
 
 				var sortableOption2 = {
 
@@ -614,6 +632,13 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
         } else if( listitem ) {
           items = $( '.-listitem' );
         }
+
+        if( _this.table ) { /* テーブル編集モードのとき */
+          if( td ) {
+            items = $( '.-td' ); /* 上書き */
+          }
+        }
+
 
 				sortableOption = $.extend( {}, sortableOption, sortableOption2, {
 					items: items
