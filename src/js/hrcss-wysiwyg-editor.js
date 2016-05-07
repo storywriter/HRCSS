@@ -23,14 +23,12 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 	pointer: {},
 
 	status: function(){ /* editInPlace が動作中か調べる */
-		return ( ( $( '.hrcss-editInPlace-dialog' ).length > 0 ) ? true : false ); /* true : editInPlace あり , false : editInPlace なし */
+		return ( ( $( '.hrcss-editInPlace-dialog' ).length > 0 ) ? true : false ); /* true : editInPlace あり, false : editInPlace なし */
 	},
 
   hovering: false, /* 要素の移動中に hover や editInPlace を効かせない */
 
 	dblclick: false, /* for accessibility : 'dblclick' event is not accessible. */
-
-  table: false, /* テーブル編集モード、テーブルは独自の世界が多いため、個別に対応する */
 
 	clipboard: {},
 
@@ -580,31 +578,10 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 							$( _this.pointer ).addClass( 'hrcss-focus' ); /* 今回クリックしたものにフォーカスをつける */
 
-              if( _this.table ) { /* テーブル編集モードなら */
-
-                if( $( _this.pointer ).closest( '.-td' ).length === 0 ) { /* テーブル内の要素をクリックしたのでなければ */
-                  _this.table = false; /* テーブル編集モードを解除する */
-                }
-
-              } /* / if( _this.table ) */
-
 						} /* / if( _this.pointer === this ) */
 
 
 					} /* / if( !_this.status() ) */
-
-
-
-          /* テーブルがダブルクリックされたら、テーブル編集モードにする */
-          if( td ) {
-
-            if( _this.dblclick ) {
-
-              _this.table = true; /* テーブル編集モードにする */
-
-            }
-
-          } /* / if( td ) */
 
 
 
@@ -663,13 +640,10 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
               items = $( '.-element' );
             } else if( listitem ) {
               items = $( '.-listitem' );
+            } else if( td ){
+              items = $( '.-td' );
             }
 
-            if( _this.table ) { /* テーブル編集モードのとき */
-              if( td ) {
-                items = $( '.-td' ); /* 上書き */
-              }
-            }
 
             /* .sortable しやすくするための取っ手 */
             var sortableHandler = _this.systemTemplates.find( '.hrcss-sortable-handle' ).clone();
@@ -867,14 +841,14 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 				var block = $( _this.pointer ).hasClass( '-block' ),
 						element = $( _this.pointer ).hasClass( '-element' ),
-            listitem = $( _this.pointer ).hasClass( '-listitem' );
+            listitem = $( _this.pointer ).hasClass( '-listitem' ),
+            td = $( _this.pointer ).hasClass( '-td' );
 
 				if( !_this.status() ){ /* 'input' 'textarea' 入力中と競合しないように */
 
 					_ctrlKey = ( event.ctrlKey === true || event.metaKey === true ) ? true : false;
 
-					if( block || element || listitem ) {
-
+					if( block || element || listitem || td ) {
 
 						if( _ctrlKey && event.keyCode === 67 ) { /* CTRL+C */
 
