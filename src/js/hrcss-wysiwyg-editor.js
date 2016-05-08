@@ -1,11 +1,12 @@
 /**
  * WYSIWYG HTML Editor for Human Readable CSS
- * last Update: 2016/5/4 @storywriter
  *
  * Require libraries:
  * jquery v1.10.2
  * jquery-ui v1.10.3 ( core, widget, mouse, sortable )
  *
+ * Authors ordered by first contribution:
+ *   - Yoshiki HAYAMA @storywriter
  *
  * コーディングスタイル（コーディング規約）：
  * 「JavaScript Style Guide | Contribute to jQuery 」にしたがう。
@@ -447,8 +448,6 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
                   }
 
-
-
 								} else {
 									_this.alert( 'そのコンポーネントは、ここに追加できません。', function(){} );
 								}
@@ -462,7 +461,6 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 						/* 本文 の sortable を有効にする */
 						wysiwyg.sortable( sortableOption );
-
 
 					} );
 
@@ -607,8 +605,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
       					stop: function( event, ui ){ /* 削除 */
 
+                  /* 領域外にドラッグされていたら、要素を削除する */
       						var _wysiwyg = $( event.target ); /* かならず .ui-sortable を指す */
-
       						var _uiBottom = ui.offset.top + ui.item.outerHeight();
       						var _uiRight = ui.offset.left + ui.item.outerWidth();
       						var _mainBottom = _wysiwyg.offset().top + _wysiwyg.outerHeight();
@@ -622,12 +620,13 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
       						}
 
+                  /* 追加する権限のないコンポーネントが並びかえられてきたら、キャンセルする */
                   if( !_this.permission( ui.item, ui.item ) ){
                     _this.alert( 'そのコンポーネントは、ここに追加できません。', function(){} );
                     wysiwyg.sortable( 'cancel' );
                   }
 
-                  _this.hovering = false;
+                  _this.hovering = false; /* 要素の移動中ではなくする */
                   _this.pointer = {}; /* ポインタを空にする */
                   $( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusは解除 */
                   $( '.hrcss-sortable-handle' ).remove(); /* 取っ手は解除 */
@@ -919,8 +918,12 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 						} else if( event.keyCode === 46 || event.keyCode === 8 ) { /* Del || BackSpace */
 
 								_this.dialog( '削除してもよろしいですか？', function(){
+
 									$( _this.pointer ).remove();
+                  _this.pointer = {}; /* ポインタを空にする */
+
 								} );
+
 
 							if( event.keyCode === 8 ){ return false; } /* Disable 'Page Back' on the 'BackSpace' key */
 

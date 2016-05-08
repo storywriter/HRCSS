@@ -156,6 +156,15 @@
 	z-index: 2030;
 }
 
+/* .sortable handle */ /* 2016年5月8日 未使用 */
+.hrcss-empty {
+	background: #eee;
+	display: block;
+	height: 24px;
+	margin: 5px;
+	width: 80%;
+}
+
 
 /* EditInPlace */
 
