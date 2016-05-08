@@ -885,6 +885,12 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
                   _permission = true;
                 }
 
+              } else if( td ) {
+
+                if( $( _paste ).hasClass( '-td' ) ) {
+                  _permission = true;
+                }
+
               }
 
               /* -child: と -parent: のチェック */
