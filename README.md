@@ -4,7 +4,6 @@ Human Readable CSS Style Guide with WYSIWYG HTML Editor, apply to Web Components
 人間に読みやすいコンポーネント指向のCSS記述法
 
 そのまま使える WYSIWYG HTML Editor を含む。
-Web Components 技術にも対応している。
 
 最終更新：2016年5月8日 Yoshiki HAYAMA @storywriter
 
@@ -37,7 +36,7 @@ WYSIWYG HTML Editor のデモは http://storywriter.jp/hrcss/ で公開してい
 
 - コンポーネントの用途と、ネストできる要素を定義できること。
 
-- 「Web Components」にもシームレスに対応していること。
+- 「Web Components」にもシームレスに対応すること。
 
 - 既存のHTML/CSSと同居できること。
  - 大規模な環境ほど、一夜にしてすべてのコンテンツを移行できるなどあり得ない。ふつうのHTML/CSSと混在することができること。
@@ -123,6 +122,8 @@ WYSIWYG HTML Editor のデモは http://storywriter.jp/hrcss/ で公開してい
 - コードを読んだり、複雑なスタイルガイドのルールを理解しなくても、その WYSIWYG HTML Editor を使っていれば、自然とスタイルガイドが守れるようにする。
 
 - WYSIWYG HTML Editor のデモは http://storywriter.jp/hrcss/ で公開している。
+
+- また、Human Readable CSS で記述した設定ファイルは、そのままウェブページとして表示できるので、スタイルガイドとして使うことができる。別資料として管理する必要がない。スタイルガイドとして表示したサンプルは http://storywriter.jp/hrcss/user-components/sample.html で公開している。
 
 
 ## 解法（具体的なコード）
