@@ -712,6 +712,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 						ins.append( _this.systemTemplates.find( '.hrcss-editInPlace-control' ).clone() );
 
 
+            $( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusを解除 */
+
             /* .sortable が起動していたら */
             if( wysiwyg.hasClass( 'ui-sortable' ) ) {
 
@@ -731,7 +733,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 							text = text.replace( /<br.*?>/g, "\n" ); /* @TODO <br class="hidden-xs">などで困る */
 
 							textarea = _this.systemTemplates.find( '.hrcss-editInPlace-textarea' ).clone();
-							textarea.width( $this.width() ).height( $this.height() );
+							textarea.width( '85%' ).height( $this.outerHeight() ); /* 幅は、広くても、狭くても使いづらいケースがあり、85% くらいがバランスがよい */
 							textarea.val( text );
 
 							/* 表示 */
