@@ -684,7 +684,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 						var $this = $( this );
 
 						var originalText = '',
-								ins, tagName, text, textarea, table, tr;
+								ins, tagName, text, textarea, attrTable, attrTr;
 
 						var editable = $this.hasClass( '-editable' ),
 								attribute = ( $this.attr( 'class' ).indexOf( '-attribute' ) > -1 ) ? true : false;
@@ -747,13 +747,13 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 						if( attribute ) {
 
-							table = _this.systemTemplates.find( '.hrcss-editInPlace-attrTable' ).clone();
-							tr = table.find( 'tr' ).clone();
-							table.remove( 'table' ).empty();
+							attrTable = _this.systemTemplates.find( '.hrcss-editInPlace-attrTable' ).clone();
+							attrTr = attrTable.find( 'tr' ).clone();
+							attrTable.remove( 'table' ).empty();
 
 							for( var _key in attributes ){
 
-								var _tr = $( $( tr ).clone() );
+								var _tr = $( $( attrTr ).clone() );
 								_tr.find( 'label' ).text( attributes[ _key ] );
 
 								var _val = $this.attr( attributes[ _key ] );
@@ -763,11 +763,11 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 								_val = $.trim( _val );
 
 								_tr.find( 'input' ).attr( 'name', attributes[ _key ] ).val( _val || '' );
-								table.append( _tr );
+								attrTable.append( _tr );
 
 							}
 
-							ins.prepend( table );
+							ins.prepend( attrTable );
 
 						}
 
@@ -798,10 +798,9 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 								if( attribute ){
 
-									table.find( 'tr' ).each( function(){
+									attrTable.find( 'tr' ).find( 'input' ).each( function(){
 
-										var $this = $( this ).find( 'input' );
-										$this.attr( $this.attr( 'name' ), ( $this.val() || $this.text() ) );
+										$this.attr( $( this ).attr( 'name' ), ( $( this ).val() || $( this ).text() ) );
 
 									} );
 
