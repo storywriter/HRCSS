@@ -222,6 +222,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 		var index = 0;
 
+    var wysiwyg = $( '.-wysiwyg' );
+
 		var picker;
 
 
@@ -336,7 +338,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 						sortableOption = $.extend( {}, sortableOption, {
 							items: componentSelector,
-							connectWith: $( '.-wysiwyg' ),
+							connectWith: wysiwyg,
 							forceHelperSize: true,
 							forcePlaceholderSize: true,
 							placeholder: 'hrcss-sortable-placeholder',
@@ -363,7 +365,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
               },
 							stop: function( event, ui ){
                 _this.hovering = false;
-								$( '.-wysiwyg' ).sortable( "destroy" );
+								wysiwyg.sortable( "destroy" );
 							},
 							receive: function( event, ui ){ /* コンポーネントがドロップされたとき */
 
@@ -452,14 +454,14 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 								}
 
                 _this.hovering = false;
-								$( '.-wysiwyg' ).sortable( "destroy" );
+								wysiwyg.sortable( "destroy" );
 								$( '.hrcss-picker-tab-content' ).sortable( 'cancel' );
 
 							}
 						} );
 
 						/* 本文 の sortable を有効にする */
-						$( '.-wysiwyg' ).sortable( sortableOption );
+						wysiwyg.sortable( sortableOption );
 
 
 					} );
@@ -484,13 +486,13 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 				}
 
 				/* sortable を破棄する */
-				if( $( '.-wysiwyg' ).hasClass( 'ui-sortable' ) ) {
+				if( wysiwyg.hasClass( 'ui-sortable' ) ) {
           _this.hovering = false;
-					$( '.-wysiwyg' ).sortable( "destroy" );
+					wysiwyg.sortable( "destroy" );
 				}
 
 				/* HTML を表示する */
-				$( '.-wysiwyg' ).each( function(){
+				wysiwyg.each( function(){
 
 					var _text = $( this ).html();
 					_text = $( '<textarea rows="20" cols="100">' ).html( _text );
@@ -524,11 +526,13 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 			/* 見た目のフォーカスを整える */
 
 			.on( 'mouseenter', '.-block, .-element, .-listitemm, .-tr, .-td, .-editable, [class*=-attribute]', function( event ){
-        if( !_this.hovering ){ /* 要素の移動中に hover を効かせない */
+        event.stopPropagation();
+        if( !_this.status() && !_this.hovering ){ /* 要素の編集や移動中に hover を効かせない */
           $( this ).addClass( 'hrcss-hover' );
         }
 			} )
 			.on( 'mouseleave', '.-block, .-element, .-listitem, .-tr, .-td, .-editable, [class*=-attribute]', function( event ){
+        event.stopPropagation();
 				$( this ).removeClass( 'hrcss-hover' );
 			} )
 
@@ -546,9 +550,10 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
             listitem = $this.hasClass( '-listitem' ),
             td = $this.hasClass( '-td' ); /* -tr は outline の表示のみに利用 */ /* -tr は outline の表示のみに利用 */
 
+
         $( '.hrcss-hover' ).removeClass( 'hrcss-hover' ); /* hoverは解除 */
 
-				var action = false;
+				var action = false; /* イベントの発生源が editInPlace ダイアログかどうか */
         if( $( event.target ).closest( '.hrcss-editInPlace-dialog' ).length ) {
           action = true;
         } else if( $( event.target ).closest( '.hrcss-editInPlace-textarea' ).length ) {
@@ -558,6 +563,10 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 				if( action ) { /* イベントの発生源が editInPlace ダイアログ */
 
           _this.dblclick = false; /* ダブルクリックを初期化 */
+          _this.pointer = {}; /* ポインタを空にする */
+          $( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusは解除 */
+          $( '.hrcss-sortable-handle' ).remove(); /* 取っ手は解除 */
+
 
 				} else {
 
@@ -581,88 +590,80 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 						} /* / if( _this.pointer === this ) */
 
 
-					} /* / if( !_this.status() ) */
+      			/* 移動できるもののときは、移動可能先を洗い出し、sortableにする */
+
+            if( block || element || listitem || td ) {
+
+      				var sortableOption2 = {
+
+                forceHelperSize: true,
+                forcePlaceholderSize: true,
+                placeholder: 'hrcss-sortable-placeholder',
+
+                start: function( event, ui ){
+                  _this.hovering = true;
+                  _this.dblclick = false; /* ダブルクリックを初期化 */
+                },
+
+      					stop: function( event, ui ){ /* 削除 */
+
+      						var _wysiwyg = $( event.target ); /* かならず .ui-sortable を指す */
+
+      						var _uiBottom = ui.offset.top + ui.item.outerHeight();
+      						var _uiRight = ui.offset.left + ui.item.outerWidth();
+      						var _mainBottom = _wysiwyg.offset().top + _wysiwyg.outerHeight();
+      						var _mainRight = _wysiwyg.offset().left + _wysiwyg.outerWidth();
+
+      						if( ( _wysiwyg.offset().top - 50 > _uiBottom ) || ( ui.offset.left > _mainRight + 50 ) || ( ui.offset.top > _mainBottom + 50 ) || ( _wysiwyg.offset().left - 50 > _uiRight ) ){ /* '50px' : little wider is better. */
+
+      							_this.dialog( '削除してもよろしいですか？', function(){
+      								ui.item.remove();
+      							} );
+
+      						}
+
+                  if( !_this.permission( ui.item, ui.item ) ){
+                    _this.alert( 'そのコンポーネントは、ここに追加できません。', function(){} );
+                    wysiwyg.sortable( 'cancel' );
+                  }
+
+                  _this.hovering = false;
+                  _this.pointer = {}; /* ポインタを空にする */
+                  $( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusは解除 */
+                  $( '.hrcss-sortable-handle' ).remove(); /* 取っ手は解除 */
+
+                  wysiwyg.sortable( "destroy" );
+
+      					}
+
+      				} /* / sortableOption2 */
+
+              var items;
+              if( block ) {
+                items = $( '.-block' );
+              } else if( element ) {
+                items = $( '.-element' );
+              } else if( listitem ) {
+                items = $( '.-listitem' );
+              } else if( td ){
+                items = $( '.-td' );
+              }
 
 
-
-    			/* 移動できるもののときは、移動可能先を洗い出し、sortableにする */
-
-          if( block || element || listitem || td ) {
-
-    				var sortableOption2 = {
-
-              forceHelperSize: true,
-              forcePlaceholderSize: true,
-              placeholder: 'hrcss-sortable-placeholder',
-
-              start: function( event, ui ){
-                _this.hovering = true;
-                _this.dblclick = false; /* ダブルクリックを初期化 */
-              },
-
-    					stop: function( event, ui ){ /* 削除 */
-
-    						var _wysiwyg = $( event.target ); /* かならず .ui-sortable を指す */
-
-    						var _uiBottom = ui.offset.top + ui.item.outerHeight();
-    						var _uiRight = ui.offset.left + ui.item.outerWidth();
-    						var _mainBottom = _wysiwyg.offset().top + _wysiwyg.outerHeight();
-    						var _mainRight = _wysiwyg.offset().left + _wysiwyg.outerWidth();
-
-    						if( ( _wysiwyg.offset().top - 50 > _uiBottom ) || ( ui.offset.left > _mainRight + 50 ) || ( ui.offset.top > _mainBottom + 50 ) || ( _wysiwyg.offset().left - 50 > _uiRight ) ){ /* '50px' : little wider is better. */
-
-    							_this.dialog( '削除してもよろしいですか？', function(){
-    								ui.item.remove();
-    							} );
-
-    						}
-
-                if( !_this.permission( ui.item, ui.item ) ){
-                  _this.alert( 'そのコンポーネントは、ここに追加できません。', function(){} );
-                  $( '.-wysiwyg' ).sortable( 'cancel' );
-                }
-
-                _this.hovering = false;
-                _this.pointer = {}; /* ポインタを空にする */
-                $( '.hrcss-focus' ).removeClass( 'hrcss-focus' ); /* focusは解除 */
-                $( '.hrcss-sortable-handle' ).remove(); /* 取っ手は解除 */
-
-                $( '.-wysiwyg' ).sortable( "destroy" );
-
-    					}
-
-    				} /* / sortableOption2 */
-
-            var items;
-            if( block ) {
-              items = $( '.-block' );
-            } else if( element ) {
-              items = $( '.-element' );
-            } else if( listitem ) {
-              items = $( '.-listitem' );
-            } else if( td ){
-              items = $( '.-td' );
-            }
-
-
-            /* .sortable しやすくするための取っ手 */
-            var sortableHandler = _this.systemTemplates.find( '.hrcss-sortable-handle' ).clone();
-            $this.prepend( sortableHandler );
-
-            /* 既存の sortable があるか確認する */
-            if( $( '.-wysiwyg' ).hasClass( 'ui-sortable' ) ) {
-
-            } else {
+              /* .sortable しやすくするための取っ手 */
+              var sortableHandler = _this.systemTemplates.find( '.hrcss-sortable-handle' ).clone();
+              $this.prepend( sortableHandler );
 
               sortableOption = $.extend( {}, sortableOption, sortableOption2, {
                 items: items
               } );
               /* 本文 の sortable を有効にする */
-              $( '.-wysiwyg' ).sortable( sortableOption );
+              wysiwyg.sortable( sortableOption );
 
-            }
+            } /* / if( block || element || listitem || td ) */
 
-          } /* / if( block || element || listitem || td ) */
+
+          } /* / if( !_this.status() ) */
 
 
         } /* / if( action ) */
@@ -712,11 +713,18 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 						ins.append( _this.systemTemplates.find( '.hrcss-editInPlace-control' ).clone() );
 
 
+            /* .sortable が起動していたら */
+            if( wysiwyg.hasClass( 'ui-sortable' ) ) {
+
+              $( '.hrcss-sortable-handle' ).remove(); /* 取っ手は解除 */
+              wysiwyg.sortable( "destroy" ); /* .sortableを破棄 */ 
+
+            }
+
+
 						/* EditInPlace : TextArea */
 
 						if( editable ) {
-
-              $( '.hrcss-sortable-handle' ).remove(); /* 取っ手は解除 */
 
 							text = $this.html();
 							originalText = text; /* 元のテキストを保存（キャンセル用） */
