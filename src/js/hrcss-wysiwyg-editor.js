@@ -176,6 +176,21 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 	},
 
+  save: function( func ){
+
+    var _this = this;
+
+    /* HTML を表示する */
+    $( '.-wysiwyg' ).each( function(){
+
+      var _text = $( this ).html();
+      _text = $( '<textarea rows="20" cols="100">' ).html( _text );
+      _this.alert( _text, function(){} );
+
+    } );
+
+  },
+
 	alert: function( message, func ){
 
 		var _this = this;
@@ -493,14 +508,8 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 					wysiwyg.sortable( "destroy" );
 				}
 
-				/* HTML を表示する */
-				wysiwyg.each( function(){
-
-					var _text = $( this ).html();
-					_text = $( '<textarea rows="20" cols="100">' ).html( _text );
-					_this.alert( _text, function(){} );
-
-				} );
+				/* 保存を実行する */
+				_this.save();
 
 			} );
 
