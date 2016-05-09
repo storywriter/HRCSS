@@ -176,7 +176,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
 	},
 
-  save: function( func ){
+  save: function(){
 
     var _this = this;
 
