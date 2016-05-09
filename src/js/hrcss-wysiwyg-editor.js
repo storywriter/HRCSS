@@ -374,7 +374,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 
                   /* コンポーネントを追加する */
 
-                  if( td ) { /* セルの追加なら、ほかの行にも追加する */
+                  if( td ) { /* セル（列）の追加なら、ほかの行にも追加する */
 
                     /* 自分は何番目のセルか調べる */
                     var _index = ui.item.index();
@@ -408,7 +408,11 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
                       }
 
                       /* コンポーネントの HTML を追加 */
-                      _td.eq( _index ).before( _tmp );
+                      if( _td.eq( _index ).length === 0 ) { /* ui.item が子要素に含まれると、_td.length の値が変わる */
+                        _td.eq( _index - 1 ).after( _tmp ); /* after で追加する */
+                      } else {
+                        _td.eq( _index ).before( _tmp ); /* before で追加する */
+                      }
 
                     } );
 
