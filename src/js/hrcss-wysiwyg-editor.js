@@ -743,7 +743,7 @@ var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
 							/* 表示 */
 							$this.text( '' );
 							$this.append( textarea );
-							textarea.focus();
+              textarea.select();
 
 						}
 
