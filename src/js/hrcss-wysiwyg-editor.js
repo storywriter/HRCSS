@@ -19,7 +19,7 @@
 
 
 
-var hrcssWysiwygEditor = document.hrcssWysiwygEditor = {
+var hrcssWysiwygEditor = window.hrcssWysiwygEditor = { /* プラグイン作成には、window オブジェクトにアタッチしている必要がある */
 
 	pointer: {},
 
