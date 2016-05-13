@@ -5,11 +5,14 @@ Human Readable CSS Style Guide with WYSIWYG HTML Editor, apply to Web Components
 
 そのまま使える WYSIWYG HTML Editor を含む。
 
-最終更新：2016年5月8日 Yoshiki HAYAMA @storywriter
+最終更新：2016年5月13日 Yoshiki HAYAMA @storywriter
 
 本プロジェクトはオープンソースプロジェクトである。
 プロジェクトの代表は Yoshiki HAYAMA @storywriter http://storywriter.jp/ である。
+
 WYSIWYG HTML Editor のデモは http://storywriter.jp/hrcss/ で公開している。
+
+このプロジェクトの概念について、わかりやすいプレゼン資料は http://www.slideshare.net/storywriterjp/css-2016513-codegrid に公開している。
 
 
 ## 原則
